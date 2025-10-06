@@ -3,11 +3,13 @@ import ButtonMenuTrigger from "./components/ButtonMenuTrigger"
 
 const Header = () => {
   return (
-    <Card className="bg-wilson-blue w-full p-4">
-      <CardContent className="p-0 text-white">
-        <ButtonMenuTrigger />
-      </CardContent>
-    </Card>
+    <header className="bg-wilson-blue">
+      <Card className="bg-wilson-blue w-full border-0 p-4">
+        <CardContent className="p-0 text-white">
+          <ButtonMenuTrigger />
+        </CardContent>
+      </Card>
+    </header>
   )
 }
 

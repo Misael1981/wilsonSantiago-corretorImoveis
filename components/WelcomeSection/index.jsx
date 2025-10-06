@@ -1,5 +1,6 @@
 import Image from "next/image"
 import ButtonsSearch from "./components/ButtonsSearch"
+import InputsSearch from "./components/InputsSearch"
 
 const WelcomeSection = () => {
   return (
@@ -26,6 +27,7 @@ const WelcomeSection = () => {
           Aqui é onde você pode encontrar o imóvel dos seus sonhos
         </h1>
         <ButtonsSearch />
+        <InputsSearch />
       </div>
     </section>
   )
