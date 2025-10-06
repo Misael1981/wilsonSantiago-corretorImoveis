@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
   Select,
@@ -11,8 +12,8 @@ import {
 
 const InputsSearch = () => {
   return (
-    <div className="space-y-4">
-      <div className="px-4">
+    <div className="space-y-4 lg:flex lg:items-end lg:justify-center lg:space-y-0">
+      <div className="w-full px-4 lg:max-w-[250px]">
         <h3 className="text-wilson-blue mb-2 text-lg font-semibold">
           Busca por endereço
         </h3>
@@ -47,11 +48,16 @@ const InputsSearch = () => {
           </SelectContent>
         </Select>
       </div>
-      <div className="px-4">
+      <div className="w-full px-4 lg:max-w-[250px]">
         <h3 className="text-wilson-blue mb-2 text-lg font-semibold">
           Onde você deseja buscar?
         </h3>
         <Input placeholder="Digite o endereço" />
+      </div>
+      <div className="w-full px-4 lg:max-w-[250px]">
+        <Button className="bg-gradient-wilson-blue text-wilson-golden w-full">
+          Buscar
+        </Button>
       </div>
     </div>
   )
