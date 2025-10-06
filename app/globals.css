@@ -1,26 +1,228 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "tw-animate-css";
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  /* Wilson Corretor Brand Colors */
+  --wilson-blue: #0d2036;
+  --wilson-blue-light: #426792;
+  --wilson-golden: #d6b689;
+  --wilson-golden-dark: #b8a076;
+
+  /* Radius */
+  --radius: 0.625rem;
+
+  /* Background & Foreground */
+  --background: oklch(98.5% 0.002 106.42); /* Branco suave */
+  --foreground: oklch(15% 0.01 258.34); /* Azul escuro Wilson */
+
+  /* Cards */
+  --card: oklch(100% 0 0); /* Branco puro */
+  --card-foreground: oklch(15% 0.01 258.34);
+
+  /* Popover */
+  --popover: oklch(100% 0 0);
+  --popover-foreground: oklch(15% 0.01 258.34);
+
+  /* Primary - Azul Wilson */
+  --primary: oklch(25% 0.02 258.34); /* Aumentei de 15% para 25% */
+  --primary-foreground: oklch(98% 0 0); /* Branco */
+
+  /* Secondary - Dourado Wilson */
+  --secondary: oklch(75% 0.08 85.87); /* #d6b689 */
+  --secondary-foreground: oklch(15% 0.01 258.34); /* Azul escuro */
+
+  /* Muted */
+  --muted: oklch(96% 0.005 106.42); /* Cinza muito claro */
+  --muted-foreground: oklch(45% 0.006 258.34); /* Cinza médio */
+
+  /* Accent - Azul claro Wilson */
+  --accent: oklch(50% 0.08 258.34); /* #426792 */
+  --accent-foreground: oklch(98% 0 0); /* Branco */
+
+  /* Destructive */
+  --destructive: oklch(62.8% 0.257 29.23); /* Vermelho padrão */
+
+  /* Border & Input */
+  --border: oklch(89% 0.005 106.42); /* Cinza claro */
+  --input: oklch(89% 0.005 106.42);
+
+  /* Ring */
+  --ring: oklch(50% 0.08 258.34); /* Azul claro Wilson */
+
+  /* Charts - Tons do Wilson */
+  --chart-1: oklch(50% 0.08 258.34); /* Azul claro */
+  --chart-2: oklch(75% 0.08 85.87); /* Dourado */
+  --chart-3: oklch(15% 0.01 258.34); /* Azul escuro */
+  --chart-4: oklch(65% 0.06 85.87); /* Dourado claro */
+  --chart-5: oklch(35% 0.05 258.34); /* Azul médio */
+
+  /* Sidebar */
+  --sidebar: oklch(98% 0.002 106.42);
+  --sidebar-foreground: oklch(15% 0.01 258.34);
+  --sidebar-primary: oklch(15% 0.01 258.34);
+  --sidebar-primary-foreground: oklch(98% 0 0);
+  --sidebar-accent: oklch(96% 0.005 106.42);
+  --sidebar-accent-foreground: oklch(15% 0.01 258.34);
+  --sidebar-border: oklch(89% 0.005 106.42);
+  --sidebar-ring: oklch(50% 0.08 258.34);
+
+  /* Fonts do projeto Wilson */
+  --font-title: var(--font-playfair), "Playfair Display", serif;
+  --font-primary: var(--font-outfit), "Outfit", sans-serif;
+  --font-special: var(--font-playfair), "Playfair Display", serif;
+
+  /* Gradientes Wilson */
+  --degrade-blue: linear-gradient(
+    170deg,
+    rgba(15, 27, 41, 1) 0%,
+    rgba(44, 72, 102, 1) 48%,
+    #041120 100%
+  );
+  --degrade-golden: linear-gradient(
+    175deg,
+    rgba(235, 152, 38, 1) 0%,
+    rgba(214, 182, 137, 1) 48%,
+    rgba(242, 158, 41, 0.95) 100%
+  );
+  --degrade-whatsapp: linear-gradient(
+    17deg,
+    rgba(2, 173, 65, 1) 0%,
+    rgba(6, 112, 45, 1) 51%,
+    rgba(37, 211, 102, 0.95) 100%
+  );
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-primary);
+    line-height: 1.6;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-title);
+  }
+
+  /* Scrollbar personalizada */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: oklch(96% 0.005 106.42);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: oklch(50% 0.08 258.34);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(15% 0.01 258.34);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Utilitários personalizados Wilson */
+@layer utilities {
+  .text-wilson-blue {
+    color: var(--wilson-blue);
+  }
+
+  .text-wilson-golden {
+    color: var(--wilson-golden);
+  }
+
+  .bg-wilson-blue {
+    background-color: var(--wilson-blue);
+  }
+
+  .bg-wilson-golden {
+    background-color: var(--wilson-golden);
+  }
+
+  /* Novas classes para border */
+  .border-wilson-blue {
+    border-color: var(--wilson-blue);
+  }
+
+  .border-wilson-blue-light {
+    border-color: var(--wilson-blue-light);
+  }
+
+  .border-wilson-golden {
+    border-color: var(--wilson-golden);
+  }
+
+  .bg-gradient-wilson-blue {
+    background: var(--degrade-blue);
+  }
+
+  .bg-gradient-wilson-golden {
+    background: var(--degrade-golden);
+  }
+
+  .bg-gradient-whatsapp {
+    background: var(--degrade-whatsapp);
+  }
+
+  .font-title {
+    font-family: var(--font-title);
+  }
+
+  .font-primary {
+    font-family: var(--font-primary);
+  }
+
+  .font-special {
+    font-family: var(--font-special);
+  }
 }
