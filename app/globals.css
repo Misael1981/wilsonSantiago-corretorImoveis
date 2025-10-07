@@ -225,4 +225,36 @@
   .font-special {
     font-family: var(--font-special);
   }
+
+  .shadow-custom-deep {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, 
+                rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, 
+                rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  }
+
+  .boxed {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 1024px) {
+    .boxed {
+      max-width: 90%;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .boxed {
+      max-width: 80%;
+    }
+  }
+
+  @media (min-width: 1536px) {
+    .boxed {
+      max-width: 70%;
+    }
+  }
 }
