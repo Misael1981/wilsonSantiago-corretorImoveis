@@ -1,4 +1,5 @@
 import SubTitle from "../SubTitle"
+import { Button } from "../ui/button"
 
 const propertyTypes = [
   {
@@ -25,10 +26,10 @@ const propertyTypes = [
 
 const PropertyCategory = () => {
   return (
-    <section className="mt-4 p-4 lg:mt-6">
+    <section className="mt-4 space-y-4 p-4 lg:mt-6">
       <SubTitle
         title="Encontro o imóvel ideal para você"
-        className="mb-6 text-center"
+        className="text-center"
       />
       <div className="flex flex-wrap justify-center gap-4">
         {propertyTypes.map((item) => (
@@ -42,6 +43,11 @@ const PropertyCategory = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="flex justify-center">
+        <Button className="bg-gradient-wilson-blue text-wilson-golden w-[300px] max-w-[90%]">
+          Ver todos os imóveis
+        </Button>
       </div>
     </section>
   )
