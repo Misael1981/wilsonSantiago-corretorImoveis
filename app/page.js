@@ -1,5 +1,5 @@
 import Header from "@/components/Header"
-import { Button } from "@/components/ui/button"
+import PropertyCategory from "@/components/PropertyCategory"
 import WelcomeSection from "@/components/WelcomeSection"
 
 export default function Home() {
@@ -7,6 +7,7 @@ export default function Home() {
     <>
       <Header />
       <WelcomeSection />
+      <PropertyCategory />
     </>
   )
 }

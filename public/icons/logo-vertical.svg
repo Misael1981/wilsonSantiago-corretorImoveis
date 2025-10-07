@@ -3,8 +3,8 @@
 
 <svg
    width="72.675652mm"
-   height="86.86248mm"
-   viewBox="0 0 72.675652 86.86248"
+   height="86.862473mm"
+   viewBox="0 0 72.675652 86.862472"
    version="1.1"
    id="svg1"
    xml:space="preserve"
@@ -37,15 +37,15 @@
      inkscape:window-maximized="1"
      inkscape:current-layer="g22"
      showgrid="false"><sodipodi:guide
-       position="6.2956676,121.55467"
+       position="202.51176,122.1699"
        orientation="0,-1"
        id="guide1"
        inkscape:locked="false" /><inkscape:page
        x="0"
        y="0"
        width="72.675652"
-       height="86.86248"
-       id="page1"
+       height="86.862473"
+       id="page2"
        margin="0"
        bleed="0" /></sodipodi:namedview><defs
      id="defs1"><inkscape:path-effect
@@ -452,7 +452,7 @@
      id="layer2"
      inkscape:label="vetor"
      style="display:inline"
-     transform="translate(-94.323419,-322.79518)"><g
+     transform="translate(101.89267,-323.41042)"><g
        id="g97"
        transform="translate(-50.137723,206.64951)"><g
          id="g3"
@@ -578,7 +578,7 @@
                style="fill:none;fill-opacity:1;stroke:#d5b889;stroke-width:0.079375;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
                d="m 72.56663,39.065832 4.246768,-3.148645 10e-7,24.859982"
                id="path10" /></g></g></g><rect
-         style="fill:#101e2b;stroke-width:0.264583;fill-opacity:1"
+         style="fill:#101e2b;fill-opacity:1;stroke-width:0.264583"
          id="rect2"
          width="9.9586668"
          height="10.471245"
