@@ -1,4 +1,5 @@
 import About from "@/components/About"
+import AdvertiseRealEstate from "@/components/AdvertiseRealEstate"
 import BannerContactUs from "@/components/BannerContactUs"
 import Header from "@/components/Header"
 import PropertyCategory from "@/components/PropertyCategory"
@@ -12,6 +13,7 @@ export default function Home() {
       <PropertyCategory />
       <BannerContactUs />
       <About />
+      <AdvertiseRealEstate />
     </>
   )
 }
