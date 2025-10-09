@@ -8,87 +8,113 @@ import PropertyCategory from "@/components/PropertyCategory"
 import WelcomeSection from "@/components/WelcomeSection"
 import { PrismaClient } from "@/app/generated/prisma"
 import RealEstateCard from "@/components/CarouselRealEstate/components/RealEstateCard"
+import LinksBlogs from "@/components/LinksBlogs"
+import CustomersServed from "@/components/CustomersServed"
 
 const prisma = new PrismaClient()
 
 // Função para buscar todos os dados necessários da página
 async function getHomePageData() {
   try {
-    const [properties, featuredProperties, propertyTypes, siteConfig] =
-      await Promise.all([
-        // Buscar imóveis ativos (para carrossel geral)
-        prisma.property.findMany({
-          where: {
-            status: "ACTIVE",
-            deletedAt: null,
-          },
-          orderBy: {
-            createdAt: "desc",
-          },
-          take: 12, // Limitar para performance
-          select: {
-            id: true,
-            title: true,
-            price: true,
-            area: true,
-            bedrooms: true,
-            bathrooms: true,
-            garageSpaces: true,
-            type: true,
-            imageUrls: true,
-            city: true,
-            neighborhood: true,
-            slug: true,
-          },
-        }),
+    const [
+      properties,
+      featuredProperties,
+      propertyTypes,
+      siteConfig,
+      articles,
+    ] = await Promise.all([
+      // Buscar imóveis ativos (para carrossel geral)
+      prisma.property.findMany({
+        where: {
+          status: "ACTIVE",
+          deletedAt: null,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+        take: 12, // Limitar para performance
+        select: {
+          id: true,
+          title: true,
+          price: true,
+          area: true,
+          bedrooms: true,
+          bathrooms: true,
+          garageSpaces: true,
+          type: true,
+          imageUrls: true,
+          city: true,
+          neighborhood: true,
+          slug: true,
+        },
+      }),
 
-        // Buscar imóveis em destaque
-        prisma.property.findMany({
-          where: {
-            status: "ACTIVE",
-            featured: true,
-            deletedAt: null,
-          },
-          orderBy: {
-            createdAt: "desc",
-          },
-          take: 6,
-          select: {
-            id: true,
-            title: true,
-            price: true,
-            area: true,
-            bedrooms: true,
-            bathrooms: true,
-            garageSpaces: true,
-            type: true,
-            imageUrls: true,
-            city: true,
-            neighborhood: true,
-            slug: true,
-          },
-        }),
+      // Buscar imóveis em destaque
+      prisma.property.findMany({
+        where: {
+          status: "ACTIVE",
+          featured: true,
+          deletedAt: null,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+        take: 6,
+        select: {
+          id: true,
+          title: true,
+          price: true,
+          area: true,
+          bedrooms: true,
+          bathrooms: true,
+          garageSpaces: true,
+          type: true,
+          imageUrls: true,
+          city: true,
+          neighborhood: true,
+          slug: true,
+        },
+      }),
 
-        // Buscar tipos de propriedades com contagem
-        prisma.property.groupBy({
-          by: ["type"],
-          where: {
-            status: "ACTIVE",
-            deletedAt: null,
-          },
-          _count: {
-            type: true,
-          },
-        }),
+      // Buscar tipos de propriedades com contagem
+      prisma.property.groupBy({
+        by: ["type"],
+        where: {
+          status: "ACTIVE",
+          deletedAt: null,
+        },
+        _count: {
+          type: true,
+        },
+      }),
 
-        // Buscar configurações do site
-        prisma.siteConfig.findMany({
-          select: {
-            key: true,
-            value: true,
-          },
-        }),
-      ])
+      // Buscar configurações do site
+      prisma.siteConfig.findMany({
+        select: {
+          key: true,
+          value: true,
+        },
+      }),
+
+      // Buscar artigos
+      prisma.article.findMany({
+        where: {
+          published: true, // ✅ Usar published ao invés de deletedAt
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+        take: 6,
+        select: {
+          id: true,
+          title: true,
+          content: true,
+          excerpt: true,
+          imageUrl: true,
+          slug: true,
+        },
+      }),
+    ])
 
     return {
       properties,
@@ -98,6 +124,7 @@ async function getHomePageData() {
         acc[config.key] = config.value
         return acc
       }, {}),
+      articles,
     }
   } catch (error) {
     console.error("Erro ao buscar dados da home:", error)
@@ -106,13 +133,19 @@ async function getHomePageData() {
       featuredProperties: [],
       propertyTypes: [],
       siteConfig: {},
+      articles: [],
     }
   }
 }
 
 export default async function Home() {
-  const { properties, featuredProperties, propertyTypes, siteConfig } =
-    await getHomePageData()
+  const {
+    properties,
+    featuredProperties,
+    propertyTypes,
+    siteConfig,
+    articles,
+  } = await getHomePageData()
 
   return (
     <>
@@ -125,8 +158,9 @@ export default async function Home() {
           <RealEstateCard key={property.id} property={property} />
         ))}
       </CarouselRealEstate>
-      <About />
       <AdvertiseRealEstate />
+      <LinksBlogs articles={articles} />
+      <CustomersServed />
       <Footer />
     </>
   )
