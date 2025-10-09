@@ -1,31 +1,29 @@
-import { Card, CardContent } from "../ui/card"
-import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel"
-import RealEstateCard from "./components/RealEstateCard"
+"use client"
 
-const items = [
-  {
-    id: 1,
-    title: "Imóvel 1",
-  },
-  {
-    id: 2,
-    title: "Imóvel 2",
-  },
-  {
-    id: 3,
-    title: "Imóvel 3",
-  },
-]
+import Autoplay from "embla-carousel-autoplay"
+import { Carousel, CarouselContent } from "../ui/carousel"
+import SubTitle from "../SubTitle"
 
-const CarouselRealEstate = () => {
+const CarouselRealEstate = ({ children }) => {
   return (
-    <section className="boxed p-4">
-      <Carousel className="w-full">
-        <CarouselContent>
-          {items.map((item) => (
-            <RealEstateCard key={item.id} item={item} />
-          ))}
-        </CarouselContent>
+    <section className="boxed my-4 p-4">
+      <SubTitle title="Imóveis em Destaque" className="mb-4" />
+      <Carousel
+        className="w-full"
+        opts={{
+          align: "start",
+          loop: true,
+        }}
+        plugins={[
+          Autoplay({
+            delay: 2000,
+            stopOnInteraction: true,
+            stopOnMouseEnter: true,
+            stopOnFocusIn: true,
+          }),
+        ]}
+      >
+        <CarouselContent>{children}</CarouselContent>
       </Carousel>
     </section>
   )
