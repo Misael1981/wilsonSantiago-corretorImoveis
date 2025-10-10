@@ -1,13 +1,31 @@
 "use client"
 
 import { useState } from "react"
-import { Play, Eye, Calendar, MapPin, Home, Bed, Bath, Car } from "lucide-react"
 import SubTitle from "../SubTitle"
 import { Button } from "../ui/button"
 import VideoCard from "./components/VideoCard"
 
 const VideoHighlights = ({ highlights = [] }) => {
   const [activeVideo, setActiveVideo] = useState(null)
+
+  // Funções utilitárias
+  const formatViews = (views) => {
+    if (views >= 1000000) {
+      return `${(views / 1000000).toFixed(1)}M`
+    } else if (views >= 1000) {
+      return `${(views / 1000).toFixed(1)}K`
+    }
+    return views.toString()
+  }
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    })
+  }
 
   // Dados de exemplo para demonstração
   const defaultHighlights = [
@@ -53,21 +71,6 @@ const VideoHighlights = ({ highlights = [] }) => {
 
   const highlightsData = highlights.length > 0 ? highlights : defaultHighlights
 
-  const formatViews = (views) => {
-    if (views >= 1000) {
-      return `${(views / 1000).toFixed(1)}k`
-    }
-    return views.toString()
-  }
-
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString("pt-BR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    })
-  }
-
   return (
     <section className="boxed mt-8 mb-4 p-4">
       <SubTitle title="Novidades & Lançamentos" />
@@ -77,7 +80,10 @@ const VideoHighlights = ({ highlights = [] }) => {
         {/* Mobile Carousel */}
         <div className="mt-8 flex gap-4 overflow-auto lg:hidden [&::-webkit-scrollbar]:hidden">
           {highlightsData.map((highlight) => (
-            <div className="w-[500px] max-w-[100%] flex-shrink-0">
+            <div
+              key={highlight.id}
+              className="w-[500px] max-w-[100%] flex-shrink-0"
+            >
               <VideoCard
                 key={highlight.id}
                 highlight={highlight}
