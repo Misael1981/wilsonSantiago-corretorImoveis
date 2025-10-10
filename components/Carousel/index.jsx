@@ -4,10 +4,16 @@ import Autoplay from "embla-carousel-autoplay"
 import { Carousel, CarouselContent } from "../ui/carousel"
 import SubTitle from "../SubTitle"
 
-const CarouselRealEstate = ({ children }) => {
+const CarouselGlobal = ({
+  children,
+  title,
+  autoplay = true,
+  delay = 2000,
+  className = "",
+}) => {
   return (
-    <section className="boxed my-4 p-4">
-      <SubTitle title="Imóveis em Destaque" className="mb-4" />
+    <section className={`boxed my-4 p-4 ${className}`}>
+      <SubTitle title={title} className="mb-4" />
       <Carousel
         className="w-full"
         opts={{
@@ -16,7 +22,7 @@ const CarouselRealEstate = ({ children }) => {
         }}
         plugins={[
           Autoplay({
-            delay: 2000,
+            delay,
             stopOnInteraction: true,
             stopOnMouseEnter: true,
             stopOnFocusIn: true,
@@ -29,4 +35,4 @@ const CarouselRealEstate = ({ children }) => {
   )
 }
 
-export default CarouselRealEstate
+export default CarouselGlobal

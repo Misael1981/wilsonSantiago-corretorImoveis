@@ -1,15 +1,14 @@
-import About from "@/components/About"
 import AdvertiseRealEstate from "@/components/AdvertiseRealEstate"
 import BannerContactUs from "@/components/BannerContactUs"
-import CarouselRealEstate from "@/components/CarouselRealEstate"
 import Footer from "@/components/Footer"
 import Header from "@/components/Header"
 import PropertyCategory from "@/components/PropertyCategory"
 import WelcomeSection from "@/components/WelcomeSection"
 import { PrismaClient } from "@/app/generated/prisma"
-import RealEstateCard from "@/components/CarouselRealEstate/components/RealEstateCard"
+import RealEstateCard from "@/components/RealEstateCard"
 import LinksBlogs from "@/components/LinksBlogs"
 import CustomersServed from "@/components/CustomersServed"
+import CarouselGlobal from "@/components/Carousel"
 
 const prisma = new PrismaClient()
 
@@ -116,6 +115,27 @@ async function getHomePageData() {
       }),
     ])
 
+    // Clientes satisfeitos
+    const customersData = await prisma.customer.findMany({
+      where: {
+        isActive: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: 6,
+      select: {
+        id: true,
+        name: true,
+        testimonial: true,
+        photo: true,
+        rating: true,
+        occupation: true,
+        location: true,
+        createdAt: true,
+      },
+    })
+
     return {
       properties,
       featuredProperties,
@@ -125,6 +145,7 @@ async function getHomePageData() {
         return acc
       }, {}),
       articles,
+      customersData,
     }
   } catch (error) {
     console.error("Erro ao buscar dados da home:", error)
@@ -134,6 +155,7 @@ async function getHomePageData() {
       propertyTypes: [],
       siteConfig: {},
       articles: [],
+      customersData: [],
     }
   }
 }
@@ -145,6 +167,7 @@ export default async function Home() {
     propertyTypes,
     siteConfig,
     articles,
+    customersData,
   } = await getHomePageData()
 
   return (
@@ -153,14 +176,14 @@ export default async function Home() {
       <WelcomeSection />
       <PropertyCategory />
       <BannerContactUs />
-      <CarouselRealEstate>
+      <CarouselGlobal title="Imóveis em Destaque">
         {properties.map((property) => (
           <RealEstateCard key={property.id} property={property} />
         ))}
-      </CarouselRealEstate>
+      </CarouselGlobal>
       <AdvertiseRealEstate />
       <LinksBlogs articles={articles} />
-      <CustomersServed />
+      <CustomersServed customersData={customersData} />
       <Footer />
     </>
   )
