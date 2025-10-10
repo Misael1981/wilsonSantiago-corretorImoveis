@@ -9,6 +9,7 @@ import RealEstateCard from "@/components/RealEstateCard"
 import LinksBlogs from "@/components/LinksBlogs"
 import CustomersServed from "@/components/CustomersServed"
 import CarouselGlobal from "@/components/Carousel"
+import VideoHighlights from "@/components/VideoHighlights"
 
 const prisma = new PrismaClient()
 
@@ -174,6 +175,7 @@ export default async function Home() {
     <>
       <Header />
       <WelcomeSection />
+      <VideoHighlights />
       <PropertyCategory />
       <BannerContactUs />
       <CarouselGlobal title="Imóveis em Destaque">
