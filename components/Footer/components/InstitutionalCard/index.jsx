@@ -7,13 +7,13 @@ const links = [
     icon: Shield,
     title: "Política de Privacidade",
     description: "Saiba como utilizamos seus dados",
-    href: "/",
+    href: "/politica-de-privacidade",
   },
   {
     icon: FileText,
     title: "Cadastre seu Imóvel",
     description: "Cadastre seu imóvel no portal pioneira da região",
-    href: "/",
+    href: "/cadastrar-imovel",
   },
   {
     icon: Bookmark,
