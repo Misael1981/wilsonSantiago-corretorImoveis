@@ -1,4 +1,8 @@
 import { Button } from "@/components/ui/button"
+import {
+  NavigationMenu,
+  NavigationMenuList,
+} from "@/components/ui/navigation-menu"
 
 const navItems = [
   {
@@ -18,11 +22,14 @@ const navItems = [
 const NavMenu = () => {
   return (
     <nav>
-      <ul>
+      <NavigationMenu>
+        <NavigationMenuList></NavigationMenuList>
+      </NavigationMenu>
+      <ul className="lg:flex lg:items-center lg:gap-4">
         {navItems.map((item) => (
           <li
             key={item.label}
-            className="hover:border-b-wilson-golden border-b-wilson-blue-light mb-2 border-b pb-2"
+            className="border-b-wilson-blue-light mb-2 border-b pb-2 lg:m-0 lg:border-b-0 lg:pb-0"
           >
             <Button
               variant="link"

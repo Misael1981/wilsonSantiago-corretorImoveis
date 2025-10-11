@@ -7,7 +7,7 @@ const ButtonMenuTrigger = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost">
+        <Button variant="ghost" className="lg:hidden">
           <MenuIcon size={24} className="size-8" />
         </Button>
       </SheetTrigger>
