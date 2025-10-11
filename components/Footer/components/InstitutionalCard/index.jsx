@@ -1,6 +1,10 @@
+"use client"
+
+import DialogOrderYourProperty from "@/components/DialogOrderYourProperty"
 import { Bookmark, FileText, PlusCircle, Shield } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { useState } from "react"
 
 const links = [
   {
@@ -25,6 +29,7 @@ const links = [
 ]
 
 const InstitutionalCard = () => {
+  const [open, setOpen] = useState(false)
   return (
     <div className="w-full space-y-2 lg:max-w-[400px]">
       <Image
@@ -41,25 +46,46 @@ const InstitutionalCard = () => {
       </h3>
       <ul>
         <li>
-          {links.map(({ icon: IconComponent, title, description, href }) => (
-            <Link
-              key={title}
-              href={href}
-              className="group flex items-center gap-3 rounded-lg p-2 transition-all hover:bg-gray-50 dark:hover:bg-gray-800"
-            >
-              <div className="bg-wilson-golden text-wilson-blue flex h-8 w-8 items-center justify-center rounded-full group-hover:bg-amber-300">
-                <IconComponent className="h-5 w-5" />
-              </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium group-hover:text-amber-300 dark:text-gray-100">
-                  {title}
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  {description}
-                </p>
-              </div>
-            </Link>
-          ))}
+          {links.map(({ icon: IconComponent, title, description, href }) =>
+            title === "Encomende seu Imóvel" ? (
+              <DialogOrderYourProperty
+                key={title}
+                trigger={
+                  <div className="group flex items-center gap-3 rounded-lg p-2 transition-all hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
+                    <div className="bg-wilson-golden text-wilson-blue flex h-8 w-8 items-center justify-center rounded-full group-hover:bg-amber-300">
+                      <IconComponent className="h-5 w-5" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium group-hover:text-amber-300 dark:text-gray-100">
+                        {title}
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        {description}
+                      </p>
+                    </div>
+                  </div>
+                }
+              />
+            ) : (
+              <Link
+                key={title}
+                href={href}
+                className="group flex items-center gap-3 rounded-lg p-2 transition-all hover:bg-gray-50 dark:hover:bg-gray-800"
+              >
+                <div className="bg-wilson-golden text-wilson-blue flex h-8 w-8 items-center justify-center rounded-full group-hover:bg-amber-300">
+                  <IconComponent className="h-5 w-5" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium group-hover:text-amber-300 dark:text-gray-100">
+                    {title}
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {description}
+                  </p>
+                </div>
+              </Link>
+            )
+          )}
         </li>
       </ul>
     </div>
