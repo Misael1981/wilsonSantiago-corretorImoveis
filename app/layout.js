@@ -21,10 +21,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt-BR">
-      <body
-        className={`${outfit.variable} ${playfairDisplay.variable} antialiased`}
-      >
+    <html
+      lang="pt-BR"
+      className={`${outfit.variable} ${playfairDisplay.variable}`}
+    >
+      <body className="antialiased">
         {children}
         <Toaster />
       </body>
