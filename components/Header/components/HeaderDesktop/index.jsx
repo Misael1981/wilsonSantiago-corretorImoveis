@@ -1,5 +1,6 @@
 import Image from "next/image"
 import NavMenu from "../NavMenu"
+import ButtonLogin from "../ButtonLogin"
 
 const HeaderDesktop = () => {
   return (
@@ -14,6 +15,7 @@ const HeaderDesktop = () => {
           />
         </div>
         <NavMenu />
+        <ButtonLogin />
       </div>
     </div>
   )

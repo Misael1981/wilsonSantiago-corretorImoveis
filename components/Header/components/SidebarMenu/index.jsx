@@ -1,7 +1,7 @@
 import { SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import Image from "next/image"
 import ButtonLogin from "../ButtonLogin"
-import NavMenu from "../NavMenu"
+import NavMenuMobile from "../NavMenuMobile"
 
 const SidebarMenu = () => {
   return (
@@ -16,7 +16,10 @@ const SidebarMenu = () => {
         />
       </SheetHeader>
       <div className="space-y-4">
-        <ButtonLogin />
+        <div className="flex flex-col items-end justify-end">
+          <ButtonLogin />
+        </div>
+        <NavMenuMobile />
       </div>
     </SheetContent>
   )

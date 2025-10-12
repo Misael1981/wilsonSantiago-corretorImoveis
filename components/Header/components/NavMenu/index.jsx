@@ -1,7 +1,5 @@
 "use client"
 
-import DialogOrderYourProperty from "@/components/DialogOrderYourProperty"
-import { Button } from "@/components/ui/button"
 import {
   NavigationMenu,
   NavigationMenuContent,
