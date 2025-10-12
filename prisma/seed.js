@@ -1,5 +1,5 @@
-const { PrismaClient } = require("../app/generated/prisma")
 const bcrypt = require("bcrypt")
+const { PrismaClient } = require("@prisma/client")
 const prisma = new PrismaClient()
 
 async function seedDataBase() {
@@ -351,7 +351,7 @@ async function seedDataBase() {
       const created = await prisma.property.upsert({
         where: { slug: property.slug },
         update: {},
-        create: property
+        create: property,
       })
       createdProperties.push(created)
     }

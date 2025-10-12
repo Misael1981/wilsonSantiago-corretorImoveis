@@ -4,14 +4,12 @@ import Footer from "@/components/Footer"
 import Header from "@/components/Header"
 import PropertyCategory from "@/components/PropertyCategory"
 import WelcomeSection from "@/components/WelcomeSection"
-import { PrismaClient } from "@prisma/client"
 import RealEstateCard from "@/components/RealEstateCard"
 import LinksBlogs from "@/components/LinksBlogs"
 import CustomersServed from "@/components/CustomersServed"
 import CarouselGlobal from "@/components/Carousel"
 import VideoHighlights from "@/components/VideoHighlights"
-
-const prisma = new PrismaClient()
+import prisma from "@/lib/prisma"
 
 // Função para buscar todos os dados necessários da página
 async function getHomePageData() {
