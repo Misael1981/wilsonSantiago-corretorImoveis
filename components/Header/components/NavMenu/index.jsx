@@ -34,7 +34,7 @@ const NavMenu = () => {
     <NavigationMenu viewport={false}>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="text-wilson-golden bg-transparent">
+          <NavigationMenuTrigger className="text-wilson-golden bg-transparent text-lg">
             Home
           </NavigationMenuTrigger>
           <NavigationMenuContent className="bg-wilson-blue border-wilson-blue z-50 border">
@@ -93,16 +93,14 @@ const NavMenu = () => {
 
         {navItems.map((item) => (
           <NavigationMenuItem key={item.id}>
-            <NavigationMenuLink asChild>
-              <Link className="text-wilson-golden" href={item.href}>
-                {item.label}
-              </Link>
+            <NavigationMenuLink asChild className="text-wilson-golden text-lg">
+              <Link href={item.href}>{item.label}</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
         ))}
 
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="text-wilson-golden bg-transparent">
+          <NavigationMenuTrigger className="text-wilson-golden bg-transparent text-lg">
             Institucional
           </NavigationMenuTrigger>
           <NavigationMenuContent className="border-wilson-blue z-50 border">

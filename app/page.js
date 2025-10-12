@@ -10,6 +10,7 @@ import CustomersServed from "@/components/CustomersServed"
 import CarouselGlobal from "@/components/Carousel"
 import VideoHighlights from "@/components/VideoHighlights"
 import prisma from "@/lib/prisma"
+import WelcomeUser from "@/components/WelcomeUser"
 
 // Função para buscar todos os dados necessários da página
 async function getHomePageData() {
@@ -173,6 +174,7 @@ export default async function Home() {
     <>
       <Header />
       <WelcomeSection />
+      <WelcomeUser />
       <VideoHighlights />
       <PropertyCategory />
       <BannerContactUs />
