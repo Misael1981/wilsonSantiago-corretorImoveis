@@ -3,7 +3,7 @@ import { MdLocationOn } from "react-icons/md"
 
 const AdressCard = () => {
   return (
-    <div className="w-full space-y-2 lg:max-w-[400px]">
+    <div className="w-full space-y-2 lg:max-w-[400px]" id="adress">
       <h3 className="text-wilson-golden mb-4 text-lg font-semibold">
         Onde estamos
       </h3>

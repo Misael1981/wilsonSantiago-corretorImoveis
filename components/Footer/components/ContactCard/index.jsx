@@ -32,7 +32,7 @@ const ContactCard = () => {
     toast.success("Copiado para a área de transferência")
   }
   return (
-    <div className="w-full space-y-2 lg:max-w-[400px]">
+    <div className="w-full space-y-2 lg:max-w-[400px]" id="contact">
       <h3 className="text-wilson-golden mb-4 text-lg font-semibold">Contato</h3>
       <ul className="space-y-2">
         {linksContact.map((item) => (

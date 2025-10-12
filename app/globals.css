@@ -44,9 +44,11 @@
 :root {
   /* Wilson Corretor Brand Colors */
   --wilson-blue: #0d2036;
+  --wilson-blue-medio: #021f3f;
   --wilson-blue-light: #426792;
   --wilson-golden: #d6b689;
   --wilson-golden-dark: #b8a076;
+  --cor-aleatoria: #1a406b;
 
   /* Radius */
   --radius: 0.625rem;
@@ -185,6 +187,10 @@
     background-color: var(--wilson-blue);
   }
 
+  .bg-wilson-blue-medio {
+    background-color: var(--wilson-blue-medio);
+  }
+
   .bg-wilson-golden {
     background-color: var(--wilson-golden);
   }
@@ -227,9 +233,10 @@
   }
 
   .shadow-custom-deep {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, 
-                rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, 
-                rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    box-shadow:
+      rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+      rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+      rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   }
 
   .boxed {

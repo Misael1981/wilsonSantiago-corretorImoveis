@@ -100,98 +100,98 @@ const DialogOrderYourProperty = ({ trigger }) => {
             </div>
           </div>
 
-        {/* Preferências do imóvel */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div className="grid gap-2">
-            <Label htmlFor="tipo">Tipo de Imóvel</Label>
-            <Select
-              value={form.tipo}
-              onValueChange={(v) => handleChange("tipo", v)}
-            >
-              <SelectTrigger id="tipo">
-                <SelectValue placeholder="Selecione" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="casa">Casa</SelectItem>
-                <SelectItem value="apartamento">Apartamento</SelectItem>
-                <SelectItem value="chacara">Chácara</SelectItem>
-                <SelectItem value="terreno">Terreno</SelectItem>
-                <SelectItem value="comercial">Comercial</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="cidade">Cidade</Label>
-            <Input
-              id="cidade"
-              name="cidade"
-              value={form.cidade}
-              onChange={(e) => handleChange("cidade", e.target.value)}
-              placeholder="Ex: Pouso Alegre"
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div className="grid gap-2">
-            <Label htmlFor="bairro">Bairro</Label>
-            <Input
-              id="bairro"
-              name="bairro"
-              value={form.bairro}
-              onChange={(e) => handleChange("bairro", e.target.value)}
-              placeholder="Ex: Centro"
-            />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
+          {/* Preferências do imóvel */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="grid gap-2">
-              <Label htmlFor="precoMin">Preço mínimo (R$)</Label>
-              <Input
-                id="precoMin"
-                name="precoMin"
-                type="number"
-                value={form.precoMin}
-                onChange={(e) => handleChange("precoMin", e.target.value)}
-                placeholder="Ex: 200000"
-              />
+              <Label htmlFor="tipo">Tipo de Imóvel</Label>
+              <Select
+                value={form.tipo}
+                onValueChange={(v) => handleChange("tipo", v)}
+              >
+                <SelectTrigger id="tipo">
+                  <SelectValue placeholder="Selecione" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="casa">Casa</SelectItem>
+                  <SelectItem value="apartamento">Apartamento</SelectItem>
+                  <SelectItem value="chacara">Chácara</SelectItem>
+                  <SelectItem value="terreno">Terreno</SelectItem>
+                  <SelectItem value="comercial">Comercial</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="precoMax">Preço máximo (R$)</Label>
+              <Label htmlFor="cidade">Cidade</Label>
               <Input
-                id="precoMax"
-                name="precoMax"
-                type="number"
-                value={form.precoMax}
-                onChange={(e) => handleChange("precoMax", e.target.value)}
-                placeholder="Ex: 500000"
+                id="cidade"
+                name="cidade"
+                value={form.cidade}
+                onChange={(e) => handleChange("cidade", e.target.value)}
+                placeholder="Ex: Pouso Alegre"
               />
             </div>
           </div>
-        </div>
 
-        {/* Observações / descrição */}
-        <div className="grid gap-2">
-          <Label htmlFor="descricao">Descrição do imóvel desejado</Label>
-          <Textarea
-            id="descricao"
-            name="descricao"
-            value={form.descricao}
-            onChange={(e) => handleChange("descricao", e.target.value)}
-            placeholder="Ex: número de quartos, vagas, proximidade com escolas, bairro preferido, etc."
-            className="min-h-[120px]"
-          />
-        </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid gap-2">
+              <Label htmlFor="bairro">Bairro</Label>
+              <Input
+                id="bairro"
+                name="bairro"
+                value={form.bairro}
+                onChange={(e) => handleChange("bairro", e.target.value)}
+                placeholder="Ex: Centro"
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="precoMin">Preço mínimo (R$)</Label>
+                <Input
+                  id="precoMin"
+                  name="precoMin"
+                  type="number"
+                  value={form.precoMin}
+                  onChange={(e) => handleChange("precoMin", e.target.value)}
+                  placeholder="Ex: 200000"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="precoMax">Preço máximo (R$)</Label>
+                <Input
+                  id="precoMax"
+                  name="precoMax"
+                  type="number"
+                  value={form.precoMax}
+                  onChange={(e) => handleChange("precoMax", e.target.value)}
+                  placeholder="Ex: 500000"
+                />
+              </div>
+            </div>
+          </div>
 
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button type="button" variant="outline">
-              Cancelar
-            </Button>
-          </DialogClose>
-          <Button type="submit">Enviar</Button>
-        </DialogFooter>
-      </form>
-    </DialogContent>
+          {/* Observações / descrição */}
+          <div className="grid gap-2">
+            <Label htmlFor="descricao">Descrição do imóvel desejado</Label>
+            <Textarea
+              id="descricao"
+              name="descricao"
+              value={form.descricao}
+              onChange={(e) => handleChange("descricao", e.target.value)}
+              placeholder="Ex: número de quartos, vagas, proximidade com escolas, bairro preferido, etc."
+              className="min-h-[120px]"
+            />
+          </div>
+
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button type="button" variant="outline">
+                Cancelar
+              </Button>
+            </DialogClose>
+            <Button type="submit">Enviar</Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
     </Dialog>
   )
 }

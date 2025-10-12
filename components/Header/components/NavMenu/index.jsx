@@ -1,46 +1,143 @@
+"use client"
+
+import DialogOrderYourProperty from "@/components/DialogOrderYourProperty"
 import { Button } from "@/components/ui/button"
 import {
   NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
   NavigationMenuList,
+  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
+import Link from "next/link"
 
 const navItems = [
   {
-    label: "Home",
-    href: "/",
-  },
-  {
+    id: "imoveis",
     label: "Imóveis",
     href: "/imoveis",
   },
   {
+    id: "blog",
     label: "Blog",
     href: "/blog",
   },
+  {
+    id: "sobre",
+    label: "Sobre",
+    href: "/sobre",
+  },
 ]
 
+// NavMenu component
 const NavMenu = () => {
   return (
-    <nav>
-      <NavigationMenu>
-        <NavigationMenuList></NavigationMenuList>
-      </NavigationMenu>
-      <ul className="lg:flex lg:items-center lg:gap-4">
+    <NavigationMenu viewport={false}>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger className="text-wilson-golden bg-transparent">
+            Home
+          </NavigationMenuTrigger>
+          <NavigationMenuContent className="bg-wilson-blue border-wilson-blue z-50 border">
+            <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+              <li className="row-span-3">
+                <NavigationMenuLink asChild>
+                  <a
+                    className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-gradient-to-b p-6 no-underline outline-none select-none focus:shadow-md"
+                    href="/"
+                  >
+                    <div className="text-wilson-blue hover:text-bold mt-4 mb-2 text-lg font-medium">
+                      Home Page
+                    </div>
+                    <p className="text-muted-foreground text-wilson-blue text-sm leading-tight">
+                      Acesso a página principal
+                    </p>
+                  </a>
+                </NavigationMenuLink>
+              </li>
+              <li>
+                <NavigationMenuLink asChild>
+                  <a
+                    href="#highlights"
+                    title="Novidades e Lançamentos"
+                    className="text-wilson-golden"
+                  >
+                    Novidades e Lançamentos
+                  </a>
+                </NavigationMenuLink>
+              </li>
+              <li>
+                <NavigationMenuLink asChild>
+                  <a
+                    href="#contact"
+                    title="Contato"
+                    className="text-wilson-golden"
+                  >
+                    Contato
+                  </a>
+                </NavigationMenuLink>
+              </li>
+              <li>
+                <NavigationMenuLink asChild>
+                  <a
+                    href="#adress"
+                    title="Localização"
+                    className="text-wilson-golden"
+                  >
+                    Localização
+                  </a>
+                </NavigationMenuLink>
+              </li>
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+
         {navItems.map((item) => (
-          <li
-            key={item.label}
-            className="border-b-wilson-blue-light mb-2 border-b pb-2 lg:m-0 lg:border-b-0 lg:pb-0"
-          >
-            <Button
-              variant="link"
-              className="text-wilson-golden hover:text-wilson-golden/80 text-lg font-semibold transition-colors duration-300"
-            >
-              {item.label}
-            </Button>
-          </li>
+          <NavigationMenuItem key={item.id}>
+            <NavigationMenuLink asChild>
+              <Link className="text-wilson-golden" href={item.href}>
+                {item.label}
+              </Link>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
         ))}
-      </ul>
-    </nav>
+
+        <NavigationMenuItem>
+          <NavigationMenuTrigger className="text-wilson-golden bg-transparent">
+            Institucional
+          </NavigationMenuTrigger>
+          <NavigationMenuContent className="border-wilson-blue z-50 border">
+            <ul className="grid w-[200px] gap-4">
+              <li>
+                <NavigationMenuLink asChild>
+                  <Link href="/cadastrar-imovel" className="text-wilson-golden">
+                    Encomendar seu Imóvel
+                  </Link>
+                </NavigationMenuLink>
+              </li>
+              <li>
+                <NavigationMenuLink asChild>
+                  <Link href="/cadastrar-imovel" className="text-wilson-golden">
+                    Cadastrar seu Imóvel
+                  </Link>
+                </NavigationMenuLink>
+              </li>
+              <li>
+                <NavigationMenuLink asChild>
+                  <Link
+                    href="/politica-de-privacidade"
+                    className="text-wilson-golden"
+                  >
+                    Política de Privacidade
+                  </Link>
+                </NavigationMenuLink>
+              </li>
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
   )
 }
 

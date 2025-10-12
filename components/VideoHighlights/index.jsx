@@ -72,7 +72,7 @@ const VideoHighlights = ({ highlights = [] }) => {
   const highlightsData = highlights.length > 0 ? highlights : defaultHighlights
 
   return (
-    <section className="boxed mt-8 mb-4 p-4">
+    <section className="boxed mt-8 mb-4 p-4" id="highlights">
       <SubTitle title="Novidades & Lançamentos" />
 
       {/* Desktop: Grid 2 colunas | Mobile: Carrossel horizontal */}

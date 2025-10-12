@@ -17,7 +17,6 @@ const SidebarMenu = () => {
       </SheetHeader>
       <div className="space-y-4">
         <ButtonLogin />
-        <NavMenu />
       </div>
     </SheetContent>
   )
