@@ -20,7 +20,7 @@ const ImoveisBreadcrumb = () => {
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href="/imoveis">Imóveis</Link>
+            <Link href="/imoveis">Imóveis à venda</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
       </BreadcrumbList>

@@ -15,6 +15,7 @@ import { Sidebar, SidebarContent, SidebarHeader } from "@/components/ui/sidebar"
 import { AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { useState } from "react"
+import { useRouter, usePathname } from "next/navigation"
 
 const AppSidebar = () => {
   const [isOpen, setIsOpen] = useState(true)
@@ -48,10 +49,25 @@ const AppSidebar = () => {
       area: "",
       status: "",
     })
+    if (typeof window !== "undefined") {
+      window.location.href = "/imoveis"
+    }
   }
 
+  // Removemos o handleApply baseado em useRouter e usamos formulário GET
+  const router = useRouter()
+  const pathname = usePathname()
+
   const handleApply = () => {
-    console.log("Filtros aplicados:", filters)
+    // Monta a querystring com os filtros preenchidos
+    const params = new URLSearchParams()
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== "" && value != null) {
+        params.set(key, String(value))
+      }
+    })
+
+    router.push(`${pathname}?${params.toString()}`, { scroll: false })
     setIsOpen(false)
   }
 
@@ -70,10 +86,15 @@ const AppSidebar = () => {
           <AnimatePresence>
             {isOpen && (
               <AnimatedContent className="">
-                <h2 className="mb-4 text-center text-lg font-semibold">
-                  Filtros
-                </h2>
-                <div className="flex flex-col justify-between gap-7">
+                <form
+                  action="/imoveis"
+                  method="GET"
+                  className="flex flex-col justify-between gap-2"
+                >
+                  <h2 className="mb-4 text-center text-lg font-semibold">
+                    Filtros
+                  </h2>
+
                   {/* Tipo */}
                   <div className="space-y-1">
                     <Label>Tipo do imóvel</Label>
@@ -92,20 +113,29 @@ const AppSidebar = () => {
                         <SelectItem value="comercial">Comercial</SelectItem>
                       </SelectContent>
                     </Select>
+                    {/* Hidden input para enviar o valor do Select no GET */}
+                    <input
+                      type="hidden"
+                      name="type"
+                      value={filters.type ?? ""}
+                    />
                   </div>
 
                   {/* Localização */}
                   <div className="space-y-1">
                     <Label>Cidade</Label>
                     <Input
+                      name="city"
                       value={filters.city}
                       onChange={(e) => handleChange("city", e.target.value)}
                       placeholder="Ex: São Paulo"
                     />
                   </div>
+
                   <div className="space-y-1">
                     <Label>Bairro</Label>
                     <Input
+                      name="neighborhood"
                       value={filters.neighborhood}
                       onChange={(e) =>
                         handleChange("neighborhood", e.target.value)
@@ -120,6 +150,7 @@ const AppSidebar = () => {
                       <Label>Preço mín.</Label>
                       <Input
                         type="number"
+                        name="priceMin"
                         value={filters.priceMin}
                         onChange={(e) =>
                           handleChange("priceMin", e.target.value)
@@ -130,6 +161,7 @@ const AppSidebar = () => {
                       <Label>Preço máx.</Label>
                       <Input
                         type="number"
+                        name="priceMax"
                         value={filters.priceMax}
                         onChange={(e) =>
                           handleChange("priceMax", e.target.value)
@@ -144,6 +176,7 @@ const AppSidebar = () => {
                       <Label>Quartos</Label>
                       <Input
                         type="number"
+                        name="bedrooms"
                         value={filters.bedrooms}
                         onChange={(e) =>
                           handleChange("bedrooms", e.target.value)
@@ -154,6 +187,7 @@ const AppSidebar = () => {
                       <Label>Banheiros</Label>
                       <Input
                         type="number"
+                        name="bathrooms"
                         value={filters.bathrooms}
                         onChange={(e) =>
                           handleChange("bathrooms", e.target.value)
@@ -164,6 +198,7 @@ const AppSidebar = () => {
                       <Label>Vagas</Label>
                       <Input
                         type="number"
+                        name="parking"
                         value={filters.parking}
                         onChange={(e) =>
                           handleChange("parking", e.target.value)
@@ -177,6 +212,7 @@ const AppSidebar = () => {
                     <Label>Área útil (m²)</Label>
                     <Input
                       type="number"
+                      name="area"
                       value={filters.area}
                       onChange={(e) => handleChange("area", e.target.value)}
                     />
@@ -185,12 +221,13 @@ const AppSidebar = () => {
                   {/* Botões */}
                   <div className="flex gap-2 pt-4">
                     <Button
-                      onClick={handleApply}
+                      type="submit"
                       className="bg-gradient-wilson-blue flex-1"
                     >
                       Aplicar
                     </Button>
                     <Button
+                      type="button"
                       variant="outline"
                       onClick={handleClear}
                       className="flex-1 bg-red-700 text-gray-300 hover:bg-red-800"
@@ -198,7 +235,7 @@ const AppSidebar = () => {
                       Limpar
                     </Button>
                   </div>
-                </div>
+                </form>
               </AnimatedContent>
             )}
           </AnimatePresence>

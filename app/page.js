@@ -35,6 +35,7 @@ async function getHomePageData() {
         select: {
           id: true,
           title: true,
+          description: true,
           price: true,
           area: true,
           bedrooms: true,
@@ -62,6 +63,7 @@ async function getHomePageData() {
         select: {
           id: true,
           title: true,
+          description: true,
           price: true,
           area: true,
           bedrooms: true,
