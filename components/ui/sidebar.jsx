@@ -304,6 +304,7 @@ function SidebarInput({
 
 function SidebarHeader({
   className,
+  children,
   ...props
 }) {
   return (
@@ -311,7 +312,10 @@ function SidebarHeader({
       data-slot="sidebar-header"
       data-sidebar="header"
       className={cn("flex flex-col gap-2 p-2", className)}
-      {...props} />
+      {...props}
+    >
+      {children}
+    </div>
   );
 }
 
@@ -343,6 +347,7 @@ function SidebarSeparator({
 
 function SidebarContent({
   className,
+  children,
   ...props
 }) {
   return (
@@ -353,7 +358,10 @@ function SidebarContent({
         "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
         className
       )}
-      {...props} />
+      {...props}
+    >
+      {children}
+    </div>
   );
 }
 

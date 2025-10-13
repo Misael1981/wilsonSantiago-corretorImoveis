@@ -1,7 +1,13 @@
 import { Outfit, Playfair_Display } from "next/font/google"
 import "../globals.css"
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
 import AppSidebar from "./components/AppSidebar"
+import ImoveisBreadcrumb from "./components/BreadcrumbPage"
+import HeaderImoveis from "./components/HeaderImoveis"
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -19,10 +25,10 @@ export default function ImoveisLayout({ children }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main>
-        <SidebarTrigger />
+      <SidebarInset className="min-h-svh w-full">
+        <HeaderImoveis />
         {children}
-      </main>
+      </SidebarInset>
     </SidebarProvider>
   )
 }

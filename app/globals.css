@@ -56,7 +56,7 @@
   --radius: 0.625rem;
 
   /* Background & Foreground */
-  --background: oklch(92% 0.002 106.42); /* Branco suave */
+  --background: oklch(96% 0.002 106.42); /* Branco suave */
   --foreground: oklch(15% 0.01 258.34); /* Azul escuro Wilson */
 
   /* Cards */
