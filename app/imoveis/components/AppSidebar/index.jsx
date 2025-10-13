@@ -11,7 +11,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Sidebar, SidebarContent, SidebarHeader } from "@/components/ui/sidebar"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+} from "@/components/ui/sidebar"
 import { AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { useState } from "react"
@@ -87,9 +92,10 @@ const AppSidebar = () => {
             {isOpen && (
               <AnimatedContent className="">
                 <form
+                  id="filtersForm"
                   action="/imoveis"
                   method="GET"
-                  className="flex flex-col justify-between gap-2"
+                  className="flex size-full flex-col justify-between gap-2"
                 >
                   <h2 className="mb-4 text-center text-lg font-semibold">
                     Filtros
@@ -217,29 +223,31 @@ const AppSidebar = () => {
                       onChange={(e) => handleChange("area", e.target.value)}
                     />
                   </div>
-
-                  {/* Botões */}
-                  <div className="flex gap-2 pt-4">
-                    <Button
-                      type="submit"
-                      className="bg-gradient-wilson-blue flex-1"
-                    >
-                      Aplicar
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={handleClear}
-                      className="flex-1 bg-red-700 text-gray-300 hover:bg-red-800"
-                    >
-                      Limpar
-                    </Button>
-                  </div>
                 </form>
               </AnimatedContent>
             )}
           </AnimatePresence>
         </SidebarContent>
+        <SidebarFooter>
+          {/* Botões */}
+          <div className="flex gap-2 pt-4">
+            <Button
+              type="submit"
+              form="filtersForm"
+              className="bg-gradient-wilson-blue flex-1"
+            >
+              Aplicar
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleClear}
+              className="flex-1 bg-red-700 text-gray-300 hover:bg-red-800"
+            >
+              Limpar
+            </Button>
+          </div>
+        </SidebarFooter>
       </div>
     </Sidebar>
   )

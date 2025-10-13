@@ -15,6 +15,9 @@ export default async function Imoveis({ searchParams }) {
     sala_comercial: "SALA_COMERCIAL",
   }
 
+  // Aguarda o searchParams antes de ler as propriedades (corrige o erro de sync dynamic APIs)
+  const sp = await searchParams
+
   const {
     type,
     city,
@@ -27,12 +30,14 @@ export default async function Imoveis({ searchParams }) {
     area,
     page = "1",
     pageSize = "12",
-  } = searchParams ?? {}
+    title,
+  } = sp ?? {}
 
   const where = {
     status: "ACTIVE",
     deletedAt: null,
     ...(type ? { type: typeMap[type] } : {}),
+    ...(title ? { title: { contains: title, mode: "insensitive" } } : {}),
     ...(city ? { city: { contains: city, mode: "insensitive" } } : {}),
     ...(neighborhood
       ? { neighborhood: { contains: neighborhood, mode: "insensitive" } }
@@ -41,7 +46,7 @@ export default async function Imoveis({ searchParams }) {
       ? {
           price: {
             ...(priceMin ? { gte: parseFloat(priceMin) } : {}),
-            ...(priceMax ? { lte: parseFloat(priceMax) } : {}),
+            ...(priceMax ? { lle: parseFloat(priceMax) } : {}),
           },
         }
       : {}),
