@@ -7,73 +7,61 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ===== USUÁRIOS =====
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  surname   String?
-  password  String // Campo adicionado para autenticação
-  phone     String?
-  avatar    String?
-  role      Role     @default(USER)
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relacionamentos
-  properties Property[]
+  id         String     @id @default(cuid())
+  email      String     @unique
+  name       String?
+  surname    String?
+  password   String
+  phone      String?
+  avatar     String?
+  role       Role       @default(USER)
+  isActive   Boolean    @default(true)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
   articles   Article[]
-  favorites  Favorite[]
   contacts   Contact[]
+  favorites  Favorite[]
+  properties Property[]
 
   @@map("users")
 }
 
-// ===== IMÓVEIS =====
 model Property {
-  id           String         @id @default(cuid())
-  title        String
-  description  String?
-  address      String
-  number       String?
-  complement   String?
-  neighborhood String
-  city         String
-  state        String
-  zipCode      String?
-  price        Float
-  area         Float?
-  bedrooms     Int
-  bathrooms    Int
-  garageSpaces Int     @default(0)
-  type         PropertyType
-  status       PropertyStatus @default(ACTIVE)
-  imageUrls    String[]
-  views        Int            @default(0)
-  featured     Boolean        @default(false)
-  deletedAt DateTime?
-
-  // SEO
-  slug            String? @unique
+  id              String            @id @default(cuid())
+  title           String
+  description     String?
+  address         String
+  number          String?
+  complement      String?
+  neighborhood    String
+  city            String
+  state           String
+  zipCode         String?
+  price           Float
+  area            Float?
+  bedrooms        Int
+  bathrooms       Int
+  garageSpaces    Int               @default(0)
+  type            PropertyType
+  status          PropertyStatus    @default(ACTIVE)
+  imageUrls       String[]
+  views           Int               @default(0)
+  featured        Boolean           @default(false)
+  deletedAt       DateTime?
+  slug            String?           @unique
   metaTitle       String?
   metaDescription String?
+  latitude        Float?
+  longitude       Float?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  createdById     String
+  history         PropertyHistory[]
+  contacts        Contact[]
+  favorites       Favorite[]
+  createdBy       User              @relation(fields: [createdById], references: [id])
 
-  // Coordenadas para mapas
-  latitude  Float?
-  longitude Float?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relacionamentos
-  createdBy   User              @relation(fields: [createdById], references: [id])
-  createdById String
-  favorites   Favorite[]
-  contacts    Contact[]
-  history     PropertyHistory[]
-
-  // Índices para performance
   @@index([type, status])
   @@index([city, neighborhood])
   @@index([price])
@@ -85,43 +73,35 @@ model Property {
 model PropertyHistory {
   id         String   @id @default(cuid())
   propertyId String
-  field      String   // Campo que mudou
-  oldValue   String?  // Valor anterior
-  newValue   String?  // Novo valor
-  changedBy  String   // ID do usuário
+  field      String
+  oldValue   String?
+  newValue   String?
+  changedBy  String
   changedAt  DateTime @default(now())
-  
-  property Property @relation(fields: [propertyId], references: [id])
+  property   Property @relation(fields: [propertyId], references: [id])
 }
 
-// ===== BLOG/ARTIGOS =====
 model Article {
-  id        String  @id @default(cuid())
-  title     String
-  content   String // Texto completo do artigo
-  excerpt   String? // Resumo para listagens
-  slug      String  @unique // URL amigável
-  imageUrl  String?
-  published Boolean @default(false)
-  featured  Boolean @default(false)
-  views     Int     @default(0)
-  readTime  Int? // Tempo estimado de leitura em minutos
-
-  // SEO
+  id              String       @id @default(cuid())
+  title           String
+  content         String
+  excerpt         String?
+  slug            String       @unique
+  imageUrl        String?
+  published       Boolean      @default(false)
+  featured        Boolean      @default(false)
+  views           Int          @default(0)
+  readTime        Int?
   metaTitle       String?
   metaDescription String?
-  keywords        String[] // Array de palavras-chave
+  keywords        String[]
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  publishedAt     DateTime?
+  authorId        String
+  tags            ArticleTag[]
+  author          User         @relation(fields: [authorId], references: [id])
 
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  publishedAt DateTime?
-
-  // Relacionamentos
-  author   User         @relation(fields: [authorId], references: [id])
-  authorId String
-  tags     ArticleTag[]
-
-  // Índices para performance e busca
   @@index([published, publishedAt])
   @@index([featured, publishedAt])
   @@index([slug])
@@ -130,28 +110,26 @@ model Article {
 }
 
 model Tag {
-  id          String  @id @default(cuid())
-  name        String  @unique
-  slug        String  @unique
+  id          String       @id @default(cuid())
+  name        String       @unique
+  slug        String       @unique
   description String?
-  color       String? // Cor hexadecimal para UI
-
-  articles ArticleTag[]
+  color       String?
+  articles    ArticleTag[]
 
   @@map("tags")
 }
 
 model ArticleTag {
-  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
   articleId String
-  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
   tagId     String
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
   @@id([articleId, tagId])
   @@map("article_tags")
 }
 
-// ===== DEPOIMENTOS DE CLIENTES =====
 model Customer {
   id          String   @id @default(cuid())
   name        String
@@ -160,8 +138,8 @@ model Customer {
   rating      Int      @default(5)
   isActive    Boolean  @default(true)
   order       Int      @default(0)
-  occupation  String? // Profissão do cliente
-  location    String? // Cidade do cliente
+  occupation  String?
+  location    String?
   date        DateTime @default(now())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -170,62 +148,50 @@ model Customer {
   @@map("customers")
 }
 
-// ===== FAVORITOS =====
 model Favorite {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-
-  // Relacionamentos
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
   userId     String
-  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
   propertyId String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, propertyId])
   @@map("favorites")
 }
 
-// ===== CONTATOS/LEADS =====
 model Contact {
-  id      String        @id @default(cuid())
-  name    String
-  email   String
-  phone   String?
-  message String
-  type    ContactType   @default(GENERAL)
-  status  ContactStatus @default(PENDING)
-  source  String? // De onde veio o lead (site, WhatsApp, etc.)
-
-  // Relacionamento opcional com imóvel
-  property   Property? @relation(fields: [propertyId], references: [id])
-  propertyId String?
-
-  // Relacionamento com usuário que vai atender
-  assignedTo   User?   @relation(fields: [assignedToId], references: [id])
+  id           String        @id @default(cuid())
+  name         String
+  email        String
+  phone        String?
+  message      String
+  type         ContactType   @default(GENERAL)
+  status       ContactStatus @default(PENDING)
+  source       String?
+  propertyId   String?
   assignedToId String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  assignedTo   User?         @relation(fields: [assignedToId], references: [id])
+  property     Property?     @relation(fields: [propertyId], references: [id])
 
   @@index([status, createdAt])
   @@index([type])
   @@map("contacts")
 }
 
-// ===== CONFIGURAÇÕES DO SITE =====
 model SiteConfig {
   id          String     @id @default(cuid())
-  key         String     @unique // Ex: "site_title", "contact_email", etc.
+  key         String     @unique
   value       String
   description String?
   type        ConfigType @default(TEXT)
-
-  updatedAt DateTime @updatedAt
+  updatedAt   DateTime   @updatedAt
 
   @@map("site_config")
 }
 
-// ===== ENUMS =====
 enum Role {
   USER
   ADMIN
