@@ -1,3 +1,4 @@
+// importações e configurações do módulo
 import prisma from "@/lib/prisma"
 import { notFound, redirect } from "next/navigation"
 import { Card, CardContent } from "@/components/ui/card"
@@ -5,21 +6,27 @@ import { BedDouble, CarFront, ChartArea, ShowerHead } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { FaWhatsapp } from "react-icons/fa"
 import GalleryImages from "./components/GalleryImages"
+import { formatBRL } from "@/lib/utils"
 
 export async function generateMetadata({ params }) {
   const p = await params
   const { slugOrId } = p
-  const property = await prisma.property.findFirst({
-    where: { OR: [{ id: slugOrId }, { slug: slugOrId }] },
-    select: { title: true, metaTitle: true, metaDescription: true },
-  })
-  if (!property) {
-    return { title: "Imóvel não encontrado" }
-  }
-  return {
-    title: property.metaTitle || property.title,
-    description:
-      property.metaDescription || `Detalhes do imóvel: ${property.title}`,
+  // Blindagem contra erro de conexão no deploy
+  try {
+    const property = await prisma.property.findFirst({
+      where: { OR: [{ id: slugOrId }, { slug: slugOrId }] },
+      select: { title: true, metaTitle: true, metaDescription: true },
+    })
+    if (!property) {
+      return { title: "Imóvel não encontrado" }
+    }
+    return {
+      title: property.metaTitle || property.title,
+      description:
+        property.metaDescription || `Detalhes do imóvel: ${property.title}`,
+    }
+  } catch (e) {
+    return { title: "Detalhes do Imóvel" }
   }
 }
 
@@ -47,19 +54,7 @@ export default async function PropertyDetails({ params }) {
     data: { views: { increment: 1 } },
   })
 
-  // Helper de formatação com fallback (determinístico)
-  const formatBRL = (n) => {
-    try {
-      // Evita decimais; usa agrupamento com locale fixo
-      return `R$ ${new Intl.NumberFormat("pt-BR", {
-        maximumFractionDigits: 0,
-      }).format(Math.round(n ?? 0))}`
-    } catch {
-      // Fallback manual caso o ambiente não tenha ICU completo
-      const v = Math.round(n ?? 0)
-      return `R$ ${v.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`
-    }
-  }
+  // Removido formatBRL local; usamos helper compartilhado
 
   return (
     <div className="boxed p-4">
@@ -136,3 +131,4 @@ export default async function PropertyDetails({ params }) {
     </div>
   )
 }
+export const dynamic = "force-dynamic"

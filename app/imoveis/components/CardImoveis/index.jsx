@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { BedDouble, CarFront, ChartArea, Heart, ShowerHead } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { formatBRL } from "@/lib/utils"
 
 const CardImoveis = ({ property }) => {
   return (
@@ -75,7 +76,7 @@ const CardImoveis = ({ property }) => {
 
                 <div className="flex w-full items-center justify-between">
                   <div className="text-xl font-bold text-green-600">
-                    R$ {property.price?.toLocaleString("pt-BR")}
+                    {formatBRL(property.price)}
                   </div>
                   <Button
                     size="icon"
