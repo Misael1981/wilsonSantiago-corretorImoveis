@@ -19,6 +19,7 @@ const CardImoveis = ({ property }) => {
                   alt={property.title}
                   className="rounded-md object-cover"
                   fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 500px, 300px"
                 />
               </div>
               <div className="flex flex-col items-start justify-between gap-4 lg:max-w-[65%]">

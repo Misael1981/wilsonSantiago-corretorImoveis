@@ -36,6 +36,7 @@ const BannerContactUs = () => {
             alt="banner-contact-us"
             fill
             className="rounded-b-md object-cover lg:rounded-r-md lg:rounded-bl-none"
+            sizes="(max-width: 1024px) 100vw, 400px"
           />
         </div>
       </div>
