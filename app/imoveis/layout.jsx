@@ -1,13 +1,11 @@
+export const dynamic = "force-dynamic"
+
 import { Outfit, Playfair_Display } from "next/font/google"
 import "../globals.css"
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar"
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import AppSidebar from "./components/AppSidebar"
-import ImoveisBreadcrumb from "./components/BreadcrumbPage"
 import HeaderImoveis from "./components/HeaderImoveis"
+import { Suspense } from "react"
 
 const outfit = Outfit({
   variable: "--font-outfit",
