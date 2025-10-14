@@ -1,7 +1,9 @@
+// CardImoveis (component)
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { BedDouble, CarFront, ChartArea, Heart, ShowerHead } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 const CardImoveis = ({ property }) => {
   return (
@@ -85,12 +87,14 @@ const CardImoveis = ({ property }) => {
                 </div>
 
                 <div className="w-full">
-                  <Button
-                    className="bg-gradient-wilson-blue text-wilson-golden w-full text-lg font-bold"
-                    variant="primary"
-                  >
-                    Ver Detalhes
-                  </Button>
+                  <Link href={`/imoveis/${property.slug || property.id}`}>
+                    <Button
+                      className="bg-gradient-wilson-blue text-wilson-golden w-full text-lg font-bold"
+                      variant="primary"
+                    >
+                      Ver Detalhes
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
