@@ -46,7 +46,8 @@ export default async function Imoveis({ searchParams }) {
       ? {
           price: {
             ...(priceMin ? { gte: parseFloat(priceMin) } : {}),
-            ...(priceMax ? { lle: parseFloat(priceMax) } : {}),
+            // Corrige 'lle' -> 'lte'
+            ...(priceMax ? { lte: parseFloat(priceMax) } : {}),
           },
         }
       : {}),

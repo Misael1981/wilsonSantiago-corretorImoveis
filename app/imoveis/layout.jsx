@@ -26,7 +26,9 @@ export default function ImoveisLayout({ children }) {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset className="min-h-svh w-full">
-        <HeaderImoveis />
+        <Suspense fallback={null}>
+          <HeaderImoveis />
+        </Suspense>
         {children}
       </SidebarInset>
     </SidebarProvider>
