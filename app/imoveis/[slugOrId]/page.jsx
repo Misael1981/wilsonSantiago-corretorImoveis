@@ -7,7 +7,8 @@ import { FaWhatsapp } from "react-icons/fa"
 import GalleryImages from "./components/GalleryImages"
 
 export async function generateMetadata({ params }) {
-  const { slugOrId } = params
+  const p = await params
+  const { slugOrId } = p
   const property = await prisma.property.findFirst({
     where: { OR: [{ id: slugOrId }, { slug: slugOrId }] },
     select: { title: true, metaTitle: true, metaDescription: true },
@@ -23,7 +24,8 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function PropertyDetails({ params }) {
-  const { slugOrId } = params
+  const p = await params
+  const { slugOrId } = p
 
   // Buscar por id OU slug
   const property = await prisma.property.findFirst({
@@ -45,6 +47,20 @@ export default async function PropertyDetails({ params }) {
     data: { views: { increment: 1 } },
   })
 
+  // Helper de formatação com fallback (determinístico)
+  const formatBRL = (n) => {
+    try {
+      // Evita decimais; usa agrupamento com locale fixo
+      return `R$ ${new Intl.NumberFormat("pt-BR", {
+        maximumFractionDigits: 0,
+      }).format(Math.round(n ?? 0))}`
+    } catch {
+      // Fallback manual caso o ambiente não tenha ICU completo
+      const v = Math.round(n ?? 0)
+      return `R$ ${v.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`
+    }
+  }
+
   return (
     <div className="boxed p-4">
       <Card className="p-0">
@@ -52,7 +68,6 @@ export default async function PropertyDetails({ params }) {
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:items-stretch">
             {/* Galeria principal */}
             <GalleryImages property={property} />
-
             {/* Informações */}
             <div className="flex h-full flex-col justify-between gap-4">
               <h1 className="text-wilson-blue text-2xl font-bold">
@@ -62,7 +77,7 @@ export default async function PropertyDetails({ params }) {
                 {property.city}, {property.neighborhood}
               </p>
               <div className="text-xl font-bold text-green-600">
-                R$ {property.price?.toLocaleString("pt-BR")}
+                {formatBRL(property.price)}
               </div>
               <ul className="text-wilson-blue flex flex-wrap justify-between gap-3 text-sm">
                 {property.bedrooms != null && (
