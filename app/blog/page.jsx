@@ -1,13 +1,16 @@
 export const dynamic = "force-dynamic"
 import prisma from "@/lib/prisma"
-import Image from "next/image"
 import HeaderBlog from "./components/HeaderBlog"
 import WelcomeBlogs from "./components/WelcomeBlogs"
 import ArticleList from "./components/ArticleList"
 
 export default async function BlogPage({ searchParams }) {
-  let posts = []
+  const params = await searchParams // precisa do await agora
 
+  const q = typeof params?.q === "string" ? params.q.trim() : ""
+  const tag = typeof params?.tag === "string" ? params.tag.trim() : ""
+
+  let posts = []
   try {
     posts = await prisma.article.findMany({
       orderBy: { publishedAt: "desc" },
@@ -29,6 +32,7 @@ export default async function BlogPage({ searchParams }) {
     console.error("Error fetching posts:", error)
     posts = []
   }
+
   if (!posts.length) {
     return (
       <section className="boxed p-4">
@@ -37,10 +41,6 @@ export default async function BlogPage({ searchParams }) {
       </section>
     )
   }
-
-  const q = typeof searchParams?.q === "string" ? searchParams.q.trim() : ""
-  const tag =
-    typeof searchParams?.tag === "string" ? searchParams.tag.trim() : ""
 
   const where = {
     published: true,
@@ -55,7 +55,6 @@ export default async function BlogPage({ searchParams }) {
       : {}),
     ...(tag
       ? {
-          // filtra por tag via tabela de junção ArticleTag -> Tag
           tags: { some: { tag: { slug: tag } } },
         }
       : {}),
