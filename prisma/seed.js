@@ -378,39 +378,39 @@ async function seedDataBase() {
       {
         title: "Dicas práticas para conquistar seu financiamento imobiliário",
         content: `# Dicas práticas para conquistar seu financiamento imobiliário
-    
-    Realizar o sonho da casa própria é um dos grandes objetivos de muitas famílias brasileiras. Para grande parte dessas pessoas, o **financiamento imobiliário** é o caminho que torna esse sonho possível.
-    
-    ## 1. Organize suas finanças antes de buscar o financiamento
-    
-    O primeiro passo para financiar um imóvel começa muito antes de ir ao banco: é entender sua realidade financeira. Analise sua renda mensal, gastos fixos e variáveis, e veja qual valor de parcela cabe no orçamento sem comprometer sua tranquilidade.
-    
-    > Lembre-se que, na maioria das instituições, o comprometimento da renda não deve ultrapassar **30%**.
-    
-    ## 2. Prepare a documentação com antecedência
-    
-    Ter toda a documentação pronta agiliza o processo e passa mais segurança para o banco. Normalmente, os principais documentos exigidos são:
-    
-    - RG e CPF
-    - Comprovante de estado civil  
-    - Comprovantes de renda atualizados
-    - Declaração do Imposto de Renda
-    - Comprovante de residência
-    
-    ## 3. Pesquise as opções disponíveis
-    
-    Cada banco ou instituição financeira oferece diferentes taxas de juros, prazos e condições. Antes de escolher, faça simulações em pelo menos três ou quatro instituições para comparar:
-    
-    - Valor total financiado
-    - Taxas de juros (fixas ou variáveis)  
-    - Tempo de pagamento
-    - Custos adicionais (seguros obrigatórios, taxas administrativas)
-    
-    ## Conclusão
-    
-    Conquistar um financiamento imobiliário não precisa ser complicado. Com planejamento, pesquisa e a ajuda de um profissional experiente, como um corretor de confiança, o processo se torna muito mais simples, seguro e vantajoso.
-    
-    **Quer saber mais?** Continue acompanhando nosso blog e fique por dentro de outras dicas para realizar o sonho da casa própria de forma segura e inteligente!`,
+
+Realizar o sonho da casa própria é um dos grandes objetivos de muitas famílias brasileiras. Para grande parte dessas pessoas, o **financiamento imobiliário** é o caminho que torna esse sonho possível.
+
+## 1. Organize suas finanças antes de buscar o financiamento
+
+O primeiro passo para financiar um imóvel começa muito antes de ir ao banco: é entender sua realidade financeira. Analise sua renda mensal, gastos fixos e variáveis, e veja qual valor de parcela cabe no orçamento sem comprometer sua tranquilidade.
+
+> Lembre-se que, na maioria das instituições, o comprometimento da renda não deve ultrapassar **30%**.
+
+## 2. Prepare a documentação com antecedência
+
+Ter toda a documentação pronta agiliza o processo e passa mais segurança para o banco. Normalmente, os principais documentos exigidos são:
+
+- RG e CPF
+- Comprovante de estado civil  
+- Comprovantes de renda atualizados
+- Declaração do Imposto de Renda
+- Comprovante de residência
+
+## 3. Pesquise as opções disponíveis
+
+Cada banco ou instituição financeira oferece diferentes taxas de juros, prazos e condições. Antes de escolher, faça simulações em pelo menos três ou quatro instituições para comparar:
+
+- Valor total financiado
+- Taxas de juros (fixas ou variáveis)  
+- Tempo de pagamento
+- Custos adicionais (seguros obrigatórios, taxas administrativas)
+
+## Conclusão
+
+Conquistar um financiamento imobiliário não precisa ser complicado. Com planejamento, pesquisa e a ajuda de um profissional experiente, como um corretor de confiança, o processo se torna muito mais simples, seguro e vantajoso.
+
+**Quer saber mais?** Continue acompanhando nosso blog e fique por dentro de outras dicas para realizar o sonho da casa própria de forma segura e inteligente!`,
         excerpt:
           "Dicas essenciais para encontrar a propriedade perfeita para você.",
         slug: "dicas-praticas-financiamento-imobiliario",

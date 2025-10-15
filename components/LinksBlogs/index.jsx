@@ -3,7 +3,12 @@ import SubTitle from "../SubTitle"
 import { Card, CardContent } from "../ui/card"
 
 const LinksBlogs = ({ articles }) => {
-  const displayArticles = articles?.slice(0, 4) || []
+  const displayArticles = Array.isArray(articles) ? articles.slice(0, 4) : []
+
+  const a0 = displayArticles[0]
+  const a1 = displayArticles[1]
+  const a2 = displayArticles[2]
+  const a3 = displayArticles[3]
 
   return (
     <section className="boxed my-4 p-4">
@@ -13,102 +18,91 @@ const LinksBlogs = ({ articles }) => {
         venda ou manutenção dos seus imóveis
       </h3>
       <div className="flex flex-wrap items-stretch justify-center gap-4 lg:h-[520px]">
+        {/* Slot 1 */}
         <Link
-          href={`/blog/${displayArticles[0].slug}`}
+          href={a0 ? `/blog/${a0.slug}` : `/blog`}
           className="group relative block h-[300px] w-[500px] max-w-[100%] overflow-hidden rounded-sm transition-transform hover:scale-105 lg:h-[516px] lg:w-[320px]"
         >
-          {/* Background Image */}
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: `url(${displayArticles[0].imageUrl || "/assets/casa.jpg"})`,
+              backgroundImage: `url(${a0?.imageUrl || "/assets/casa.jpg"})`,
             }}
           />
-          {/* Overlay escuro */}
           <div className="absolute inset-0 bg-black/50 transition-colors group-hover:bg-black/40" />
-
-          {/* Conteúdo */}
           <div className="relative z-10 flex h-full flex-col justify-end p-6 text-white">
             <h4 className="mb-2 text-xl leading-tight font-bold">
-              {displayArticles[0].title}
+              {a0?.title || "Sem artigos disponíveis"}
             </h4>
             <p className="line-clamp-3 text-sm text-gray-200">
-              {displayArticles[0].excerpt}
+              {a0?.excerpt || "Visite o Blog para novidades."}
             </p>
           </div>
         </Link>
 
+        {/* Slot 2 e 3 */}
         <div className="flex max-w-[100%] flex-col items-center justify-center gap-4">
           <Link
-            href={`/blog/${displayArticles[1].slug}`}
+            href={a1 ? `/blog/${a1.slug}` : `/blog`}
             className="relative block h-[300px] w-[500px] max-w-[100%] overflow-hidden rounded-sm transition-transform hover:scale-105 lg:h-[250px] lg:w-[320px]"
           >
-            {/* Background Image */}
             <div
               className="absolute inset-0 bg-cover bg-center bg-no-repeat"
               style={{
-                backgroundImage: `url(${displayArticles[1].imageUrl || "/assets/casa.jpg"})`,
+                backgroundImage: `url(${a1?.imageUrl || "/assets/casa.jpg"})`,
               }}
             />
-            {/* Overlay escuro */}
             <div className="absolute inset-0 bg-black/50 transition-colors group-hover:bg-black/40" />
-
-            {/* Conteúdo */}
             <div className="relative z-10 flex h-full flex-col justify-end p-6 text-white">
               <h4 className="mb-2 text-xl leading-tight font-bold">
-                {displayArticles[1].title}
+                {a1?.title || "Sem artigos disponíveis"}
               </h4>
               <p className="line-clamp-3 text-sm text-gray-200">
-                {displayArticles[1].excerpt}
+                {a1?.excerpt || "Visite o Blog para novidades."}
               </p>
             </div>
           </Link>
+
           <Link
-            href={`/blog/${displayArticles[2].slug}`}
+            href={a2 ? `/blog/${a2.slug}` : `/blog`}
             className="relative block h-[300px] w-[500px] max-w-[100%] overflow-hidden rounded-sm transition-transform hover:scale-105 lg:h-[250px] lg:w-[320px]"
           >
-            {/* Background Image */}
             <div
               className="absolute inset-0 bg-cover bg-center bg-no-repeat"
               style={{
-                backgroundImage: `url(${displayArticles[2].imageUrl || "/assets/casa.jpg"})`,
+                backgroundImage: `url(${a2?.imageUrl || "/assets/casa.jpg"})`,
               }}
             />
-            {/* Overlay escuro */}
             <div className="absolute inset-0 bg-black/50 transition-colors group-hover:bg-black/40" />
-
-            {/* Conteúdo */}
             <div className="relative z-10 flex h-full flex-col justify-end p-6 text-white">
               <h4 className="mb-2 text-xl leading-tight font-bold">
-                {displayArticles[2].title}
+                {a2?.title || "Sem artigos disponíveis"}
               </h4>
               <p className="line-clamp-3 text-sm text-gray-200">
-                {displayArticles[2].excerpt}
+                {a2?.excerpt || "Visite o Blog para novidades."}
               </p>
             </div>
           </Link>
         </div>
+
+        {/* Slot 4 */}
         <Link
-          href={`/blog/${displayArticles[3].slug}`}
+          href={a3 ? `/blog/${a3.slug}` : `/blog`}
           className="group relative block h-[300px] w-[500px] max-w-[100%] overflow-hidden rounded-sm transition-transform hover:scale-105 lg:h-[516px] lg:w-[320px]"
         >
-          {/* Background Image */}
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: `url(${displayArticles[3].imageUrl || "/assets/casa.jpg"})`,
+              backgroundImage: `url(${a3?.imageUrl || "/assets/casa.jpg"})`,
             }}
           />
-          {/* Overlay escuro */}
           <div className="absolute inset-0 bg-black/50 transition-colors group-hover:bg-black/40" />
-
-          {/* Conteúdo */}
           <div className="relative z-10 flex h-full flex-col justify-end p-6 text-white">
             <h4 className="mb-2 text-xl leading-tight font-bold">
-              {displayArticles[3].title}
+              {a3?.title || "Sem artigos disponíveis"}
             </h4>
             <p className="line-clamp-3 text-sm text-gray-200">
-              {displayArticles[3].excerpt}
+              {a3?.excerpt || "Visite o Blog para novidades."}
             </p>
           </div>
         </Link>

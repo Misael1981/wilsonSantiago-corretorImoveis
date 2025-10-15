@@ -1,8 +1,7 @@
-export const dynamic = "force-dynamic"
 import prisma from "@/lib/prisma"
-import HeaderBlog from "./components/HeaderBlog"
 import WelcomeBlogs from "./components/WelcomeBlogs"
 import ArticleList from "./components/ArticleList"
+import ArticleHero from "./components/ArticleHero"
 
 export default async function BlogPage({ searchParams }) {
   const params = await searchParams // precisa do await agora
@@ -76,12 +75,12 @@ export default async function BlogPage({ searchParams }) {
   })
 
   return (
-    <>
-      <HeaderBlog />
+    <main>
       <WelcomeBlogs />
+      <ArticleHero />
       <section className="boxed p-4">
         <ArticleList articles={articles} />
       </section>
-    </>
+    </main>
   )
 }
