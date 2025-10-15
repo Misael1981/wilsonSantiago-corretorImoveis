@@ -1,11 +1,11 @@
 import Link from "next/link"
 
 const sections = [
-  { label: "Notícias", href: "/blog?tag=noticias" },
-  { label: "Dicas", href: "/blog?tag=dicas" },
-  { label: "Financiamento", href: "/blog?tag=financiamento" },
-  { label: "Mercado", href: "/blog?tag=mercado" },
-  { label: "Guia do comprador", href: "/blog?tag=guia" },
+  { label: "Notícias", href: "/blog/tag/noticias" },
+  { label: "Dicas", href: "/blog/tag/dicas" },
+  { label: "Financiamento", href: "/blog/tag/financiamento" },
+  { label: "Mercado", href: "/blog/tag/mercado" },
+  { label: "Guia do comprador", href: "/blog/tag/guia" },
 ]
 
 const WelcomeBlogs = () => {
