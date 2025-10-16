@@ -1,8 +1,6 @@
 import { Outfit, Playfair_Display } from "next/font/google"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
-import Header from "@/components/Header"
-import Footer from "@/components/Footer"
 import FloatingWhatsApp from "@/components/FloatingWhatsApp"
 
 const outfit = Outfit({
@@ -20,6 +18,20 @@ const playfairDisplay = Playfair_Display({
 export const metadata = {
   title: "Wilson Corretor de Imóveis",
   description: "Encontre o imóvel dos seus sonhos",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" }, // padrão
+      { url: "/favicon-96x96.png", type: "image/png", sizes: "96x96" },
+      { url: "/logo-favicon.png", type: "image/png" }, // opcional
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180" },
+    ],
+  },
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#0d3b85" },
+    { media: "(prefers-color-scheme: dark)", color: "#0d3b85" },
+  ],
 }
 
 export default function RootLayout({ children }) {
