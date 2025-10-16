@@ -3,6 +3,7 @@ import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
+import FloatingWhatsApp from "@/components/FloatingWhatsApp"
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -29,6 +30,9 @@ export default function RootLayout({ children }) {
     >
       <body className="antialiased">
         {children}
+        <div className="fixed right-4 bottom-4 z-50">
+          <FloatingWhatsApp />
+        </div>
         <Toaster />
       </body>
     </html>

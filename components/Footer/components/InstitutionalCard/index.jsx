@@ -51,7 +51,11 @@ const InstitutionalCard = () => {
               <DialogOrderYourProperty
                 key={title}
                 trigger={
-                  <div className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 transition-all hover:bg-gray-300 dark:hover:bg-gray-800">
+                  <button
+                    type="button"
+                    aria-label="Encomende seu Imóvel"
+                    className="group flex cursor-pointer gap-3 rounded-lg p-2 text-start transition-all hover:bg-gray-300 dark:hover:bg-gray-800"
+                  >
                     <div className="bg-wilson-golden text-wilson-blue flex h-8 w-8 items-center justify-center rounded-full group-hover:bg-amber-300">
                       <IconComponent className="h-5 w-5" />
                     </div>
@@ -63,14 +67,14 @@ const InstitutionalCard = () => {
                         {description}
                       </p>
                     </div>
-                  </div>
+                  </button>
                 }
               />
             ) : (
               <Link
                 key={title}
                 href={href}
-                className="group flex items-center gap-3 rounded-lg p-2 transition-all hover:bg-gray-300 dark:hover:bg-gray-800"
+                className="group items中心 flex gap-3 rounded-lg p-2 transition-all hover:bg-gray-300 dark:hover:bg-gray-800"
               >
                 <div className="bg-wilson-golden text-wilson-blue flex h-8 w-8 items-center justify-center rounded-full group-hover:bg-amber-300">
                   <IconComponent className="h-5 w-5" />

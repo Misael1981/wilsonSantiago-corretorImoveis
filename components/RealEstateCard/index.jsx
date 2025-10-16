@@ -84,6 +84,7 @@ const RealEstateCard = ({ property }) => {
                 <Button
                   className="bg-gradient-wilson-golden mt-4 w-full"
                   variant="primary"
+                  asChild
                 >
                   Ver Detalhes
                 </Button>
