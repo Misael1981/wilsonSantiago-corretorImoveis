@@ -1,6 +1,8 @@
 import { Outfit, Playfair_Display } from "next/font/google"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
+import Header from "@/components/Header"
+import Footer from "@/components/Footer"
 
 const outfit = Outfit({
   variable: "--font-outfit",

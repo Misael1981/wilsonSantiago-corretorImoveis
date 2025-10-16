@@ -2,6 +2,7 @@ import Image from "next/image"
 import ThirdTitle from "../ThirdTitle"
 import { Card, CardContent } from "../ui/card"
 import { Button } from "../ui/button"
+import Link from "next/link"
 
 const AdvertiseRealEstate = () => {
   return (
@@ -22,8 +23,11 @@ const AdvertiseRealEstate = () => {
               Receba mais contatos divulgando os seus imóveis no portal
               imobiliário pioneiro da região
             </p>
-            <Button className="text-wilson-blue bg-gradient-wilson-golden">
-              Anuncie seu imóvel
+            <Button
+              asChild
+              className="text-wilson-blue bg-gradient-wilson-golden"
+            >
+              <Link href="/cadastrar-imovel">Cadastre seu imóvel</Link>
             </Button>
           </div>
         </CardContent>

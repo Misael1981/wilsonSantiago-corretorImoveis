@@ -20,9 +20,9 @@ const linksContact = [
   },
   {
     name: "Instagram",
-    href: "https://www.instagram.com/santiagowilsonrodrigo/",
+    href: "https://www.instagram.com/wilson_santiago_corretor?igsh=MWFkMGt3dnV5NDMwcQ==",
     icon: <FaInstagram className="mr-2 h-5 w-5 text-pink-500" />,
-    value: "@santiagowilsonrodrigo",
+    value: "@wilson_santiago_corretor",
   },
 ]
 

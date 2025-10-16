@@ -51,12 +51,12 @@ const InstitutionalCard = () => {
               <DialogOrderYourProperty
                 key={title}
                 trigger={
-                  <div className="group flex items-center gap-3 rounded-lg p-2 transition-all hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
+                  <div className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 transition-all hover:bg-gray-300 dark:hover:bg-gray-800">
                     <div className="bg-wilson-golden text-wilson-blue flex h-8 w-8 items-center justify-center rounded-full group-hover:bg-amber-300">
                       <IconComponent className="h-5 w-5" />
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium group-hover:text-amber-300 dark:text-gray-100">
+                      <p className="text-sm font-medium text-white/80 group-hover:text-amber-300">
                         {title}
                       </p>
                       <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -70,13 +70,13 @@ const InstitutionalCard = () => {
               <Link
                 key={title}
                 href={href}
-                className="group flex items-center gap-3 rounded-lg p-2 transition-all hover:bg-gray-50 dark:hover:bg-gray-800"
+                className="group flex items-center gap-3 rounded-lg p-2 transition-all hover:bg-gray-300 dark:hover:bg-gray-800"
               >
                 <div className="bg-wilson-golden text-wilson-blue flex h-8 w-8 items-center justify-center rounded-full group-hover:bg-amber-300">
                   <IconComponent className="h-5 w-5" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium group-hover:text-amber-300 dark:text-gray-100">
+                  <p className="text-sm font-medium text-white/80 group-hover:text-amber-300">
                     {title}
                   </p>
                   <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -84,7 +84,7 @@ const InstitutionalCard = () => {
                   </p>
                 </div>
               </Link>
-            )
+            ),
           )}
         </li>
       </ul>

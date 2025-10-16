@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-const InputsSearch = () => {
+export default function InputsSearch() {
   return (
     <div className="space-y-4 lg:flex lg:items-end lg:justify-center lg:space-y-0">
       <div className="w-full px-4 lg:max-w-[250px]">
@@ -18,7 +18,7 @@ const InputsSearch = () => {
           Busca por endereço
         </h3>
         <Select>
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full border border-blue-900 focus:border-blue-900 focus:ring-2 focus:ring-blue-200">
             <SelectValue placeholder="Tipos de Imóveis" />
           </SelectTrigger>
           <SelectContent className="">
@@ -52,7 +52,10 @@ const InputsSearch = () => {
         <h3 className="text-wilson-blue mb-2 text-lg font-semibold">
           Onde você deseja buscar?
         </h3>
-        <Input placeholder="Digite o endereço" />
+        <Input
+          className="border border-blue-900"
+          placeholder="Digite o endereço"
+        />
       </div>
       <div className="w-full px-4 lg:max-w-[250px]">
         <Button className="bg-gradient-wilson-blue text-wilson-golden w-full">
@@ -62,5 +65,3 @@ const InputsSearch = () => {
     </div>
   )
 }
-
-export default InputsSearch

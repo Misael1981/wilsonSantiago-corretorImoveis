@@ -175,19 +175,21 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <WelcomeSection />
-      <WelcomeUser />
-      <VideoHighlights />
-      <PropertyCategory />
-      <BannerContactUs />
-      <CarouselGlobal title="Imóveis em Destaque">
-        {properties.map((property) => (
-          <RealEstateCard key={property.id} property={property} />
-        ))}
-      </CarouselGlobal>
-      <AdvertiseRealEstate />
-      <LinksBlogs articles={articles} />
-      <CustomersServed customersData={customersData} />
+      <main>
+        <WelcomeSection />
+        <WelcomeUser />
+        <VideoHighlights />
+        <PropertyCategory />
+        <BannerContactUs />
+        <CarouselGlobal title="Imóveis em Destaque">
+          {properties.map((property) => (
+            <RealEstateCard key={property.id} property={property} />
+          ))}
+        </CarouselGlobal>
+        <AdvertiseRealEstate />
+        <LinksBlogs articles={articles} />
+        <CustomersServed customersData={customersData} />
+      </main>
       <Footer />
     </>
   )

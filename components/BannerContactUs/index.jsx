@@ -10,6 +10,9 @@ const items = [
 ]
 
 const BannerContactUs = () => {
+  const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP
+  const wa = (msg) =>
+    `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`
   return (
     <section className="boxed p-4">
       <div className="shadow-custom-deep lg:flex lg:items-stretch">
@@ -26,8 +29,18 @@ const BannerContactUs = () => {
               </li>
             ))}
           </ul>
-          <Button className="bg-gradient-wilson-golden w-[50%] font-bold text-blue-950">
-            Fale Conosco
+          <Button
+            className="bg-gradient-wilson-golden w-[50%] font-bold text-blue-950"
+            asChild
+          >
+            <a
+              href={wa("Olá, gostaria de fazer um orçamento.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Fale conosco pelo WhatsApp"
+            >
+              Fale Conosco
+            </a>
           </Button>
         </div>
         <div className="relative h-[350px] lg:w-[400px] lg:flex-1">
