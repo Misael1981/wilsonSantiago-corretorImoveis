@@ -1,11 +1,56 @@
+"use client"
+
+import { useSession } from "next-auth/react"
+import { Avatar, AvatarImage } from "../ui/avatar"
+import { format } from "date-fns"
+import { ptBR } from "date-fns/locale"
+
 const WelcomeUser = () => {
+  const { data } = useSession()
   return (
     <section className="boxed p-4 lg:flex lg:items-end lg:justify-end">
       <div className="w-fit">
-        <h3 className="text-xl">
-          Ola, <strong>faça seu login</strong>
-        </h3>
-        <p className="text-gray-500">Sábado, 06 de Setembro de 2025</p>
+        {data?.user ? (
+          <div className="flex items-center gap-2">
+            <Avatar>
+              <AvatarImage
+                src={data?.user?.image}
+                alt={data?.user?.name}
+                width={6}
+                height={6}
+              />
+            </Avatar>
+            <div>
+              <h3 className="text-xl leading-none">
+                Olá, <strong>{data?.user?.name}</strong>
+              </h3>
+              <p className="leading-none">
+                <span className="text-sm text-gray-700 capitalize">
+                  {format(new Date(), "EEEE, dd", { locale: ptBR })}
+                </span>
+                <span className="text-sm text-gray-700">&nbsp;de&nbsp;</span>
+                <span className="text-sm text-gray-700 capitalize">
+                  {format(new Date(), "MMMM", { locale: ptBR })}
+                </span>
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <h3 className="text-xl leading-none">
+              Ola, <strong>faça seu login</strong>
+            </h3>
+            <p className="leading-none">
+              <span className="text-sm text-gray-700 capitalize">
+                {format(new Date(), "EEEE, dd", { locale: ptBR })}
+              </span>
+              <span className="text-sm text-gray-700">&nbsp;de&nbsp;</span>
+              <span className="text-sm text-gray-700 capitalize">
+                {format(new Date(), "MMMM", { locale: ptBR })}
+              </span>
+            </p>
+          </div>
+        )}
       </div>
     </section>
   )

@@ -4,8 +4,8 @@ import ButtonLogin from "../ButtonLogin"
 
 const HeaderDesktop = () => {
   return (
-    <div className="bg-wilson-blue hidden lg:block">
-      <div className="boxed flex items-center justify-between">
+    <div className="boxed bg-wilson-blue hidden lg:block">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Image
             src="/icons/logo-horizontal.svg"

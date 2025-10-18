@@ -132,6 +132,11 @@ const NavMenu = () => {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink asChild className="text-lg text-white">
+            <Link href="/admin">Dashboard Administrativo</Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   )
