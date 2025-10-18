@@ -8,6 +8,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
+import { useSession } from "next-auth/react"
 import Link from "next/link"
 
 const navItems = [
@@ -30,6 +31,9 @@ const navItems = [
 
 // NavMenu component
 const NavMenu = () => {
+  const { data } = useSession()
+  const isAdmin = data?.user?.role === "ADMIN"
+
   return (
     <NavigationMenu viewport={false}>
       <NavigationMenuList>
@@ -132,11 +136,13 @@ const NavMenu = () => {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className="text-lg text-white">
-            <Link href="/admin">Dashboard Administrativo</Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
+        {isAdmin && (
+          <NavigationMenuItem>
+            <NavigationMenuLink asChild className="text-lg text-white">
+              <Link href="/admin">Dashboard Administrativo</Link>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+        )}
       </NavigationMenuList>
     </NavigationMenu>
   )

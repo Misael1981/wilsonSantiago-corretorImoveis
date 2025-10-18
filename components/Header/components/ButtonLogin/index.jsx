@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogTrigger } from "@/components/ui/dialog"
-import { LogIn, LogOut, User } from "lucide-react"
+import { LogIn, LogOut } from "lucide-react"
 import DialogLogin from "../DailogLogin"
 import { signOut, useSession } from "next-auth/react"
 import {
@@ -15,7 +15,7 @@ const ButtonLogin = () => {
   const { data } = useSession()
 
   const handleLogout = async () => {
-    await signOut("google")
+    await signOut() // Corrige: signOut não recebe nome de provedor
   }
   return (
     <>
@@ -36,21 +36,23 @@ const ButtonLogin = () => {
         </Tooltip>
       ) : (
         <Dialog>
-          <DialogTrigger asChild>
-            <Tooltip>
-              <TooltipTrigger asChild>
+          {/* Ajuste: o DialogTrigger deve envolver o Button diretamente */}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <DialogTrigger asChild>
                 <Button
                   className="bg-gradient-wilson-golden text-blue-950"
                   variant="icon"
                 >
                   <LogIn size={16} className="size-4" />
                 </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Entrar na conta</p>
-              </TooltipContent>
-            </Tooltip>
-          </DialogTrigger>
+              </DialogTrigger>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Entrar na conta</p>
+            </TooltipContent>
+          </Tooltip>
+
           <DialogLogin />
         </Dialog>
       )}

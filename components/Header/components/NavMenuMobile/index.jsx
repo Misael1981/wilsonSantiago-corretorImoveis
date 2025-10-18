@@ -1,3 +1,6 @@
+"use client"
+
+import { useSession } from "next-auth/react"
 import Link from "next/link"
 
 const navItems = [
@@ -24,6 +27,9 @@ const navItems = [
 ]
 
 const NavMenuMobile = () => {
+  const { data } = useSession()
+  const isAdmin = data?.user?.role === "ADMIN"
+
   return (
     <nav>
       <ul>
@@ -37,11 +43,13 @@ const NavMenuMobile = () => {
             </Link>
           </li>
         ))}
-        <li className="border-wilson-golden border-b py-2 text-lg text-white">
-          <Link href="/admin" className="text-white">
-            Dashboard Administrativo
-          </Link>
-        </li>
+        {isAdmin && (
+          <li className="border-wilson-golden border-b py-2 text-lg text-white">
+            <Link href="/admin" className="text-white">
+              Dashboard Administrativo
+            </Link>
+          </li>
+        )}
       </ul>
     </nav>
   )
