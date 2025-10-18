@@ -1,10 +1,11 @@
 import Image from "next/image"
 import NavMenu from "../NavMenu"
 import ButtonLogin from "../ButtonLogin"
+import WelcomeUser from "@/components/WelcomeUser"
 
 const HeaderDesktop = () => {
   return (
-    <div className="boxed bg-wilson-blue hidden lg:block">
+    <div className="bg-wilson-blue hidden lg:block">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Image
@@ -15,7 +16,10 @@ const HeaderDesktop = () => {
           />
         </div>
         <NavMenu />
-        <ButtonLogin />
+        <div className="flex items-center gap-2">
+          <WelcomeUser />
+          <ButtonLogin />
+        </div>
       </div>
     </div>
   )

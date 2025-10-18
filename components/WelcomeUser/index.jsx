@@ -8,7 +8,7 @@ import { ptBR } from "date-fns/locale"
 const WelcomeUser = () => {
   const { data } = useSession()
   return (
-    <section className="boxed p-4 lg:flex lg:items-end lg:justify-end">
+    <section className="">
       <div className="w-fit">
         {data?.user ? (
           <div className="flex items-center gap-2">
@@ -24,12 +24,12 @@ const WelcomeUser = () => {
               <h3 className="text-xl leading-none">
                 Olá, <strong>{data?.user?.name}</strong>
               </h3>
-              <p className="leading-none">
-                <span className="text-sm text-gray-700 capitalize">
+              <p className="leading-none text-gray-400">
+                <span className="text-sm capitalize">
                   {format(new Date(), "EEEE, dd", { locale: ptBR })}
                 </span>
-                <span className="text-sm text-gray-700">&nbsp;de&nbsp;</span>
-                <span className="text-sm text-gray-700 capitalize">
+                <span className="text-sm">&nbsp;de&nbsp;</span>
+                <span className="text-sm capitalize">
                   {format(new Date(), "MMMM", { locale: ptBR })}
                 </span>
               </p>
@@ -40,12 +40,12 @@ const WelcomeUser = () => {
             <h3 className="text-xl leading-none">
               Ola, <strong>faça seu login</strong>
             </h3>
-            <p className="leading-none">
-              <span className="text-sm text-gray-700 capitalize">
+            <p className="leading-none text-gray-400">
+              <span className="text-sm capitalize">
                 {format(new Date(), "EEEE, dd", { locale: ptBR })}
               </span>
-              <span className="text-sm text-gray-700">&nbsp;de&nbsp;</span>
-              <span className="text-sm text-gray-700 capitalize">
+              <span className="text-sm">&nbsp;de&nbsp;</span>
+              <span className="text-sm capitalize">
                 {format(new Date(), "MMMM", { locale: ptBR })}
               </span>
             </p>

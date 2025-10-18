@@ -177,7 +177,6 @@ export default async function Home() {
       <Header />
       <main>
         <WelcomeSection />
-        <WelcomeUser />
         <VideoHighlights />
         <PropertyCategory />
         <BannerContactUs />

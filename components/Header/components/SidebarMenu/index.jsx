@@ -2,6 +2,7 @@ import { SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import Image from "next/image"
 import ButtonLogin from "../ButtonLogin"
 import NavMenuMobile from "../NavMenuMobile"
+import WelcomeUser from "@/components/WelcomeUser"
 
 const SidebarMenu = () => {
   return (
@@ -16,7 +17,8 @@ const SidebarMenu = () => {
         />
       </SheetHeader>
       <div className="space-y-4">
-        <div className="flex flex-col items-end justify-end">
+        <div className="flex items-center justify-between">
+          <WelcomeUser />
           <ButtonLogin />
         </div>
         <NavMenuMobile />
