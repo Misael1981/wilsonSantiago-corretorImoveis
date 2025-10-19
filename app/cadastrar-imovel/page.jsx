@@ -86,16 +86,31 @@ export default function CadastrarImovel() {
     }
 
     setLoading(true)
-
     try {
-      // Chamada pra API aqui
+      const res = await fetch("/api/listings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nome: formData.nome,
+          email: formData.email,
+          telefone: formData.telefone,
+          cidade: formData.cidade,
+          titulo: formData.titulo,
+          descricao: formData.descricao,
+          valor: formData.valor,
+          area: formData.area,
+          quartos: formData.quartos,
+          tipo: formData.tipo,
+          fotos: selectedFiles.map((f) => f.name),
+        }),
+      })
 
-      // Simulação de envio
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error(data?.error || "Erro ao cadastrar")
+      }
 
-      toast.success(
-        "Imóvel cadastrado com sucesso! Entraremos em contato em breve.",
-      )
+      toast.success("Imóvel cadastrado com sucesso! Entraremos em contato em breve.")
 
       // Reset form
       setFormData({
@@ -111,8 +126,9 @@ export default function CadastrarImovel() {
         tipo: "",
         fotos: [],
       })
+      setSelectedFiles([])
     } catch (error) {
-      toast.error("Erro ao cadastrar imóvel. Tente novamente.")
+      toast.error(error.message || "Erro ao cadastrar imóvel. Tente novamente.")
     } finally {
       setLoading(false)
     }

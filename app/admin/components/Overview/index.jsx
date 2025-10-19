@@ -24,7 +24,6 @@ const cards = [
 ]
 
 const Overview = ({ propertiesCount, usersCount, pendingOrdersCount }) => {
-  console.log(propertiesCount, usersCount, pendingOrdersCount)
   return (
     <section className="flex w-full justify-center p-4">
       <div>

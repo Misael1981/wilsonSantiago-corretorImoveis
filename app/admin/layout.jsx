@@ -9,6 +9,10 @@ export const metadata = {
   robots: { index: false },
 }
 
+export const viewport = {
+  themeColor: "#0ea5e9",
+}
+
 export default function AdminLayout({ children }) {
   return (
     <SidebarProvider>

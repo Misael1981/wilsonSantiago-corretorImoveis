@@ -1,7 +1,9 @@
+import HeaderAdmin from "../components/HeaderAdmin"
+
 export default function Imoveis() {
   return (
     <div>
-      <h1>Imóveis</h1>
+      <HeaderAdmin label="Imóveis" />
     </div>
   )
 }

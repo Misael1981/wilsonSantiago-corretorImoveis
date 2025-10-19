@@ -1,7 +1,9 @@
+import HeaderAdmin from "../components/HeaderAdmin"
+
 export default function Posts() {
   return (
     <div>
-      <h1>Posts</h1>
+      <HeaderAdmin label="Posts" />
     </div>
   )
 }

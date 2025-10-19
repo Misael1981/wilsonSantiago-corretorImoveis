@@ -11,7 +11,7 @@ const actions = [
     href: "#",
   },
   {
-    label: "Gerenciar Informações",
+    label: "Solicitações de Anúncios",
     href: "#",
   },
   {
