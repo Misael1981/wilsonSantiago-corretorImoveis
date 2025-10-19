@@ -226,6 +226,28 @@ model ListingRequest {
   @@map("listing_requests")
 }
 
+model PropertyRequest {
+  id             String   @id @default(cuid())
+  name           String
+  phone          String
+  type           PropertyType
+  city           String
+  neighborhood   String?
+  minPrice       Float?
+  maxPrice       Float?
+  description    String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  status         PropertyRequestStatus @default(PENDING)
+  source         String?
+
+  @@index([status, createdAt])
+  @@index([type])
+  @@index([city])
+  @@map("property_requests")
+}
+
+
 model Contact {
   id           String        @id @default(cuid())
   name         String
@@ -290,6 +312,14 @@ enum ListingStatus {
   APPROVED
   REJECTED
 }
+
+enum PropertyRequestStatus {
+  PENDING
+  CONTACTED
+  COMPLETED
+  CANCELLED
+}
+
 
 enum ContactType {
   GENERAL

@@ -41,21 +41,57 @@ const DialogOrderYourProperty = ({ trigger }) => {
     setForm((prev) => ({ ...prev, [field]: value }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // TODO: enviar para API real (ex: POST /api/encomendas)
-    toast.success("Solicitação enviada! Entraremos em contato.")
-    setOpen(false)
-    setForm({
-      nome: "",
-      telefone: "",
-      tipo: "",
-      cidade: "",
-      bairro: "",
-      precoMin: "",
-      precoMax: "",
-      descricao: "",
-    })
+
+    // Regras simples de validação
+    if (!form.nome || !form.telefone || !form.tipo || !form.cidade) {
+      toast.error("Preencha nome, telefone, tipo e cidade.")
+      return
+    }
+    const min = form.precoMin ? parseFloat(form.precoMin) : null
+    const max = form.precoMax ? parseFloat(form.precoMax) : null
+    if (min !== null && max !== null && min > max) {
+      toast.error("Preço mínimo não pode ser maior que o máximo.")
+      return
+    }
+
+    try {
+      const res = await fetch("/api/property-requests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nome: form.nome,
+          telefone: form.telefone,
+          tipo: form.tipo,
+          cidade: form.cidade,
+          bairro: form.bairro,
+          precoMin: form.precoMin,
+          precoMax: form.precoMax,
+          descricao: form.descricao,
+        }),
+      })
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error(data?.error || "Erro ao enviar solicitação")
+      }
+
+      toast.success("Solicitação enviada! Entraremos em contato.")
+      setOpen(false)
+      setForm({
+        nome: "",
+        telefone: "",
+        tipo: "",
+        cidade: "",
+        bairro: "",
+        precoMin: "",
+        precoMax: "",
+        descricao: "",
+      })
+    } catch (err) {
+      toast.error(err.message ?? "Erro ao enviar. Tente novamente.")
+    }
   }
 
   return (

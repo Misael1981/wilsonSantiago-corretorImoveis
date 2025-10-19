@@ -1,29 +1,26 @@
 import { Card, CardContent } from "@/components/ui/card"
 
-const cards = [
-  {
-    title: "Imóveis Disponíveis",
-    value: 100,
-  },
-  {
-    title: "Número de Usuários",
-    value: 50,
-  },
-  {
-    title: "Novos Usuários (Último Mês)",
-    value: 20,
-  },
-  {
-    title: "Encomendas de imóveis (pendentes)",
-    value: 3,
-  },
-  {
-    title: "Pedidos para cadastros de imóveis",
-    value: 5,
-  },
-]
+const Overview = ({
+  propertiesCount,
+  usersCount,
+  newUsersLast30Days,
+  propertyRequestsPendingCount,
+  listingRequestsCount,
+}) => {
+  const cards = [
+    { title: "Imóveis Disponíveis", value: propertiesCount ?? 0 },
+    { title: "Número de Usuários", value: usersCount ?? 0 },
+    { title: "Novos Usuários (Último Mês)", value: newUsersLast30Days ?? 0 },
+    {
+      title: "Encomendas de imóveis (pendentes)",
+      value: propertyRequestsPendingCount ?? 0,
+    },
+    {
+      title: "Pedidos para cadastros de imóveis",
+      value: listingRequestsCount ?? 0,
+    },
+  ]
 
-const Overview = ({ propertiesCount, usersCount, pendingOrdersCount }) => {
   return (
     <section className="flex w-full justify-center p-4">
       <div>
