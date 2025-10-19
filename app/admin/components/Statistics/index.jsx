@@ -26,14 +26,15 @@ const chartData = [
   { month: "Set", desktop: 209 },
   { month: "Out", desktop: 214 },
 ]
+// Config do gráfico: mantém a série "desktop" e renomeia o label
 const chartConfig = {
   desktop: {
-    label: "Desktop",
+    label: "Novos Usuários",
     color: "var(--chart-1)",
   },
 }
 
-const Statistics = () => {
+const Statistics = ({ chartData = [] }) => {
   return (
     <section className="flex w-full justify-center p-4">
       <div className="w-full">
@@ -71,7 +72,7 @@ const Statistics = () => {
                     tickLine={false}
                     axisLine={false}
                     tickMargin={8}
-                    tickFormatter={(value) => value.slice(0, 3)}
+                    tickFormatter={(value) => String(value).slice(0, 3)}
                   />
                   <ChartTooltip
                     cursor={false}
