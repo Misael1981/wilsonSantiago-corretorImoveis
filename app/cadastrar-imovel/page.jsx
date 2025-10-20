@@ -110,7 +110,9 @@ export default function CadastrarImovel() {
         throw new Error(data?.error || "Erro ao cadastrar")
       }
 
-      toast.success("Imóvel cadastrado com sucesso! Entraremos em contato em breve.")
+      toast.success(
+        "Imóvel cadastrado com sucesso! Entraremos em contato em breve.",
+      )
 
       // Reset form
       setFormData({
