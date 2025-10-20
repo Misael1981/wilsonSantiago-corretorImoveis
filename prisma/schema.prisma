@@ -302,6 +302,7 @@ enum PropertyStatus {
   PENDING
   SOLD
   RENTED
+  SPECIAL_CONDITION
   INACTIVE
   RESERVED
 }

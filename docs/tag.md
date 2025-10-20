@@ -187,3 +187,8 @@ export default async function TagPage({ params, searchParams }) {
     )
 }
 ```
+
+- Novo imóvel: o botão “+ Novo Imóvel” pode abrir um diálogo de criação ou navegar para /cadastrar-imovel . Se preferir diálogo, replicamos o padrão do DialogCreate dos usuários.
+- Filtros extras: adicionar status ( ACTIVE , SOLD , SPECIAL_CONDITION ), type e city como parâmetros; o RealEstateFilters pode alternar chips/botões e a página usa eles no where .
+- Listas: substituir o render inline por componentes AvailableProperties , RegistrationRequests , RealEstateRequests , cada um recebendo seus dados do servidor.
+- Status novo: com SPECIAL_CONDITION , criar um badge visual (por exemplo, cor diferente) e filtros para destacar promoções.
