@@ -18,15 +18,6 @@ import { ptBR } from "date-fns/locale"
 import { TrendingUp } from "lucide-react"
 import { CartesianGrid, LabelList, Line, LineChart, XAxis } from "recharts"
 
-const chartData = [
-  { month: "Abril", desktop: 186 },
-  { month: "Maio", desktop: 305 },
-  { month: "Junho", desktop: 237 },
-  { month: "Julho", desktop: 73 },
-  { month: "Set", desktop: 209 },
-  { month: "Out", desktop: 214 },
-]
-// Config do gráfico: mantém a série "desktop" e renomeia o label
 const chartConfig = {
   desktop: {
     label: "Novos Usuários",

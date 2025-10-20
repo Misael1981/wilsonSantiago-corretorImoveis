@@ -1,7 +1,7 @@
 import { Outfit, Playfair_Display } from "next/font/google"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
-import FloatingWhatsApp from "@/components/FloatingWhatsApp"
+import HideOnAdminFloatingWhatsApp from "@/components/FloatingWhatsApp/HideOnAdmin"
 import AuthProvider from "./providers/auth"
 
 const outfit = Outfit({
@@ -27,6 +27,9 @@ export const metadata = {
     ],
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
+}
+
+export const viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#0d3b85" },
     { media: "(prefers-color-scheme: dark)", color: "#0d3b85" },
@@ -43,7 +46,7 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           {children}
           <div className="fixed right-4 bottom-4 z-50">
-            <FloatingWhatsApp />
+            <HideOnAdminFloatingWhatsApp />
           </div>
           <Toaster />
         </AuthProvider>
