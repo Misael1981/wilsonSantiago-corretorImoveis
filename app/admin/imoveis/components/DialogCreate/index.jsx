@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -42,7 +42,7 @@ const PROPERTY_STATUSES = [
   "RESERVED",
 ]
 
-export default function DialogCreate({ open, onOpenChange, onSubmit }) {
+export default function DialogCreate({ open, onOpenChange, onSubmit, initialData, dialogTitle = "Novo Imóvel", submitText = "Criar Imóvel" }) {
   const [form, setForm] = useState({
     title: "",
     type: "CASA",
@@ -173,11 +173,36 @@ export default function DialogCreate({ open, onOpenChange, onSubmit }) {
     })
   }
 
+  useEffect(() => {
+    if (!initialData) return
+    setForm((prev) => ({
+      ...prev,
+      title: initialData.title || "",
+      type: initialData.type || prev.type,
+      status: initialData.status || prev.status,
+      price: initialData.price != null ? String(initialData.price) : "",
+      address: initialData.address || "",
+      number: initialData.number || "",
+      complement: initialData.complement || "",
+      neighborhood: initialData.neighborhood || "",
+      city: initialData.city || "",
+      state: initialData.state || "",
+      zipCode: initialData.zipCode || "",
+      bedrooms: initialData.bedrooms != null ? String(initialData.bedrooms) : "",
+      bathrooms: initialData.bathrooms != null ? String(initialData.bathrooms) : "",
+      garageSpaces: initialData.garageSpaces != null ? String(initialData.garageSpaces) : "0",
+      area: initialData.area != null ? String(initialData.area) : "",
+      imageUrlsText: "",
+      imageUrls: Array.isArray(initialData.imageUrls) ? initialData.imageUrls : [],
+      featured: !!initialData.featured,
+    }))
+  }, [initialData])
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] max-w-3xl overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Novo Imóvel</DialogTitle>
+          <DialogTitle>{dialogTitle}</DialogTitle>
           <DialogDescription>Preencha os dados do imóvel</DialogDescription>
         </DialogHeader>
 
@@ -384,7 +409,7 @@ export default function DialogCreate({ open, onOpenChange, onSubmit }) {
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancelar
           </Button>
-          <Button onClick={handleSave}>Criar Imóvel</Button>
+          <Button onClick={handleSave}>{submitText}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -20,3 +20,90 @@ export async function GET(req, { params }) {
     return NextResponse.json({ error: "Server error" }, { status: 500 })
   }
 }
+
+export async function DELETE(req, { params }) {
+  const session = await getServerSession(authOptions)
+  if (!session || session.user?.role !== "ADMIN") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  }
+
+  const { slugOrId } = await params
+  try {
+    const found = await prisma.property.findFirst({
+      where: { OR: [{ id: slugOrId }, { slug: slugOrId }] },
+      select: { id: true },
+    })
+    if (!found) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 })
+    }
+
+    await prisma.property.delete({ where: { id: found.id } })
+    return NextResponse.json({ ok: true }, { status: 200 })
+  } catch (err) {
+    console.error(err)
+    return NextResponse.json({ error: "Server error" }, { status: 500 })
+  }
+}
+
+export async function PUT(req, { params }) {
+  const session = await getServerSession(authOptions)
+  if (!session || session.user?.role !== "ADMIN") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  }
+
+  const { slugOrId } = await params
+  try {
+    const body = await req.json()
+    const found = await prisma.property.findFirst({
+      where: { OR: [{ id: slugOrId }, { slug: slugOrId }] },
+      select: { id: true },
+    })
+    if (!found) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 })
+    }
+
+    const allowed = [
+      "title",
+      "type",
+      "status",
+      "price",
+      "address",
+      "number",
+      "complement",
+      "neighborhood",
+      "city",
+      "state",
+      "zipCode",
+      "bedrooms",
+      "bathrooms",
+      "garageSpaces",
+      "area",
+      "imageUrls",
+      "featured",
+    ]
+    const data = Object.fromEntries(
+      Object.entries(body).filter(([k]) => allowed.includes(k))
+    )
+
+    const updated = await prisma.property.update({
+      where: { id: found.id },
+      data,
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        type: true,
+        status: true,
+        price: true,
+        city: true,
+        featured: true,
+      },
+    })
+    return NextResponse.json(updated, { status: 200 })
+  } catch (err) {
+    console.error(err)
+    return NextResponse.json({ error: "Server error" }, { status: 500 })
+  }
+}
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/auth"
