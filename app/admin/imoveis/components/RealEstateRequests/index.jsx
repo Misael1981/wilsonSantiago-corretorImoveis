@@ -30,13 +30,6 @@ import {
 import { toast } from "sonner"
 
 function RealEstateRequests({ propertyRequests }) {
-  const STATUS_LABELS = {
-    PENDING: "Pendente",
-    CONTACTED: "Em negociação",
-    COMPLETED: "Concluído",
-    CANCELLED: "Cancelado",
-  }
-
   const TYPE_LABELS = {
     HOUSE: "Casa",
     APARTMENT: "Apartamento",
@@ -45,6 +38,13 @@ function RealEstateRequests({ propertyRequests }) {
     COMMERCIAL: "Comercial",
     STORE: "Loja",
     OTHER: "Outro",
+  }
+
+  const STATUS_LABELS = {
+    PENDING: "Pendente",
+    CONTACTED: "Em negociação",
+    COMPLETED: "Concluído",
+    CANCELLED: "Cancelado",
   }
 
   const badgeClassForStatus = (status) => {
@@ -194,11 +194,12 @@ function RealEstateRequests({ propertyRequests }) {
         </span>
       </div>
 
-      <div>
+      <div className="flex flex-wrap justify-center gap-4 lg:justify-start">
         {propertyRequests?.map((req) => (
-          <Card key={req.id} className="w-[400px]">
+          <Card key={req.id} className="w-[400px] max-w-[95%]">
             <CardContent>
               <div>
+                {/* CTA */}
                 <div className="mb-4 flex justify-end">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -228,6 +229,7 @@ function RealEstateRequests({ propertyRequests }) {
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
+                {/* Cabeçalho */}
                 <div className="mb-4 flex items-center justify-between">
                   <div>
                     <h4 className="text-lg font-semibold">{req.name || "—"}</h4>
