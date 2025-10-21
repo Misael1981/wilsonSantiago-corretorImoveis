@@ -16,13 +16,37 @@ const SearchTables = ({ view }) => {
   return (
     <section className="w-full p-4">
       <div className="flex flex-wrap items-center justify-center gap-4">
-        <Button variant={view === "available" ? "default" : "outline"} onClick={() => setView("available")}>
+        <Button
+          className={
+            view === "available"
+              ? "bg-gradient-wilson-golden text-wilson-blue"
+              : ""
+          }
+          variant={view === "available" ? "default" : "outline"}
+          onClick={() => setView("available")}
+        >
           Imóveis Disponíveis
         </Button>
-        <Button variant={view === "listing" ? "default" : "outline"} onClick={() => setView("listing")}>
+        <Button
+          className={
+            view === "listing"
+              ? "bg-gradient-wilson-golden text-wilson-blue"
+              : ""
+          }
+          variant={view === "listing" ? "default" : "outline"}
+          onClick={() => setView("listing")}
+        >
           Pedidos de Cadastros
         </Button>
-        <Button variant={view === "requests" ? "default" : "outline"} onClick={() => setView("requests")}>
+        <Button
+          className={
+            view === "requests"
+              ? "bg-gradient-wilson-golden text-wilson-blue"
+              : ""
+          }
+          variant={view === "requests" ? "default" : "outline"}
+          onClick={() => setView("requests")}
+        >
           Imóveis Encomendados
         </Button>
       </div>

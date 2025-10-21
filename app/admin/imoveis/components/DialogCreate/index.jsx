@@ -22,6 +22,7 @@ import {
 import { Switch } from "@/components/ui/switch"
 import { toast } from "sonner"
 import UploadImagens from "./upload-images"
+import { Textarea } from "@/components/ui/textarea"
 const PROPERTY_TYPES = [
   "CASA",
   "APARTAMENTO",
@@ -42,9 +43,17 @@ const PROPERTY_STATUSES = [
   "RESERVED",
 ]
 
-export default function DialogCreate({ open, onOpenChange, onSubmit, initialData, dialogTitle = "Novo Imóvel", submitText = "Criar Imóvel" }) {
+export default function DialogCreate({
+  open,
+  onOpenChange,
+  onSubmit,
+  initialData,
+  dialogTitle = "Novo Imóvel",
+  submitText = "Criar Imóvel",
+}) {
   const [form, setForm] = useState({
     title: "",
+    description: "",
     type: "CASA",
     status: "ACTIVE",
     price: "",
@@ -188,12 +197,19 @@ export default function DialogCreate({ open, onOpenChange, onSubmit, initialData
       city: initialData.city || "",
       state: initialData.state || "",
       zipCode: initialData.zipCode || "",
-      bedrooms: initialData.bedrooms != null ? String(initialData.bedrooms) : "",
-      bathrooms: initialData.bathrooms != null ? String(initialData.bathrooms) : "",
-      garageSpaces: initialData.garageSpaces != null ? String(initialData.garageSpaces) : "0",
+      bedrooms:
+        initialData.bedrooms != null ? String(initialData.bedrooms) : "",
+      bathrooms:
+        initialData.bathrooms != null ? String(initialData.bathrooms) : "",
+      garageSpaces:
+        initialData.garageSpaces != null
+          ? String(initialData.garageSpaces)
+          : "0",
       area: initialData.area != null ? String(initialData.area) : "",
       imageUrlsText: "",
-      imageUrls: Array.isArray(initialData.imageUrls) ? initialData.imageUrls : [],
+      imageUrls: Array.isArray(initialData.imageUrls)
+        ? initialData.imageUrls
+        : [],
       featured: !!initialData.featured,
     }))
   }, [initialData])
@@ -374,6 +390,19 @@ export default function DialogCreate({ open, onOpenChange, onSubmit, initialData
               />
               <Label htmlFor="featured">Destaque</Label>
             </div>
+          </div>
+          {/* descrição */}
+          <div className="space-y-2">
+            <Label htmlFor="create-description">Descrição</Label>
+            <Textarea
+              id="create-description"
+              value={form.description}
+              onChange={(e) =>
+                setForm({ ...form, description: e.target.value })
+              }
+              placeholder="Detalhes, diferenciais e observações do imóvel"
+              className="min-h-[120px]"
+            />
           </div>
           <div className="space-y-2">
             <Label>Status</Label>

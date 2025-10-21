@@ -104,8 +104,10 @@ const AvailableProperties = ({ properties }) => {
                     <div className="font-medium">{p.title}</div>
                     <div className="text-muted-foreground text-sm">
                       {p.type} •{" "}
-                      <Badge className="bg-green-500 text-xs font-medium text-white">
-                        {p.status}
+                      <Badge
+                        className={`${badgeClassForStatus(p.status)} text-xs font-medium`}
+                      >
+                        {STATUS_LABELS[p.status] ?? p.status}
                       </Badge>{" "}
                       • {p.city}
                     </div>
@@ -175,3 +177,43 @@ const AvailableProperties = ({ properties }) => {
 }
 
 export default AvailableProperties
+
+// Map de rótulos PT-BR para exibição
+const STATUS_LABELS = {
+  ACTIVE: "Ativo",
+  PENDING: "Pendente",
+  SOLD: "Vendido",
+  SPECIAL_CONDITION: "Condição especial",
+  INACTIVE: "Inativo",
+  RESERVED: "Reservado",
+}
+
+const TYPE_LABELS = {
+  CASA: "Casa",
+  APARTAMENTO: "Apartamento",
+  TERRENO: "Terreno",
+  LOJA: "Loja",
+  CHACARA: "Chácara",
+  SITIO: "Sítio",
+  GALPAO: "Galpão",
+  SALA_COMERCIAL: "Sala comercial",
+}
+
+const badgeClassForStatus = (s) => {
+  switch (s) {
+    case "ACTIVE":
+      return "bg-green-500 text-white"
+    case "PENDING":
+      return "bg-yellow-500 text-white"
+    case "SOLD":
+      return "bg-gray-500 text-white"
+    case "SPECIAL_CONDITION":
+      return "bg-purple-600 text-white"
+    case "INACTIVE":
+      return "bg-slate-400 text-white"
+    case "RESERVED":
+      return "bg-blue-500 text-white"
+    default:
+      return "bg-secondary"
+  }
+}

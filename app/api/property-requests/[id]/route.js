@@ -4,6 +4,11 @@ import { NextResponse } from "next/server"
 const allowed = ["PENDING", "CONTACTED", "COMPLETED", "CANCELLED"]
 
 export async function PATCH(req, { params }) {
+  const session = await getServerSession(authOptions)
+  if (!session || session.user?.role !== "ADMIN") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  }
+
   try {
     const { id } = await params
     const body = await req.json()
@@ -33,3 +38,30 @@ export async function PATCH(req, { params }) {
     return NextResponse.json({ error: "Server error" }, { status: 500 })
   }
 }
+
+export async function DELETE(req, { params }) {
+  const session = await getServerSession(authOptions)
+  if (!session || session.user?.role !== "ADMIN") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  }
+
+  try {
+    const { id } = await params
+    const exists = await prisma.propertyRequest.findUnique({
+      where: { id },
+      select: { id: true },
+    })
+    if (!exists) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 })
+    }
+
+    await prisma.propertyRequest.delete({ where: { id } })
+    return NextResponse.json({ ok: true }, { status: 200 })
+  } catch (error) {
+    console.error(error)
+    return NextResponse.json({ error: "Server error" }, { status: 500 })
+  }
+}
+
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/auth"

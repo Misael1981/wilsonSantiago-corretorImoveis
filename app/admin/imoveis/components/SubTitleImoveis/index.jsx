@@ -19,6 +19,7 @@ const SubTitleImoveis = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           title: form.title,
+          description: form.description,
           type: form.type,
           status: form.status,
           price: form.price,

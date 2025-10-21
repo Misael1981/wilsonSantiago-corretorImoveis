@@ -1,6 +1,8 @@
 import HeaderAdmin from "../components/HeaderAdmin"
 import AvailableProperties from "./components/AvailableProperties"
 import RealEstateFilters from "./components/RealEstateFilters"
+import RealEstateRequests from "./components/RealEstateRequests"
+import RegistrationRequests from "./components/RegistrationRequests"
 import SearchTables from "./components/SearchTables"
 import SubTitleImoveis from "./components/SubTitleImoveis"
 import SummaryCards from "./components/SummaryCards"
@@ -13,18 +15,15 @@ export default async function Imoveis({ searchParams }) {
   const q = (params?.q || "").trim()
 
   // Resumo (dinâmico)
-  const [
-    totalProperties,
-    soldCount,
-    listingRequestsCount,
-    propertyRequestsCount,
-  ] = await Promise.all([
-    prisma.property.count(),
-    prisma.property.count({ where: { status: "SOLD" } }),
-    prisma.listingRequest.count(),
-    prisma.propertyRequest.count(),
-  ])
+  const propertiesCount = await prisma.property.count()
+  const soldPropertiesCount = await prisma.property.count({
+    where: { status: "SOLD" },
+  })
+  const listingRequestsCount = await prisma.listingRequest.count()
+  const propertyRequestsCount = await prisma.propertyRequest.count()
 
+  const totalProperties = propertiesCount
+  const soldCount = soldPropertiesCount
   // Lista para a visão "Imóveis Disponíveis"
   const availableWhere = {
     AND: [
@@ -40,6 +39,40 @@ export default async function Imoveis({ searchParams }) {
         : {},
     ],
   }
+
+  const listings = await prisma.listingRequest.findMany({
+    orderBy: { createdAt: "desc" },
+    select: {
+      id: true,
+      name: true,
+      phone: true,
+      city: true,
+      type: true,
+      description: true,
+      title: true,
+      price: true,
+      status: true,
+      createdAt: true,
+    },
+  })
+
+  const propertyRequests = await prisma.propertyRequest.findMany({
+    orderBy: { createdAt: "desc" },
+    select: {
+      id: true,
+      name: true,
+      phone: true,
+      city: true,
+      type: true,
+      neighborhood: true,
+      description: true,
+      minPrice: true,
+      maxPrice: true,
+      status: true,
+      source: true,
+      createdAt: true,
+    },
+  })
 
   const availableProperties =
     view === "available"
@@ -81,11 +114,9 @@ export default async function Imoveis({ searchParams }) {
         </div>
       )}
 
-      {view === "listing" && (
-        <div className="p-4">Pedidos de cadastro (em breve)</div>
-      )}
+      {view === "listing" && <RegistrationRequests listings={listings} />}
       {view === "requests" && (
-        <div className="p-4">Imóveis encomendados (em breve)</div>
+        <RealEstateRequests propertyRequests={propertyRequests} />
       )}
     </div>
   )

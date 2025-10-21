@@ -43,7 +43,12 @@ const RealEstateFilters = () => {
               </div>
             </div>
             <div className="flex gap-2">
-              <Button onClick={applySearch}>Buscar</Button>
+              <Button
+                className="bg-gradient-wilson-blue text-wilson-golden"
+                onClick={applySearch}
+              >
+                Buscar
+              </Button>
               <Button
                 variant="outline"
                 onClick={() => {
