@@ -50,11 +50,6 @@ const items = [
     url: "/admin/info-grupo",
     icon: Group,
   },
-  {
-    title: "Solicitações de Imóveis",
-    url: "/admin/imoveis/solicitacoes",
-    icon: House,
-  },
 ]
 
 const publicPagesItems = [
