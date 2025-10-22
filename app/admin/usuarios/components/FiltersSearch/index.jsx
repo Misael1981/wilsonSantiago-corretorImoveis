@@ -28,9 +28,11 @@ const FiltersSearch = ({ q = "", role, verified }) => {
   }
 
   const applySearch = () => pushParams({ q: query })
-  const clearAll = () => pushParams({ q: "", role: undefined, verified: undefined })
+  const clearAll = () =>
+    pushParams({ q: "", role: undefined, verified: undefined })
   const setAdmins = () => pushParams({ role: "ADMIN", verified: undefined })
-  const setVerified = (flag) => pushParams({ verified: flag ? "true" : "false", role: undefined })
+  const setVerified = (flag) =>
+    pushParams({ verified: flag ? "true" : "false", role: undefined })
 
   const isAdmins = role === "ADMIN"
   const isVerified = verified === "true"
@@ -59,19 +61,39 @@ const FiltersSearch = ({ q = "", role, verified }) => {
                 />
               </div>
             </div>
-            <div className="flex gap-2">
-              <Button size="sm" variant={!isAdmins && !isVerified && !isUnverified && !q ? "default" : "outline"} onClick={clearAll}>
+            <div className="flex gap-2 overflow-auto [&::-webkit-scrollbar]:hidden">
+              <Button
+                size="sm"
+                variant={
+                  !isAdmins && !isVerified && !isUnverified && !q
+                    ? "default"
+                    : "outline"
+                }
+                onClick={clearAll}
+              >
                 Todos
               </Button>
-              <Button size="sm" variant={isAdmins ? "default" : "outline"} onClick={setAdmins}>
+              <Button
+                size="sm"
+                variant={isAdmins ? "default" : "outline"}
+                onClick={setAdmins}
+              >
                 <Shield className="mr-1 h-3 w-3" />
                 Admins
               </Button>
-              <Button size="sm" variant={isVerified ? "default" : "outline"} onClick={() => setVerified(true)}>
+              <Button
+                size="sm"
+                variant={isVerified ? "default" : "outline"}
+                onClick={() => setVerified(true)}
+              >
                 <UserCheck className="mr-1 h-3 w-3" />
                 Verificados
               </Button>
-              <Button size="sm" variant={isUnverified ? "default" : "outline"} onClick={() => setVerified(false)}>
+              <Button
+                size="sm"
+                variant={isUnverified ? "default" : "outline"}
+                onClick={() => setVerified(false)}
+              >
                 <UserX className="mr-1 h-3 w-3" />
                 Não Verificados
               </Button>

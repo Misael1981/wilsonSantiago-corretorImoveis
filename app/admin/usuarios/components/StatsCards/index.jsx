@@ -1,7 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Calendar, Mail, ShieldCheck, Users } from "lucide-react"
 
-const StatsCards = ({ totalUsers, adminCount, verifiedCount, newUsersThisMonth }) => {
+const StatsCards = ({
+  totalUsers,
+  adminCount,
+  verifiedCount,
+  newUsersThisMonth,
+}) => {
   const stats = [
     { title: "Total de Usuários", icon: Users, value: totalUsers },
     { title: "Administradores", icon: ShieldCheck, value: adminCount },
@@ -10,7 +15,7 @@ const StatsCards = ({ totalUsers, adminCount, verifiedCount, newUsersThisMonth }
   ]
 
   return (
-    <section className="flex flex-wrap gap-4 p-4">
+    <section className="flex flex-wrap justify-center gap-4 p-4 lg:justify-start">
       {stats.map((stat) => (
         <Card className="w-[250px]" key={stat.title}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

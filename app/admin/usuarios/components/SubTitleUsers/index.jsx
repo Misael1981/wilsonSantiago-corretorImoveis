@@ -42,14 +42,16 @@ const SubTitleUsers = () => {
   }
 
   return (
-    <section className="flex w-full flex-wrap items-center justify-between p-4">
-      <div>
-        <h2 className="text-2xl font-bold text-gray-800">Gerenciar Usuários</h2>
-        <p className="text-gray-600">
+    <section className="flex w-full flex-wrap items-center justify-between gap-4 p-4">
+      <div className="w-full lg:w-fit">
+        <h2 className="text-center text-2xl font-bold text-gray-800 lg:text-start">
+          Gerenciar Usuários
+        </h2>
+        <p className="text-center text-gray-600 lg:text-start">
           Gerencie usuários e permissões do sistema
         </p>
       </div>
-      <div className="">
+      <div className="flex w-full justify-center lg:w-fit lg:justify-end">
         <Button
           className="bg-gradient-wilson-blue px-6 py-4 text-lg text-white"
           onClick={openCreateDialog}
