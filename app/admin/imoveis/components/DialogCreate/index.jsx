@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -20,9 +20,9 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
-import { toast } from "sonner"
 import UploadImagens from "./upload-images"
 import { Textarea } from "@/components/ui/textarea"
+import { toast } from "sonner"
 const PROPERTY_TYPES = [
   "CASA",
   "APARTAMENTO",
@@ -78,97 +78,41 @@ export default function DialogCreate({
     return Number.isFinite(n) ? n : undefined
   }
 
-  // Upload de fotos (Cloudinary)
-  const fileInputRef = useRef(null)
-  const [files, setFiles] = useState([])
-  const [uploading, setUploading] = useState(false)
-  const MAX_FILES = 10
-  const MAX_SIZE = 5 * 1024 * 1024 // 5MB
-
-  const handleFilesChange = (e) => {
-    const selected = Array.from(e.target.files || [])
-    if (selected.length === 0) return
-
-    const invalidType = selected.some((f) => !f.type.startsWith("image/"))
-    if (invalidType) {
-      toast.error("Apenas imagens são permitidas.")
-      return
-    }
-    const tooLarge = selected.some((f) => f.size > MAX_SIZE)
-    if (tooLarge) {
-      toast.error("Cada imagem deve ter no máximo 5MB.")
-      return
-    }
-
-    const combined = [...files, ...selected]
-    if (combined.length > MAX_FILES) {
-      toast.error(`Máximo de ${MAX_FILES} fotos.`)
-      setFiles(combined.slice(0, MAX_FILES))
-      return
-    }
-    setFiles(combined)
-  }
-
-  const handleChooseFiles = () => {
-    fileInputRef.current?.click()
-  }
-
-  const uploadImages = async () => {
-    if (files.length === 0) {
-      toast.error("Selecione imagens antes de enviar.")
-      return
-    }
-    setUploading(true)
-    try {
-      const fd = new FormData()
-      files.forEach((f) => fd.append("file", f))
-      fd.append("folder", "properties")
-
-      const res = await fetch("/api/uploads/image", {
-        method: "POST",
-        body: fd,
-      })
-      if (!res.ok) {
-        const text = await res.text()
-        throw new Error(text || "Falha ao enviar imagens")
-      }
-      const data = await res.json()
-      const urls = Array.isArray(data.urls) ? data.urls : []
-      setForm((prev) => ({
-        ...prev,
-        imageUrls: [...(prev.imageUrls || []), ...urls],
-      }))
-      setFiles([])
-      toast.success("Imagens enviadas com sucesso!")
-    } catch (err) {
-      console.error(err)
-      toast.error("Erro ao enviar imagens.")
-    } finally {
-      setUploading(false)
-    }
-  }
-
   const handleSave = () => {
-    const required = [
-      form.title,
-      form.address,
-      form.neighborhood,
-      form.city,
-      form.state,
-      form.price,
-      form.bedrooms,
-      form.bathrooms,
-      form.type,
-    ]
-    if (required.some((x) => !x || String(x).trim() === "")) {
+    const requiredMap = {
+      title: "Título",
+      // Endereço removido dos obrigatórios
+      neighborhood: "Bairro",
+      city: "Cidade",
+      state: "Estado",
+      price: "Preço",
+      bedrooms: "Quartos",
+      bathrooms: "Banheiros",
+      type: "Tipo",
+    }
+    const missing = Object.entries(requiredMap)
+      .filter(([key]) => {
+        const v = form[key]
+        return !v || String(v).trim() === ""
+      })
+      .map(([, label]) => label)
+
+    if (missing.length) {
+      // Feedback claro ao usuário
+      toast.error(`Preencha: ${missing.join(", ")}`)
       return
     }
 
-    const imageUrls =
+    const parsedImageUrls =
       form.imageUrlsText
         .split(",")
         .map((s) => s.trim())
         .filter((s) => s.length > 0) || []
+
+    const imageUrls = [
+      ...(Array.isArray(form.imageUrls) ? form.imageUrls : []),
+      ...parsedImageUrls,
+    ]
 
     onSubmit({
       ...form,
@@ -253,7 +197,7 @@ export default function DialogCreate({
             </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="address">Endereço *</Label>
+            <Label htmlFor="address">Endereço</Label>
             <Input
               id="address"
               value={form.address}
@@ -430,6 +374,20 @@ export default function DialogCreate({
                   imageUrls: [...(prev.imageUrls || []), ...urls],
                 }))
               }
+            />
+          </div>
+          {/* Campo opcional para URLs de imagens separadas por vírgula */}
+          <div className="space-y-2">
+            <Label htmlFor="imageUrlsText">
+              URLs de imagens (separadas por vírgula)
+            </Label>
+            <Input
+              id="imageUrlsText"
+              value={form.imageUrlsText}
+              onChange={(e) =>
+                setForm({ ...form, imageUrlsText: e.target.value })
+              }
+              placeholder="https://exemplo.com/img1.jpg, https://exemplo.com/img2.jpg"
             />
           </div>
         </div>

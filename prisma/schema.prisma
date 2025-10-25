@@ -74,7 +74,7 @@ model Property {
   id              String            @id @default(cuid())
   title           String
   description     String?
-  address         String
+  address         String?
   number          String?
   complement      String?
   neighborhood    String

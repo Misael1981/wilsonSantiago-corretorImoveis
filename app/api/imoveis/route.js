@@ -29,12 +29,12 @@ export async function POST(req) {
       status,
       imageUrls,
       featured,
+      description,
     } = body
 
-    // Campos obrigatórios
+    // Campos obrigatórios (endereço NÃO é mais obrigatório)
     const hasRequired =
       title &&
-      address &&
       neighborhood &&
       city &&
       state &&
@@ -51,7 +51,8 @@ export async function POST(req) {
 
     const data = {
       title: String(title).trim(),
-      address: String(address).trim(),
+      // endereço opcional → salva vazio se não vier
+      address: address ? String(address).trim() : "",
       number: number ? String(number).trim() : null,
       complement: complement ? String(complement).trim() : null,
       neighborhood: String(neighborhood).trim(),
@@ -74,6 +75,8 @@ export async function POST(req) {
         : [],
       featured: typeof featured === "boolean" ? featured : false,
       createdById: session.user.id,
+      // descrição opcional: salva somente se vier
+      description: description ? String(description).trim() : undefined,
     }
 
     const created = await prisma.property.create({
