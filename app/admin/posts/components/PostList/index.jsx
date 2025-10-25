@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Edit, MoreHorizontal, Trash2 } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { toast } from "@/components/ui/sonner"
+
 import {
   Dialog,
   DialogContent,
@@ -20,6 +20,7 @@ import {
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
+import { toast } from "sonner"
 
 function PostList({ posts }) {
   const router = useRouter()
