@@ -1,81 +1,71 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import SubTitle from "../SubTitle"
 import { Button } from "../ui/button"
 import VideoCard from "./components/VideoCard"
 
+const formatViews = (views) =>
+  views >= 1_000_000
+    ? `${(views / 1_000_000).toFixed(1)} mi`
+    : views >= 1_000
+      ? `${(views / 1_000).toFixed(1)} mil`
+      : views
+
+const formatDate = (isoString) => {
+  const date = new Date(isoString)
+  return date.toLocaleDateString("pt-BR", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  })
+}
+
 const VideoHighlights = ({ highlights = [] }) => {
   const [activeVideo, setActiveVideo] = useState(null)
+  const [videos, setVideos] = useState([])
 
-  // Funções utilitárias
-  const formatViews = (views) => {
-    if (views >= 1000000) {
-      return `${(views / 1000000).toFixed(1)}M`
-    } else if (views >= 1000) {
-      return `${(views / 1000).toFixed(1)}K`
-    }
-    return views.toString()
-  }
+  useEffect(() => {
+    const handle = "@wilsonrodrigosantiago7266"
+    fetch(
+      `/api/videos?handle=${encodeURIComponent(handle)}&list=1&maxResults=6`,
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("🎥 API data:", data)
+        setVideos(Array.isArray(data?.videos) ? data.videos : [])
+      })
+      .catch((err) => {
+        console.error("Erro ao carregar vídeos:", err)
+        setVideos([])
+      })
+  }, [])
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString)
-    return date.toLocaleDateString("pt-BR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    })
-  }
+  const videoHighlights = videos.map((v) => ({
+    id: v.id,
+    title: v.title,
+    description: v.description,
+    youtubeId: v.id,
+    thumbnail: v.thumbnail,
+    price: "",
+    location: "",
+    specs: { bedrooms: 0, bathrooms: 0, garage: 0, area: "" },
+    tags: [],
+    publishedAt: v.publishedAt,
+    views: v.views ?? 0,
+  }))
 
-  // Dados de exemplo para demonstração
-  const defaultHighlights = [
-    {
-      id: 1,
-      title: "LANÇAMENTO EXCLUSIVO - Casa Moderna no Centro",
-      description:
-        "Conheça esta incrível casa de 3 dormitórios com acabamento de primeira linha. Localização privilegiada e preço imperdível!",
-      youtubeId: "dQw4w9WgXcQ", // Substitua pelo ID real do seu vídeo
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
-      price: "R$ 450.000",
-      location: "Centro, Pouso Alegre - MG",
-      specs: {
-        bedrooms: 3,
-        bathrooms: 2,
-        garage: 2,
-        area: "120m²",
-      },
-      tags: ["LANÇAMENTO", "DESTAQUE"],
-      publishedAt: "2024-01-15",
-      views: 1250,
-    },
-    {
-      id: 2,
-      title: "OPORTUNIDADE ÚNICA - Apartamento Vista Panorâmica",
-      description:
-        "Apartamento no último andar com vista deslumbrante da cidade. Acabamento premium e área de lazer completa.",
-      youtubeId: "dQw4w9WgXcQ", // Substitua pelo ID real do seu vídeo
-      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
-      price: "R$ 320.000",
-      location: "Bairro Nobre, Pouso Alegre - MG",
-      specs: {
-        bedrooms: 2,
-        bathrooms: 1,
-        garage: 1,
-        area: "85m²",
-      },
-      tags: ["PROMOÇÃO", "VISTA PANORÂMICA"],
-      publishedAt: "2024-01-10",
-      views: 890,
-    },
-  ]
-
-  const highlightsData = highlights.length > 0 ? highlights : defaultHighlights
+  const highlightsData =
+    videoHighlights.length > 0
+      ? videoHighlights
+      : highlights.length > 0
+        ? highlights
+        : []
 
   return (
     <section className="boxed p-4 lg:mt-8" id="highlights">
       <SubTitle title="Novidades & Lançamentos" />
 
-      {/* Desktop: Grid 2 colunas | Mobile: Carrossel horizontal */}
       <div className="mt-8">
         {/* Mobile Carousel */}
         <div className="mt-8 flex gap-4 overflow-auto lg:hidden [&::-webkit-scrollbar]:hidden">
@@ -85,7 +75,6 @@ const VideoHighlights = ({ highlights = [] }) => {
               className="w-[500px] max-w-[100%] flex-shrink-0"
             >
               <VideoCard
-                key={highlight.id}
                 highlight={highlight}
                 activeVideo={activeVideo}
                 setActiveVideo={setActiveVideo}
@@ -111,7 +100,6 @@ const VideoHighlights = ({ highlights = [] }) => {
         </div>
       </div>
 
-      {/* Call to Action */}
       <div className="rounded-2xl p-8 text-center text-white">
         <Button className="bg-gradient-wilson-golden hover:text-blue-750 text-blue-950 transition-colors">
           Confira outras novidades
