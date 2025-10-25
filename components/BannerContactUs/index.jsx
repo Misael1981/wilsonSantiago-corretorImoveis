@@ -1,15 +1,20 @@
+"use client"
+
 import { CheckCheck } from "lucide-react"
 import ThirdTitle from "../ThirdTitle"
 import { Button } from "../ui/button"
 import Image from "next/image"
+import { useState } from "react"
+import DialogOrderYourProperty from "../DialogOrderYourProperty"
 
 const items = [
-  "Simule um financiamento para a compra do seu imóvel com as taxas mais baixas do mercado.",
-  "Um de nossos agentes irá te orientar durante todo o processo, desde a documentação inicial, encaminhamento para a instituição financeira, até as chaves do seu imóvel.",
-  "Entre em contato, e veja que o sonho é possível!",
+  "Rápido e eficiente, sem compromisso algum, um de nossos agentes entrará em contato com você para te ajudar a encontrar o imóvel ideal.",
+
+  "Preencha o formulário, e veja que o sonho é possível!",
 ]
 
 const BannerContactUs = () => {
+  const [dialogOpen, setDialogOpen] = useState(false)
   const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP
   const wa = (msg) =>
     `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`
@@ -17,10 +22,14 @@ const BannerContactUs = () => {
     <section className="boxed p-4">
       <div className="shadow-custom-deep lg:flex lg:items-stretch">
         <div className="bg-gradient-wilson-blue flex flex-col justify-between space-y-4 rounded-t-md p-4 lg:flex-2 lg:rounded-l-md lg:rounded-tr-none">
-          <ThirdTitle title="Fale Conosco" />
+          <ThirdTitle title="Encomende seu imóvel" />
           <h4 className="text-xl font-semibold text-white/70">
-            Nós podemos te ajudar a transformar seu sonho em realidade
+            Não encontrou o imóvel que está procurando?
           </h4>
+          <p className="text-white/70">
+            Preencha o formulário abaixo e um de nossos agentes entrará em
+            contato com você para te ajudar a encontrar o imóvel ideal.
+          </p>
           <ul className="space-y-2">
             {items.map((item, index) => (
               <li key={index} className="text-md text-white/70">
@@ -31,16 +40,13 @@ const BannerContactUs = () => {
           </ul>
           <Button
             className="bg-gradient-wilson-golden w-[50%] font-bold text-blue-950"
-            asChild
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              setDialogOpen(true)
+            }}
           >
-            <a
-              href={wa("Olá, gostaria de fazer um orçamento.")}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Fale conosco pelo WhatsApp"
-            >
-              Fale Conosco
-            </a>
+            Encomende seu imóvel
           </Button>
         </div>
         <div className="relative h-[350px] lg:w-[400px] lg:flex-1">
@@ -53,6 +59,7 @@ const BannerContactUs = () => {
           />
         </div>
       </div>
+      <DialogOrderYourProperty open={dialogOpen} onOpenChange={setDialogOpen} />
     </section>
   )
 }
