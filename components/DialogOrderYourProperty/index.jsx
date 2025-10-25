@@ -24,8 +24,10 @@ import {
 } from "../ui/select"
 import { Textarea } from "../ui/textarea"
 
-const DialogOrderYourProperty = ({ trigger }) => {
-  const [open, setOpen] = useState(false)
+const DialogOrderYourProperty = ({ trigger, open: externalOpen, onOpenChange }) => {
+  const [internalOpen, setInternalOpen] = useState(false)
+  const open = externalOpen !== undefined ? externalOpen : internalOpen
+  const setOpen = onOpenChange || setInternalOpen
   const [form, setForm] = useState({
     nome: "",
     telefone: "",
@@ -44,7 +46,6 @@ const DialogOrderYourProperty = ({ trigger }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    // Regras simples de validação
     if (!form.nome || !form.telefone || !form.tipo || !form.cidade) {
       toast.error("Preencha nome, telefone, tipo e cidade.")
       return
@@ -60,22 +61,10 @@ const DialogOrderYourProperty = ({ trigger }) => {
       const res = await fetch("/api/property-requests", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nome: form.nome,
-          telefone: form.telefone,
-          tipo: form.tipo,
-          cidade: form.cidade,
-          bairro: form.bairro,
-          precoMin: form.precoMin,
-          precoMax: form.precoMax,
-          descricao: form.descricao,
-        }),
+        body: JSON.stringify(form),
       })
 
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}))
-        throw new Error(data?.error || "Erro ao enviar solicitação")
-      }
+      if (!res.ok) throw new Error("Erro ao enviar solicitação")
 
       toast.success("Solicitação enviada! Entraremos em contato.")
       setOpen(false)
@@ -90,16 +79,18 @@ const DialogOrderYourProperty = ({ trigger }) => {
         descricao: "",
       })
     } catch (err) {
-      toast.error(err.message ?? "Erro ao enviar. Tente novamente.")
+      toast.error("Erro ao enviar. Tente novamente.")
     }
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        {trigger ?? <Button variant="outline">Encomende seu Imóvel</Button>}
-      </DialogTrigger>
-
+      {/* só renderiza trigger se foi fornecido */}
+      {trigger && (
+        <DialogTrigger asChild>
+          {trigger}
+        </DialogTrigger>
+      )}
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[520px]">
         <DialogHeader>
           <DialogTitle>Encomende seu Imóvel</DialogTitle>
