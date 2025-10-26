@@ -47,6 +47,7 @@ async function getHomePageData() {
           city: true,
           neighborhood: true,
           slug: true,
+          status: true,
         },
       }),
 
@@ -75,6 +76,7 @@ async function getHomePageData() {
           city: true,
           neighborhood: true,
           slug: true,
+          status: true,
         },
       }),
 
@@ -164,14 +166,7 @@ async function getHomePageData() {
 }
 
 export default async function Home() {
-  const {
-    properties,
-    featuredProperties,
-    propertyTypes,
-    siteConfig,
-    articles,
-    customersData,
-  } = await getHomePageData()
+  const { properties, articles, customersData } = await getHomePageData()
 
   return (
     <>

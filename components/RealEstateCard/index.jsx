@@ -4,6 +4,7 @@ import { CarouselItem } from "@/components/ui/carousel"
 import { BedDouble, CarFront, ChartArea, ShowerHead } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import StatusBadge from "../StatusBadge"
 
 const RealEstateCard = ({ property }) => {
   return (
@@ -27,6 +28,7 @@ const RealEstateCard = ({ property }) => {
                   className="object-cover transition-transform duration-300 hover:scale-105"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 />
+                <StatusBadge status={property.status} />
               </div>
 
               {/* Conteúdo do card */}
