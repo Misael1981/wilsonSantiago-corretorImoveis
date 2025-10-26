@@ -1,3 +1,4 @@
+import MapSection from "@/components/MapSection"
 import Image from "next/image"
 import { MdLocationOn } from "react-icons/md"
 
@@ -15,13 +16,8 @@ const AdressCard = () => {
           </span>
         </li>
       </ul>
-      <div className="relative h-50 w-full overflow-hidden rounded-md">
-        <Image
-          src="/assets/map.PNG"
-          alt="Mapa do endereço"
-          fill
-          className="rounded-md object-cover"
-        />
+      <div className="h-50 w-full overflow-hidden rounded-md">
+        <MapSection />
       </div>
     </div>
   )
