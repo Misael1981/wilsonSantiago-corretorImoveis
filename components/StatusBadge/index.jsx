@@ -5,7 +5,7 @@ import { Badge } from "../ui/badge"
 const STATUS_INFO = {
   ACTIVE: {
     label: "Disponível",
-    className: "bg-green-600 text-white text-lg px-4 rounded-full",
+    className: "bg-green-600 text-white  px-4 rounded-full",
   },
   PENDING: {
     label: "Em análise",

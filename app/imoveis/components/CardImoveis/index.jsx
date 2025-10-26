@@ -5,6 +5,7 @@ import { BedDouble, CarFront, ChartArea, Heart, ShowerHead } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { formatBRL } from "@/lib/utils"
+import StatusBadge from "@/components/StatusBadge"
 
 const CardImoveis = ({ property }) => {
   return (
@@ -21,6 +22,7 @@ const CardImoveis = ({ property }) => {
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 500px, 300px"
                 />
+                <StatusBadge status={property.status} />
               </div>
               <div className="flex flex-col items-start justify-between gap-4 lg:max-w-[65%]">
                 <div>

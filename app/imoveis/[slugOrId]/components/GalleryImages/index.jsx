@@ -1,5 +1,6 @@
 // GalleryImages (component)
 "use client"
+import StatusBadge from "@/components/StatusBadge"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Image from "next/image"
@@ -33,6 +34,7 @@ const GalleryImages = ({ property }) => {
             Sem imagem disponível
           </div>
         )}
+        <StatusBadge status={property.status} />
       </div>
 
       {/* Carrossel de miniaturas com setas */}
