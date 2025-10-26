@@ -234,7 +234,7 @@ const FloatingWhatsApp = () => {
   const phoneNumber =
     (WHATSAPP_ENV && WHATSAPP_ENV.replace(/\D/g, "")) ||
     (adminPhone?.number && adminPhone.number.replace(/\D/g, "")) ||
-    "553591528076"
+    "553599415176"
   const agentName = "Wilson"
   const companyName = "Wilson Corretor Imóveis"
 
