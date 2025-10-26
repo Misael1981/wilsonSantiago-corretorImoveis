@@ -6,6 +6,7 @@ const MapSection = () => {
   const mapsKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY
   const address = "Avenida Abreu Lima, 149 - Centro - Pouso Alegre - MG"
   const encodedAddress = encodeURIComponent(address)
+  const embedSrc = `https://www.google.com/maps/embed/v1/place?q=${encodedAddress}&key=${mapsKey}`
 
   return (
     <section className="flex w-full flex-col items-center justify-center bg-gray-50 py-10">
@@ -20,8 +21,7 @@ const MapSection = () => {
           style={{ border: 0 }}
           loading="lazy"
           allowFullScreen
-          referrerPolicy="no-referrer-when-downgrade"
-          src={`https://www.google.com/maps/embed/v1/place?key=${mapsKey}&q=${encodedAddress}`}
+          src={embedSrc}
         ></iframe>
       </div>
 
