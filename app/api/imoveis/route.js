@@ -81,15 +81,9 @@ export async function POST(req) {
 
     // Geração do codRef via JavaScript (começando em 1000)
     const created = await prisma.$transaction(async (tx) => {
-      // Busca o maior codRef atual
-      const maxResult = await tx.property.aggregate({
-        _max: { codRef: true }
-      })
-      
-      // Define o próximo codRef (mínimo 1000)
+      const maxResult = await tx.property.aggregate({ _max: { codRef: true } })
       const nextCodeRef = Math.max((maxResult._max.codRef || 0) + 1, 1000)
-      
-      // Cria o imóvel com o codRef gerado
+
       return tx.property.create({
         data: { ...data, codRef: nextCodeRef },
         select: {
@@ -106,7 +100,17 @@ export async function POST(req) {
 
     return NextResponse.json(created, { status: 201 })
   } catch (err) {
-    console.error("POST /api/imoveis error:", err)
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
+    // Log mais informativo para Vercel
+    console.error("POST /api/imoveis error:", {
+      message: err?.message,
+      code: err?.code,
+      name: err?.name,
+      meta: err?.meta,
+    })
+    // Expor alguma informação no response (temporário, para diagnosticar em produção)
+    return NextResponse.json(
+      { error: "Internal Server Error", detail: err?.message, code: err?.code },
+      { status: 500 }
+    )
   }
 }
