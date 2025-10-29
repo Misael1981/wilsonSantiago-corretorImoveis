@@ -6,6 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { formatBRL } from "@/lib/utils"
 import StatusBadge from "@/components/StatusBadge"
+import CodRefBadge from "@/components/CodRefBadge"
 
 const CardImoveis = ({ property }) => {
   return (
@@ -30,13 +31,18 @@ const CardImoveis = ({ property }) => {
                     {property.description}
                   </p>
                 </div>
-                <div>
-                  <h2 className="text-wilson-blue text-lg font-bold">
-                    {property.title}
-                  </h2>
-                  <p className="text-sm text-gray-500">
-                    {property.neighborhood}
-                  </p>
+                <div className="flex w-full justify-between">
+                  <div>
+                    <h2 className="text-wilson-blue text-lg font-bold">
+                      {property.title}
+                    </h2>
+                    <p className="text-sm text-gray-500">
+                      {property.neighborhood}
+                    </p>
+                  </div>
+                  <div className="w-fit">
+                    <CodRefBadge codRef={property.codRef} />
+                  </div>
                 </div>
 
                 {/* Informações do imóvel */}

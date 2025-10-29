@@ -48,6 +48,7 @@ async function getHomePageData() {
           neighborhood: true,
           slug: true,
           status: true,
+          codRef: true,
         },
       }),
 
@@ -77,6 +78,7 @@ async function getHomePageData() {
           neighborhood: true,
           slug: true,
           status: true,
+          codRef: true,
         },
       }),
 

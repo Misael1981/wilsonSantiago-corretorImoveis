@@ -32,6 +32,7 @@ export default async function Imoveis({ searchParams }) {
     pageSize = "12",
     title,
     status,
+    codRef,
   } = sp ?? {}
 
   const where = {
@@ -84,6 +85,7 @@ export default async function Imoveis({ searchParams }) {
         neighborhood: true,
         slug: true,
         status: true,
+        codRef: true,
       },
     }),
     prisma.property.count({ where }),

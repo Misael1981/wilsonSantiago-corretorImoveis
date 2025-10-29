@@ -5,6 +5,7 @@ import { BedDouble, CarFront, ChartArea, ShowerHead } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import StatusBadge from "../StatusBadge"
+import CodRefBadge from "../CodRefBadge"
 
 const RealEstateCard = ({ property }) => {
   return (

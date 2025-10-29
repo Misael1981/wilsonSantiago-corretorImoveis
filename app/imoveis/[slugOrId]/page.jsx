@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { FaWhatsapp } from "react-icons/fa"
 import GalleryImages from "./components/GalleryImages"
 import { formatBRL } from "@/lib/utils"
+import CodRefBadge from "@/components/CodRefBadge"
 
 export async function generateMetadata({ params }) {
   const p = await params
@@ -62,9 +63,13 @@ export default async function PropertyDetails({ params }) {
         <CardContent className="p-4">
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:items-stretch">
             {/* Galeria principal */}
+
             <GalleryImages property={property} />
             {/* Informações */}
             <div className="flex h-full flex-col justify-between gap-4">
+              <div className="flex justify-end">
+                <CodRefBadge codRef={property.codRef} />
+              </div>
               <h1 className="text-wilson-blue text-2xl font-bold">
                 {property.title}
               </h1>
