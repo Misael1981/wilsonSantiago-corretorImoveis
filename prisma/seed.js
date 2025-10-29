@@ -346,12 +346,27 @@ async function seedDataBase() {
       },
     ]
 
+    // Busca o maior codRef atual e inicia o contador (mínimo 999)
+    const max = await prisma.property.aggregate({ _max: { codRef: true } })
+    let codRefCounter = Math.max(max._max.codRef ?? 999, 999)
+
     const createdProperties = []
     for (const property of properties) {
-      const created = await prisma.property.upsert({
+      // Se já existe por slug, não cria novamente
+      const existing = await prisma.property.findUnique({
         where: { slug: property.slug },
-        update: {},
-        create: property,
+      })
+      if (existing) {
+        createdProperties.push(existing)
+        continue
+      }
+
+      // Incrementa e garante início em 1000
+      codRefCounter = Math.max(codRefCounter + 1, 1000)
+
+      // Cria com codRef gerado
+      const created = await prisma.property.create({
+        data: { ...property, codRef: codRefCounter },
       })
       createdProperties.push(created)
     }

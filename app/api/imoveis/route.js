@@ -79,16 +79,29 @@ export async function POST(req) {
       description: description ? String(description).trim() : undefined,
     }
 
-    const created = await prisma.property.create({
-      data,
-      select: {
-        id: true,
-        title: true,
-        city: true,
-        status: true,
-        price: true,
-        createdAt: true,
-      },
+    // Geração do codRef via JavaScript (começando em 1000)
+    const created = await prisma.$transaction(async (tx) => {
+      // Busca o maior codRef atual
+      const maxResult = await tx.property.aggregate({
+        _max: { codRef: true }
+      })
+      
+      // Define o próximo codRef (mínimo 1000)
+      const nextCodeRef = Math.max((maxResult._max.codRef || 0) + 1, 1000)
+      
+      // Cria o imóvel com o codRef gerado
+      return tx.property.create({
+        data: { ...data, codRef: nextCodeRef },
+        select: {
+          id: true,
+          title: true,
+          city: true,
+          status: true,
+          price: true,
+          createdAt: true,
+          codRef: true,
+        },
+      })
     })
 
     return NextResponse.json(created, { status: 201 })

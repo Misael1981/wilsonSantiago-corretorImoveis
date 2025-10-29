@@ -72,6 +72,8 @@ model VerificationToken {
 
 model Property {
   id              String            @id @default(cuid())
+  codRef          Int               @unique
+
   title           String
   description     String?
   address         String?
