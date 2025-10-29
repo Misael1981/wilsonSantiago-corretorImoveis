@@ -1,6 +1,7 @@
 "use client"
 
-import React, { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
+import "leaflet/dist/leaflet.css"
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 import L from "leaflet"
 import "leaflet/dist/leaflet.css"
@@ -62,7 +63,7 @@ export default function MapSection({
   const mapCenter = useMemo(() => coords || DEFAULT_BRAZIL_CENTER, [coords])
 
   return (
-    <section className={`flex w-full flex-col items-center justify-center bg-gray-50 py-10 ${className}`}>
+    <section className={`flex w/full flex-col items-center justify-center bg-gray-50 py-10 ${className}`}>
       <h2 className="mb-6 text-center text-2xl font-semibold text-gray-900 md:text-3xl">
         Onde estamos
       </h2>

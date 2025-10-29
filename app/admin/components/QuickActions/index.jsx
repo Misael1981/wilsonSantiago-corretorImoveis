@@ -4,19 +4,19 @@ import Link from "next/link"
 const actions = [
   {
     label: "+ Cadastrar novo imóvel",
-    href: "#",
+    href: "/admin/imoveis",
   },
   {
     label: "+ Escrever novo artigo",
-    href: "#",
+    href: "/admin/artigos",
   },
   {
     label: "Solicitações de Anúncios",
-    href: "#",
+    href: "/admin/imoveis",
   },
   {
     label: "Gerenciar Usuários",
-    href: "#",
+    href: "/admin/usuarios",
   },
 ]
 
