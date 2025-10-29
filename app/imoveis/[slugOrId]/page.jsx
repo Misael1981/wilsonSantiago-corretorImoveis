@@ -63,7 +63,6 @@ export default async function PropertyDetails({ params }) {
         <CardContent className="p-4">
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:items-stretch">
             {/* Galeria principal */}
-
             <GalleryImages property={property} />
             {/* Informações */}
             <div className="flex h-full flex-col justify-between gap-4">
@@ -107,19 +106,17 @@ export default async function PropertyDetails({ params }) {
                 </h2>
                 <p className="text-xs text-gray-600">{property.description}</p>
               </div>
-              {/* <div>
+              <div>
                 <h3 className="text-lg font-semibold text-gray-800">
                   Endereço
                 </h3>
                 <p className="text-sm text-gray-600">
-                  {property.address}{" "}
-                  {property.number ? `, ${property.number}` : ""}{" "}
-                  {property.complement ? ` - ${property.complement}` : ""}
+                  {property.address} {property.number ? `, ${property.number}` : ""} {property.complement ? ` - ${property.complement}` : ""}
                 </p>
                 <p className="text-xs text-gray-500">
                   CEP: {property.zipCode || "N/A"} - {property.state}
                 </p>
-              </div> */}
+              </div>
               <div>
                 <Button
                   className="w-full bg-green-600 text-white hover:bg-green-700"

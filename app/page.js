@@ -59,7 +59,7 @@ async function getHomePageData() {
         orderBy: {
           createdAt: "desc",
         },
-        take: 6,
+        take: 12,
         select: {
           id: true,
           title: true,

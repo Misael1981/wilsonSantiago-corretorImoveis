@@ -40,7 +40,11 @@ const AvailableProperties = ({ properties }) => {
         if (numeric.includes(k)) {
           return typeof v === "number" ? v : v == null ? null : Number(v)
         }
-        if (typeof v === "string") return v.trim()
+        if (typeof v === "string") {
+          const trimmed = v.trim()
+          // Evita apagar campos existentes com string vazia
+          return trimmed === "" ? undefined : trimmed
+        }
         return v
       }
 
@@ -69,7 +73,6 @@ const AvailableProperties = ({ properties }) => {
       for (const key of allowed) {
         const next = normalize(key, data[key])
         const prev = normalize(key, editingProperty[key])
-        // Inclui se for definido e diferente do anterior
         if (typeof next !== "undefined" && JSON.stringify(next) !== JSON.stringify(prev)) {
           updatePayload[key] = next
         }

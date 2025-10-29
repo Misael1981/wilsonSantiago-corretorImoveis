@@ -89,10 +89,23 @@ export default async function Imoveis({ searchParams }) {
             imageUrls: true,
             createdAt: true,
             codRef: true,
+            // --- incluir campos usados na edição para evitar “reset” ---
+            description: true,
+            address: true,
+            number: true,
+            complement: true,
+            neighborhood: true,
+            state: true,
+            zipCode: true,
+            bedrooms: true,
+            bathrooms: true,
+            garageSpaces: true,
+            area: true,
+            featured: true,
+            slug: true,
           },
         })
       : []
-
   return (
     <div>
       <HeaderAdmin label="Imóveis" />
