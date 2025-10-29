@@ -88,6 +88,7 @@ export default async function Imoveis({ searchParams }) {
             city: true,
             imageUrls: true,
             createdAt: true,
+            codRef: true,
           },
         })
       : []

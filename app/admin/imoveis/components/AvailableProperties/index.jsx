@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Edit, MoreHorizontal, Trash2 } from "lucide-react"
 import DialogCreate from "../DialogCreate"
+import CodRefBadge from "@/components/CodRefBadge"
 
 const AvailableProperties = ({ properties }) => {
   const router = useRouter()
@@ -32,28 +33,57 @@ const AvailableProperties = ({ properties }) => {
         toast.error("ID do imóvel não encontrado.")
         return
       }
+
+      // Envia só o que mudou
+      const normalize = (k, v) => {
+        const numeric = ["price", "area", "bedrooms", "bathrooms", "garageSpaces"]
+        if (numeric.includes(k)) {
+          return typeof v === "number" ? v : v == null ? null : Number(v)
+        }
+        if (typeof v === "string") return v.trim()
+        return v
+      }
+
+      const allowed = [
+        "title",
+        "type",
+        "status",
+        "price",
+        "address",
+        "number",
+        "complement",
+        "neighborhood",
+        "city",
+        "state",
+        "zipCode",
+        "bedrooms",
+        "bathrooms",
+        "garageSpaces",
+        "area",
+        "imageUrls",
+        "featured",
+        "description",
+      ]
+
+      const updatePayload = {}
+      for (const key of allowed) {
+        const next = normalize(key, data[key])
+        const prev = normalize(key, editingProperty[key])
+        // Inclui se for definido e diferente do anterior
+        if (typeof next !== "undefined" && JSON.stringify(next) !== JSON.stringify(prev)) {
+          updatePayload[key] = next
+        }
+      }
+
+      if (Object.keys(updatePayload).length === 0) {
+        toast.info("Nenhuma alteração detectada.")
+        return
+      }
+
       const res = await fetch(`/api/imoveis/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: data.title,
-          type: data.type,
-          status: data.status,
-          price: data.price,
-          address: data.address,
-          number: data.number,
-          complement: data.complement,
-          neighborhood: data.neighborhood,
-          city: data.city,
-          state: data.state,
-          zipCode: data.zipCode,
-          bedrooms: data.bedrooms,
-          bathrooms: data.bathrooms,
-          garageSpaces: data.garageSpaces,
-          area: data.area,
-          imageUrls: data.imageUrls || [],
-          featured: !!data.featured,
-        }),
+        body: JSON.stringify(updatePayload),
       })
       if (!res.ok) {
         const msg = await res.text()
@@ -99,20 +129,23 @@ const AvailableProperties = ({ properties }) => {
           {properties.map((p) => (
             <li key={p.id} className="p-4">
               <Card className="w-full">
-                <CardContent className="flex items-center justify-between p-4">
-                  <div>
-                    <div className="font-medium">{p.title}</div>
-                    <div className="text-muted-foreground text-sm">
-                      {p.type} •{" "}
-                      <Badge
-                        className={`${badgeClassForStatus(p.status)} text-xs font-medium`}
-                      >
-                        {STATUS_LABELS[p.status] ?? p.status}
-                      </Badge>{" "}
-                      • {p.city}
+                <CardContent className="flex flex-wrap gap-8 p-4 sm:justify-between">
+                  <div className="flex w-full justify-between gap-8 sm:w-fit">
+                    <div>
+                      <div className="font-medium">{p.title}</div>
+                      <div className="text-muted-foreground text-sm">
+                        {p.type} •{" "}
+                        <Badge
+                          className={`${badgeClassForStatus(p.status)} text-xs font-medium`}
+                        >
+                          {STATUS_LABELS[p.status] ?? p.status}
+                        </Badge>{" "}
+                        • {p.city}
+                      </div>
                     </div>
+                    <CodRefBadge codRef={p.codRef} />
                   </div>
-                  <div className="flex items-center gap-4">
+                  <div className="flex w-full items-center justify-between gap-4 sm:w-fit">
                     <div className="text-right">
                       <div className="font-semibold">
                         {typeof p.price === "number"

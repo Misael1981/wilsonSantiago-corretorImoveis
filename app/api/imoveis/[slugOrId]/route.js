@@ -80,6 +80,7 @@ export async function PUT(req, { params }) {
       "area",
       "imageUrls",
       "featured",
+      "description", // permite atualizar a descrição
     ]
     const data = Object.fromEntries(
       Object.entries(body).filter(([k]) => allowed.includes(k))

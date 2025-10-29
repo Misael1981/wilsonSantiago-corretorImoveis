@@ -79,28 +79,31 @@ export default function DialogCreate({
   }
 
   const handleSave = () => {
-    const requiredMap = {
-      title: "Título",
-      // Endereço removido dos obrigatórios
-      neighborhood: "Bairro",
-      city: "Cidade",
-      state: "Estado",
-      price: "Preço",
-      bedrooms: "Quartos",
-      bathrooms: "Banheiros",
-      type: "Tipo",
-    }
-    const missing = Object.entries(requiredMap)
-      .filter(([key]) => {
-        const v = form[key]
-        return !v || String(v).trim() === ""
-      })
-      .map(([, label]) => label)
+    const isEdit = !!initialData
 
-    if (missing.length) {
-      // Feedback claro ao usuário
-      toast.error(`Preencha: ${missing.join(", ")}`)
-      return
+    // Validação: só na criação
+    if (!isEdit) {
+      const requiredMap = {
+        title: "Título",
+        neighborhood: "Bairro",
+        city: "Cidade",
+        state: "Estado",
+        price: "Preço",
+        bedrooms: "Quartos",
+        bathrooms: "Banheiros",
+        type: "Tipo",
+      }
+      const missing = Object.entries(requiredMap)
+        .filter(([key]) => {
+          const v = form[key]
+          return !v || String(v).trim() === ""
+        })
+        .map(([, label]) => label)
+
+      if (missing.length) {
+        toast.error(`Preencha: ${missing.join(", ")}`)
+        return
+      }
     }
 
     const parsedImageUrls =
@@ -116,12 +119,12 @@ export default function DialogCreate({
 
     onSubmit({
       ...form,
-      price: parseNumbers(form.price),
-      area: form.area ? parseNumbers(form.area) : undefined,
-      bedrooms: parseNumbers(form.bedrooms, true),
-      bathrooms: parseNumbers(form.bathrooms, true),
+      price: parseFloat(form.price),
+      area: form.area ? parseFloat(form.area) : undefined,
+      bedrooms: form.bedrooms !== "" ? parseInt(form.bedrooms, 10) : undefined,
+      bathrooms: form.bathrooms !== "" ? parseInt(form.bathrooms, 10) : undefined,
       garageSpaces:
-        form.garageSpaces !== "" ? parseNumbers(form.garageSpaces, true) : 0,
+        form.garageSpaces !== "" ? parseInt(form.garageSpaces, 10) : 0,
       imageUrls,
     })
   }
@@ -131,6 +134,7 @@ export default function DialogCreate({
     setForm((prev) => ({
       ...prev,
       title: initialData.title || "",
+      description: initialData.description || "", // preenche descrição na edição
       type: initialData.type || prev.type,
       status: initialData.status || prev.status,
       price: initialData.price != null ? String(initialData.price) : "",
