@@ -10,8 +10,6 @@ import CustomersServed from "@/components/CustomersServed"
 import CarouselGlobal from "@/components/Carousel"
 import VideoHighlights from "@/components/VideoHighlights"
 import prisma from "@/lib/prisma"
-import WelcomeUser from "@/components/WelcomeUser"
-import DialogOrderYourProperty from "@/components/DialogOrderYourProperty"
 
 // Função para buscar todos os dados necessários da página
 async function getHomePageData() {
@@ -26,7 +24,6 @@ async function getHomePageData() {
       // Buscar imóveis ativos (para carrossel geral)
       prisma.property.findMany({
         where: {
-          status: "ACTIVE",
           deletedAt: null,
         },
         orderBy: {
@@ -180,7 +177,11 @@ export default async function Home() {
         <BannerContactUs />
         <CarouselGlobal title="Imóveis em Destaque">
           {properties.map((property) => (
-            <RealEstateCard key={property.id} property={property} />
+            <RealEstateCard
+              key={property.id}
+              property={property}
+              basisClass="md:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5"
+            />
           ))}
         </CarouselGlobal>
         <AdvertiseRealEstate />

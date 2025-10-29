@@ -7,11 +7,13 @@ import Link from "next/link"
 import StatusBadge from "../StatusBadge"
 import CodRefBadge from "../CodRefBadge"
 
-const RealEstateCard = ({ property }) => {
+const RealEstateCard = ({ property, basisClass }) => {
   return (
     <CarouselItem
       key={property.id}
-      className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5"
+      className={
+        basisClass ?? "md:basis-1/2 lg:basis-1/3 xl:basis-1/3 2xl:basis-1/4"
+      }
     >
       <Link
         href={`/imoveis/${property.slug || property.id}`}
@@ -34,10 +36,10 @@ const RealEstateCard = ({ property }) => {
 
               {/* Conteúdo do card */}
               <div className="bg-gradient-wilson-blue p-4">
-                <h3 className="text-wilson-golden mb-2 line-clamp-1 text-center text-lg font-bold">
+                <h3 className="text-wilson-golden mb-2 line-clamp-1 truncate text-center text-lg font-bold">
                   {property.title}
                 </h3>
-                <p className="mb-2 text-sm text-gray-100">
+                <p className="mb-2 truncate text-sm text-gray-100">
                   {property.city}, {property.neighborhood}
                 </p>
 

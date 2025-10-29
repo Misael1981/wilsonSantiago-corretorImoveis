@@ -51,7 +51,6 @@ export async function POST(req) {
 
     const data = {
       title: String(title).trim(),
-      // endereço opcional → salva vazio se não vier
       address: address ? String(address).trim() : "",
       number: number ? String(number).trim() : null,
       complement: complement ? String(complement).trim() : null,
@@ -75,9 +74,21 @@ export async function POST(req) {
         : [],
       featured: typeof featured === "boolean" ? featured : false,
       createdById: session.user.id,
-      // descrição opcional: salva somente se vier
       description: description ? String(description).trim() : undefined,
     }
+
+    // GARANTE QUE O USUÁRIO EXISTE (evita P2003 no FK)
+    await prisma.user.upsert({
+      where: { id: session.user.id },
+      update: {},
+      create: {
+        id: session.user.id,
+        name: session.user.name ?? "Administrador",
+        email: session.user.email ?? null,
+        role: session.user.role === "ADMIN" ? "ADMIN" : "USER",
+        isActive: true,
+      },
+    })
 
     // Geração do codRef via JavaScript (começando em 1000)
     const created = await prisma.$transaction(async (tx) => {
@@ -100,14 +111,12 @@ export async function POST(req) {
 
     return NextResponse.json(created, { status: 201 })
   } catch (err) {
-    // Log mais informativo para Vercel
     console.error("POST /api/imoveis error:", {
       message: err?.message,
       code: err?.code,
       name: err?.name,
       meta: err?.meta,
     })
-    // Expor alguma informação no response (temporário, para diagnosticar em produção)
     return NextResponse.json(
       { error: "Internal Server Error", detail: err?.message, code: err?.code },
       { status: 500 }
