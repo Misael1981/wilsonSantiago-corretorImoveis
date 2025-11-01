@@ -36,7 +36,13 @@ const AvailableProperties = ({ properties }) => {
 
       // Envia só o que mudou
       const normalize = (k, v) => {
-        const numeric = ["price", "area", "bedrooms", "bathrooms", "garageSpaces"]
+        const numeric = [
+          "price",
+          "area",
+          "bedrooms",
+          "bathrooms",
+          "garageSpaces",
+        ]
         if (numeric.includes(k)) {
           return typeof v === "number" ? v : v == null ? null : Number(v)
         }
@@ -73,7 +79,10 @@ const AvailableProperties = ({ properties }) => {
       for (const key of allowed) {
         const next = normalize(key, data[key])
         const prev = normalize(key, editingProperty[key])
-        if (typeof next !== "undefined" && JSON.stringify(next) !== JSON.stringify(prev)) {
+        if (
+          typeof next !== "undefined" &&
+          JSON.stringify(next) !== JSON.stringify(prev)
+        ) {
           updatePayload[key] = next
         }
       }
@@ -133,7 +142,7 @@ const AvailableProperties = ({ properties }) => {
             <li key={p.id} className="p-4">
               <Card className="w-full">
                 <CardContent className="flex flex-wrap gap-8 p-4 sm:justify-between">
-                  <div className="flex w-full justify-between gap-8 sm:w-fit">
+                  <div className="flex w-full justify-between gap-8 sm:w-fit lg:max-w-[60%]">
                     <div>
                       <div className="font-medium">{p.title}</div>
                       <div className="text-muted-foreground text-sm">

@@ -122,7 +122,8 @@ export default function DialogCreate({
       price: parseFloat(form.price),
       area: form.area ? parseFloat(form.area) : undefined,
       bedrooms: form.bedrooms !== "" ? parseInt(form.bedrooms, 10) : undefined,
-      bathrooms: form.bathrooms !== "" ? parseInt(form.bathrooms, 10) : undefined,
+      bathrooms:
+        form.bathrooms !== "" ? parseInt(form.bathrooms, 10) : undefined,
       garageSpaces:
         form.garageSpaces !== "" ? parseInt(form.garageSpaces, 10) : 0,
       imageUrls,
@@ -293,21 +294,21 @@ export default function DialogCreate({
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="bedrooms">Quartos *</Label>
+              <Label htmlFor="bedrooms">Quartos</Label>
               <Input
                 id="bedrooms"
                 type="number"
-                value={form.bedrooms}
+                value={form.bedrooms ?? ""}
                 onChange={(e) => setForm({ ...form, bedrooms: e.target.value })}
                 placeholder="3"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="bathrooms">Banheiros *</Label>
+              <Label htmlFor="bathrooms">Banheiros</Label>
               <Input
                 id="bathrooms"
                 type="number"
-                value={form.bathrooms}
+                value={form.bathrooms ?? ""}
                 onChange={(e) =>
                   setForm({ ...form, bathrooms: e.target.value })
                 }
@@ -405,4 +406,15 @@ export default function DialogCreate({
       </DialogContent>
     </Dialog>
   )
+}
+
+const normalizeInt = (v) =>
+  v === "" || v === null || v === undefined ? undefined : Number(v)
+
+async function handleCreateProperty() {
+  const payload = {
+    bedrooms: normalizeInt(form.bedrooms),
+    bathrooms: normalizeInt(form.bathrooms),
+  }
+  // ... existing code ...
 }
