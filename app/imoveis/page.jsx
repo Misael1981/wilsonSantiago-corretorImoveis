@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma"
 import CardImoveis from "./components/CardImoveis"
 import AnimatedContent from "@/components/AnimatedContent"
+import SeeMoreButton from "./components/SeeMoreButton"
 
 export default async function Imoveis({ searchParams }) {
   // Mapeamento dos tipos (valores da URL -> enum do Prisma)
@@ -59,17 +60,23 @@ export default async function Imoveis({ searchParams }) {
     ...(area ? { area: { gte: parseFloat(area) } } : {}),
   }
 
-  const currentPage = Math.max(1, parseInt(page, 10) || 1)
-  const take = Math.max(1, Math.min(50, parseInt(pageSize, 10) || 12))
-  const skip = (currentPage - 1) * take
+  const params = await searchParams
 
-  const [properties, total] = await Promise.all([
+  const allowedPageSizes = [12, 20, 36]
+  const itemsPerPageRaw = Number(params?.pageSize);
+  const itemsPerPage = allowedPageSizes.includes(itemsPerPageRaw) ? itemsPerPageRaw : 12;
+
+  const currentPageRaw = Number(params?.page);
+  const currentPage = Number.isFinite(currentPageRaw) && currentPageRaw > 0 ? currentPageRaw : 1;
+
+  const skip = (currentPage - 1) * itemsPerPage;
+
+  const [pageItems, totalCount] = await Promise.all([
     prisma.property.findMany({
       where,
       orderBy: { createdAt: "desc" },
       skip,
-      take,
-      // Ao fazer a consulta com prisma.property.findMany, inclua:
+      take: itemsPerPage,
       select: {
         id: true,
         title: true,
@@ -89,19 +96,30 @@ export default async function Imoveis({ searchParams }) {
       },
     }),
     prisma.property.count({ where }),
-  ])
+  ]);
 
-  const totalPages = Math.ceil(total / take)
+  const displayedCount = skip + pageItems.length;
+  const remainingCount = Math.max(totalCount - displayedCount, 0);
+  const totalPages = Math.ceil(totalCount / itemsPerPage);
+  const hasMore = currentPage < totalPages;
+
+  const nextParams = {
+    ...params,
+    page: String(currentPage + 1),
+    pageSize: String(itemsPerPage),
+  };
 
   return (
     <AnimatedContent>
       <div className="flex w-full flex-col items-center justify-center p-4">
         <h1 className="mb-4 text-2xl font-bold">Imóveis</h1>
         <div className="flex flex-wrap items-center justify-center gap-4">
-          {properties.map((property) => (
+          {pageItems.map((property) => (
             <CardImoveis key={property.id} property={property} />
           ))}
         </div>
+        {/* Substitui o link por um componente enxuto */}
+        <SeeMoreButton hasMore={hasMore} nextParams={nextParams} />
       </div>
     </AnimatedContent>
   )

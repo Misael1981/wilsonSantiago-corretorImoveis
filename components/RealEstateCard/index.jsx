@@ -36,7 +36,7 @@ const RealEstateCard = ({ property, basisClass }) => {
 
               {/* Conteúdo do card */}
               <div className="bg-gradient-wilson-blue p-4">
-                <h3 className="text-wilson-golden mb-2 line-clamp-1 truncate text-center text-lg font-bold">
+                <h3 className="text-wilson-golden mb-2 line-clamp-2 text-center text-base font-bold">
                   {property.title}
                 </h3>
                 <p className="mb-2 truncate text-sm text-gray-100">

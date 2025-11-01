@@ -29,7 +29,7 @@ async function getHomePageData() {
         orderBy: {
           createdAt: "desc",
         },
-        take: 12, // Limitar para performance
+        take: 20, // Limitar para performance
         select: {
           id: true,
           title: true,
@@ -59,7 +59,7 @@ async function getHomePageData() {
         orderBy: {
           createdAt: "desc",
         },
-        take: 12,
+        take: 20,
         select: {
           id: true,
           title: true,
