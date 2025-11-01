@@ -5,10 +5,7 @@ const typesProperties = [
   { id: 1, label: "Casa", value: "casa" },
   { id: 2, label: "Apartamento", value: "apartamento" },
   { id: 3, label: "Terreno/Lote", value: "terreno" },
-  { id: 4, label: "Loja Comercial", value: "loja" },
   { id: 5, label: "Chácara", value: "chacara" },
-  { id: 6, label: "Sítio", value: "sitio" },
-  { id: 7, label: "Galpão", value: "galpao" },
   { id: 8, label: "Sala Comercial", value: "sala_comercial" },
 ]
 
