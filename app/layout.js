@@ -19,6 +19,10 @@ const playfairDisplay = Playfair_Display({
 export const metadata = {
   title: "Wilson Corretor de Imóveis",
   description: "Encontre o imóvel dos seus sonhos",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ||
+      "https://www.wilsonsantiago-corretor.com.br",
+  ),
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" }, // padrão
