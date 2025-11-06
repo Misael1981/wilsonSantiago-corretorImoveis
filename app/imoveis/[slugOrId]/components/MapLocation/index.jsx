@@ -12,7 +12,7 @@ export default function MapLocation({ lat, lng }) {
 
   return (
     <GoogleMap
-      mapContainerStyle={{ width: "100%", height: "300px" }}
+      mapContainerStyle={{ width: "100%", height: "180px" }}
       center={{ lat, lng }}
       zoom={15}
     >

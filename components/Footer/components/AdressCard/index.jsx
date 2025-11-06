@@ -20,8 +20,8 @@ const AdressCard = () => {
       </ul>
       <div className="h-50 w-full overflow-hidden rounded-md">
         <Card className="p-0">
-          <CardContent className="p-4">
-            <MapLocation lat={-20.322222} lng={-44.305556} />
+          <CardContent className="p-2">
+            <MapLocation lat={-22.234165644473553} lng={-45.936176118928095} />
           </CardContent>
         </Card>
       </div>
