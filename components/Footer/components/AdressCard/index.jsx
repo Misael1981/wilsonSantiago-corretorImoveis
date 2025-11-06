@@ -1,16 +1,8 @@
 "use client"
-import dynamic from "next/dynamic"
-import Image from "next/image"
-import { MdLocationOn } from "react-icons/md"
 
-const DynamicMapSection = dynamic(() => import("@/components/MapSection"), {
-  ssr: false,
-  loading: () => (
-    <div className="flex h-[200px] w-full items-center justify-center bg-gray-100 text-sm text-gray-600">
-      Carregando mapa...
-    </div>
-  ),
-})
+import MapLocation from "@/app/imoveis/[slugOrId]/components/MapLocation"
+import { Card, CardContent } from "@/components/ui/card"
+import { MdLocationOn } from "react-icons/md"
 
 const AdressCard = () => {
   return (
@@ -27,8 +19,11 @@ const AdressCard = () => {
         </li>
       </ul>
       <div className="h-50 w-full overflow-hidden rounded-md">
-        {/* Usa import dinâmico para evitar SSR de leaflet */}
-        <DynamicMapSection />
+        <Card className="p-0">
+          <CardContent className="p-4">
+            <MapLocation lat={-20.322222} lng={-44.305556} />
+          </CardContent>
+        </Card>
       </div>
     </div>
   )
