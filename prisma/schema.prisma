@@ -99,6 +99,7 @@ model Property {
   metaDescription String?
   latitude        Float?
   longitude       Float?
+  youtubeId       String?
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   createdById     String

@@ -21,7 +21,7 @@ export async function middleware(request) {
     const url = new URL(request.url)
     url.protocol = "https:"
     url.host = newHost
-    return Response.redirect(url, 301)
+    return NextResponse.redirect(url, 301)
   }
 
   // Rotas protegidas
@@ -34,20 +34,20 @@ export async function middleware(request) {
 
   // Pega token do NextAuth (JWT)
   const token = await getToken({
-    req,
+    req: request,
     secret: process.env.NEXTAUTH_SECRET,
   })
 
   // Não logado: manda pro sign-in do NextAuth com callback
   if (!token) {
-    const signInUrl = new URL("/api/auth/signin", req.url)
-    signInUrl.searchParams.set("callbackUrl", req.url)
+    const signInUrl = new URL("/api/auth/signin", request.url)
+    signInUrl.searchParams.set("callbackUrl", request.url)
     return NextResponse.redirect(signInUrl)
   }
 
   // Logado mas sem permissão de ADMIN
   if (token.role !== "ADMIN") {
-    return NextResponse.redirect(new URL("/", req.url))
+    return NextResponse.redirect(new URL("/", request.url))
   }
 
   return NextResponse.next()

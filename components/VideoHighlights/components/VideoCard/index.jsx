@@ -1,4 +1,5 @@
 import { Play, Eye, Calendar, MapPin, Home, Bed, Bath, Car } from "lucide-react"
+import Link from "next/link"
 
 const VideoCard = ({
   highlight,
@@ -156,10 +157,12 @@ const VideoCard = ({
             <Calendar className="h-3 w-3" />
             <span>{formatDate(highlight.publishedAt)}</span>
           </div>
-
-          <button className="bg-wilson-blue hover:bg-wilson-blue-light rounded-lg px-4 py-2 text-sm font-semibold text-white transition-colors">
+          <Link
+            href={`/imoveis/${highlight.slug ?? highlight.id}`}
+            className="bg-wilson-blue hover:bg-wilson-blue-light rounded-lg px-4 py-2 text-sm font-semibold text-white transition-colors"
+          >
             Ver Detalhes
-          </button>
+          </Link>
         </div>
       </div>
     </div>

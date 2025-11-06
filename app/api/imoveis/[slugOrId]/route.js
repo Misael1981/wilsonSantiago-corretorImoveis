@@ -108,6 +108,7 @@ export async function PUT(req, { params }) {
   setIfPresent(data, "complement", parseStringOrUndef(body.complement));
   setIfPresent(data, "zipCode", parseStringOrUndef(body.zipCode));
   setIfPresent(data, "state", parseStringOrUndef(body.state));
+  setIfPresent(data, "youtubeId", parseStringOrUndef(body.youtubeId));
 
   const updated = await prisma.property.update({
     where: { id: found.id },

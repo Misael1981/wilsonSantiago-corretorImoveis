@@ -36,6 +36,7 @@ const SubTitleImoveis = () => {
           area: form.area,
           imageUrls: form.imageUrls,
           featured: form.featured,
+          youtubeId: form.youtubeId,
         }),
       })
       if (!res.ok) {

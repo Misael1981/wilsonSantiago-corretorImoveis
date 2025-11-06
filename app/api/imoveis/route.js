@@ -30,6 +30,7 @@ export async function POST(req) {
       imageUrls,
       featured,
       description,
+      youtubeId,
     } = body
 
     // Campos obrigatórios (endereço NÃO é mais obrigatório)
@@ -75,6 +76,7 @@ export async function POST(req) {
       featured: typeof featured === "boolean" ? featured : false,
       createdById: session.user.id,
       description: description ? String(description).trim() : undefined,
+      youtubeId: youtubeId ? String(youtubeId).trim() : undefined,
     }
 
     // GARANTE QUE O USUÁRIO EXISTE (evita P2003 no FK)

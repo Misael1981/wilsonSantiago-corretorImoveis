@@ -71,6 +71,7 @@ export default function DialogCreate({
     imageUrlsText: "",
     imageUrls: [],
     featured: false,
+    youtubeId: initialData?.youtubeId || "",
   })
 
   const parseNumbers = (v, isInt = false) => {
@@ -382,17 +383,15 @@ export default function DialogCreate({
             />
           </div>
           {/* Campo opcional para URLs de imagens separadas por vírgula */}
-          <div className="space-y-2">
-            <Label htmlFor="imageUrlsText">
-              URLs de imagens (separadas por vírgula)
-            </Label>
+          <div>
+            <Label htmlFor="youtubeId">YouTube ID (opcional)</Label>
             <Input
-              id="imageUrlsText"
-              value={form.imageUrlsText}
+              id="youtubeId"
+              value={form.youtubeId}
               onChange={(e) =>
-                setForm({ ...form, imageUrlsText: e.target.value })
+                setForm((f) => ({ ...f, youtubeId: e.target.value }))
               }
-              placeholder="https://exemplo.com/img1.jpg, https://exemplo.com/img2.jpg"
+              placeholder="Ex.: dQw4w9WgXcQ"
             />
           </div>
         </div>

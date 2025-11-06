@@ -76,6 +76,8 @@ async function getHomePageData() {
           slug: true,
           status: true,
           codRef: true,
+          createdAt: true,
+          youtubeId: true,
         },
       }),
 
@@ -165,14 +167,37 @@ async function getHomePageData() {
 }
 
 export default async function Home() {
-  const { properties, articles, customersData } = await getHomePageData()
+  const { properties, articles, customersData, featuredProperties } = await getHomePageData()
+
+  const videoHighlights = (featuredProperties || [])
+    .filter((p) => p.youtubeId)
+    .slice(0, 2)
+    .map((p) => ({
+      id: p.id,
+      youtubeId: p.youtubeId,
+      title: p.title,
+      description: p.description || "",
+      thumbnail: Array.isArray(p.imageUrls) && p.imageUrls.length > 0 ? p.imageUrls[0] : "/assets/casa.jpg",
+      price: p.price,
+      location: `${p.city}${p.neighborhood ? " - " + p.neighborhood : ""}`,
+      specs: {
+        bedrooms: p.bedrooms || 0,
+        bathrooms: p.bathrooms || 0,
+        garage: p.garageSpaces || 0,
+        area: p.area ? `${p.area} m²` : "",
+      },
+      tags: [],
+      publishedAt: p.createdAt,
+      views: 0,
+      slug: p.slug || p.id,
+    }))
 
   return (
     <>
       <Header />
       <main>
         <WelcomeSection />
-        <VideoHighlights />
+        <VideoHighlights highlights={videoHighlights} />
         <PropertyCategory />
         <BannerContactUs />
         <CarouselGlobal title="Imóveis em Destaque">
