@@ -123,3 +123,27 @@ export async function POST(req) {
     )
   }
 }
+
+export async function GET(req) {
+  const url = new URL(req.url);
+  const featuredParam = url.searchParams.get("featured");
+  const featuredOnly = featuredParam === "true";
+  const where = {
+    featured: true,
+    ...(featuredOnly ? { featured: true } : {}),
+  };
+
+  const items = await prisma.property.findMany({
+    where,
+    select: {
+      id: true,
+      title: true,
+      city: true,
+      status: true,
+      price: true,
+      createdAt: true,
+      codRef: true,
+    },
+  });
+  return NextResponse.json(items);
+}

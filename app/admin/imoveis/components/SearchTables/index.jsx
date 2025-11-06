@@ -2,14 +2,28 @@
 
 import { Button } from "@/components/ui/button"
 import { useRouter, useSearchParams } from "next/navigation"
+import { useState } from "react"
 
-const SearchTables = ({ view }) => {
+function SearchTables({ view }) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  const setView = (next) => {
+  const pushView = (next) => {
     const params = new URLSearchParams(searchParams.toString())
     params.set("view", next)
+    router.push(`/admin/imoveis?${params.toString()}`)
+  }
+
+  // Destaque persistente via URL
+  const featuredOnly = searchParams.get("featured") === "true"
+
+  const toggleFeatured = () => {
+    const params = new URLSearchParams(searchParams.toString())
+    if (featuredOnly) {
+      params.delete("featured")
+    } else {
+      params.set("featured", "true")
+    }
     router.push(`/admin/imoveis?${params.toString()}`)
   }
 
@@ -23,9 +37,18 @@ const SearchTables = ({ view }) => {
               : ""
           }
           variant={view === "available" ? "default" : "outline"}
-          onClick={() => setView("available")}
+          onClick={() => pushView("available")}
         >
           Imóveis Disponíveis
+        </Button>
+        <Button
+          className={
+            featuredOnly ? "bg-gradient-wilson-golden text-wilson-blue" : ""
+          }
+          variant={featuredOnly ? "default" : "outline"}
+          onClick={toggleFeatured}
+        >
+          Imóveis em Destaque
         </Button>
         <Button
           className={
@@ -34,7 +57,7 @@ const SearchTables = ({ view }) => {
               : ""
           }
           variant={view === "listing" ? "default" : "outline"}
-          onClick={() => setView("listing")}
+          onClick={() => pushView("listing")}
         >
           Pedidos de Cadastros
         </Button>
@@ -45,7 +68,7 @@ const SearchTables = ({ view }) => {
               : ""
           }
           variant={view === "requests" ? "default" : "outline"}
-          onClick={() => setView("requests")}
+          onClick={() => pushView("requests")}
         >
           Imóveis Encomendados
         </Button>
