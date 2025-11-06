@@ -7,6 +7,35 @@ const VideoCard = ({
   formatViews,
   formatDate,
 }) => {
+  const currencyBRL = (value) => {
+    if (typeof value === "number" && Number.isFinite(value) && value > 0) {
+      return new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      }).format(value)
+    }
+    const num = parseFloat(value)
+    return Number.isFinite(num) && num > 0
+      ? new Intl.NumberFormat("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }).format(num)
+      : null
+  }
+  const priceLabel = currencyBRL(highlight.price)
+  const hasLocation =
+    typeof highlight.location === "string" &&
+    highlight.location.trim().length > 0
+
+  const specs = highlight.specs || {}
+  const bedrooms = Number(specs.bedrooms) || 0
+  const bathrooms = Number(specs.bathrooms) || 0
+  const garage = Number(specs.garage) || 0
+  const areaLabel =
+    specs.area && String(specs.area).trim().length > 0
+      ? String(specs.area)
+      : ""
+  const hasAnySpec = bedrooms > 0 || bathrooms > 0 || garage > 0 || !!areaLabel
   return (
     <div className="group overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-300 hover:shadow-2xl">
       {/* Video Container */}
@@ -28,6 +57,7 @@ const VideoCard = ({
             <img
               src={highlight.thumbnail}
               alt={highlight.title}
+              loading="lazy"
               className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
 
@@ -74,37 +104,51 @@ const VideoCard = ({
         </p>
 
         {/* Price */}
-        <div className="mb-4">
-          <span className="text-2xl font-bold text-green-600">
-            {highlight.price}
-          </span>
-        </div>
+        {priceLabel && (
+          <div className="mb-4">
+            <span className="text-2xl font-bold text-green-600">
+              {priceLabel}
+            </span>
+          </div>
+        )}
 
         {/* Location */}
-        <div className="mb-4 flex items-center gap-2 text-gray-600">
-          <MapPin className="h-4 w-4" />
-          <span className="text-sm">{highlight.location}</span>
-        </div>
+        {hasLocation && (
+          <div className="mb-4 flex items-center gap-2 text-gray-600">
+            <MapPin className="h-4 w-4" />
+            <span className="text-sm">{highlight.location}</span>
+          </div>
+        )}
 
         {/* Specs */}
-        <div className="mb-4 flex flex-wrap gap-4 text-sm text-gray-600">
-          <div className="flex items-center gap-1">
-            <Bed className="h-4 w-4" />
-            <span>{highlight.specs.bedrooms} quartos</span>
+        {hasAnySpec && (
+          <div className="mb-4 flex flex-wrap gap-4 text-sm text-gray-600">
+            {bedrooms > 0 && (
+              <div className="flex items-center gap-1">
+                <Bed className="h-4 w-4" />
+                <span>{bedrooms} quartos</span>
+              </div>
+            )}
+            {bathrooms > 0 && (
+              <div className="flex items-center gap-1">
+                <Bath className="h-4 w-4" />
+                <span>{bathrooms} banheiros</span>
+              </div>
+            )}
+            {garage > 0 && (
+              <div className="flex items-center gap-1">
+                <Car className="h-4 w-4" />
+                <span>{garage} vagas</span>
+              </div>
+            )}
+            {areaLabel && (
+              <div className="flex items-center gap-1">
+                <Home className="h-4 w-4" />
+                <span>{areaLabel}</span>
+              </div>
+            )}
           </div>
-          <div className="flex items-center gap-1">
-            <Bath className="h-4 w-4" />
-            <span>{highlight.specs.bathrooms} banheiros</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Car className="h-4 w-4" />
-            <span>{highlight.specs.garage} vagas</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Home className="h-4 w-4" />
-            <span>{highlight.specs.area}</span>
-          </div>
-        </div>
+        )}
 
         {/* Footer */}
         <div className="flex items-center justify-between border-t pt-4">

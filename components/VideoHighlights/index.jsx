@@ -55,11 +55,19 @@ const VideoHighlights = ({ highlights = [] }) => {
     views: v.views ?? 0,
   }))
 
+  // Limita aos 2 últimos publicados
+  const sortDescByDate = (arr) =>
+    [...arr].sort(
+      (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt),
+    )
+  const limitedApi = sortDescByDate(videoHighlights).slice(0, 2)
+  const limitedProp = sortDescByDate(highlights).slice(0, 2)
+
   const highlightsData =
-    videoHighlights.length > 0
-      ? videoHighlights
-      : highlights.length > 0
-        ? highlights
+    limitedApi.length > 0
+      ? limitedApi
+      : limitedProp.length > 0
+        ? limitedProp
         : []
 
   return (
@@ -67,12 +75,12 @@ const VideoHighlights = ({ highlights = [] }) => {
       <SubTitle title="Novidades & Lançamentos" />
 
       <div className="mt-8">
-        {/* Mobile Carousel */}
-        <div className="mt-8 flex gap-4 overflow-auto lg:hidden [&::-webkit-scrollbar]:hidden">
+        {/* Lista única responsiva: flex no mobile, grid no desktop */}
+        <div className="mt-8 flex gap-4 overflow-auto lg:overflow-visible lg:grid lg:grid-cols-2 lg:gap-8 [&::-webkit-scrollbar]:hidden">
           {highlightsData.map((highlight) => (
             <div
               key={highlight.id}
-              className="w-[500px] max-w-[100%] flex-shrink-0"
+              className="w-[500px] max-w-[100%] flex-shrink-0 lg:w-auto lg:flex-shrink"
             >
               <VideoCard
                 highlight={highlight}
@@ -82,20 +90,6 @@ const VideoHighlights = ({ highlights = [] }) => {
                 formatDate={formatDate}
               />
             </div>
-          ))}
-        </div>
-
-        {/* Desktop Grid */}
-        <div className="hidden gap-8 lg:grid lg:grid-cols-2">
-          {highlightsData.map((highlight) => (
-            <VideoCard
-              key={highlight.id}
-              highlight={highlight}
-              activeVideo={activeVideo}
-              setActiveVideo={setActiveVideo}
-              formatViews={formatViews}
-              formatDate={formatDate}
-            />
           ))}
         </div>
       </div>
