@@ -153,7 +153,10 @@ const NavMenu = () => {
           </NavigationMenuItem>
           {isAdmin && (
             <NavigationMenuItem>
-              <NavigationMenuLink asChild className="text-lg text-white">
+              <NavigationMenuLink
+                asChild
+                className="truncate text-lg text-white"
+              >
                 <Link href="/admin">Dashboard Administrativo</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>

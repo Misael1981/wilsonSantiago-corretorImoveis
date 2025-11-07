@@ -11,7 +11,7 @@ const WelcomeUser = () => {
     <section className="">
       <div className="w-fit">
         {data?.user ? (
-          <div className="flex items-center gap-2">
+          <div className="flex max-w-[250px] items-center gap-2 xl:max-w-[300px]">
             <Avatar>
               <AvatarImage
                 src={data?.user?.image}
@@ -21,10 +21,10 @@ const WelcomeUser = () => {
               />
             </Avatar>
             <div>
-              <h3 className="text-xl leading-none">
+              <h3 className="truncate text-xl leading-none lg:text-lg xl:text-xl">
                 Olá, <strong>{data?.user?.name}</strong>
               </h3>
-              <p className="leading-none text-gray-400">
+              <p className="truncate leading-none text-gray-400">
                 <span className="text-sm capitalize">
                   {format(new Date(), "EEEE, dd", { locale: ptBR })}
                 </span>

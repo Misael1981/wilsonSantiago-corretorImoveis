@@ -21,7 +21,7 @@ const WelcomeSection = () => {
       </div>
       <div className="bg-wilson-golden text-wilson-blue -mt-18 space-y-4 px-4 pt-24 pb-4 lg:mt-0 lg:flex lg:flex-1 lg:flex-col lg:justify-center lg:pt-4">
         <h1
-          className="font-title text-center text-3xl font-bold drop-shadow-lg xl:text-4xl"
+          className="font-title text-center text-2xl font-bold drop-shadow-lg xl:text-4xl"
           style={{ fontFamily: "var(--font-playfair)" }}
         >
           Aqui é onde você pode encontrar o imóvel dos seus sonhos

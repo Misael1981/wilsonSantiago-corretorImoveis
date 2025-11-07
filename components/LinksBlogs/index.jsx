@@ -17,7 +17,7 @@ const LinksBlogs = ({ articles }) => {
         Explore Uma seleção de conteúdos que simplificam sua jornada de compra,
         venda ou manutenção dos seus imóveis
       </h3>
-      <div className="flex flex-wrap items-stretch justify-center gap-4 lg:h-[520px]">
+      <div className="flex flex-wrap items-stretch justify-center gap-4">
         {/* Slot 1 */}
         <Link
           href={a0 ? `/blog/${a0.slug}` : `/blog`}
@@ -88,7 +88,7 @@ const LinksBlogs = ({ articles }) => {
         {/* Slot 4 */}
         <Link
           href={a3 ? `/blog/${a3.slug}` : `/blog`}
-          className="group relative block h-[300px] w-[500px] max-w-[100%] overflow-hidden rounded-sm transition-transform hover:scale-105 lg:h-[516px] lg:w-[320px]"
+          className="group relative block h-[300px] w-[500px] max-w-[100%] overflow-hidden rounded-sm transition-transform hover:scale-105 xl:h-[516px] xl:w-[320px]"
         >
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
