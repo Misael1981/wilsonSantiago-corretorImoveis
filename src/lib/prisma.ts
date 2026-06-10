@@ -1,4 +1,4 @@
-import { PrismaClient } from "@/generated/prisma/client"
+import { PrismaClient } from "@/generated/prisma"
 import { PrismaPg } from "@prisma/adapter-pg"
 
 type GlobalWithPrisma = {
@@ -21,4 +21,4 @@ if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma
 
 export default prisma
 export const db = prisma
-export { Prisma } from "@/generated/prisma/client"
+export { Prisma } from "@/generated/prisma"
