@@ -1,6 +1,5 @@
-
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
@@ -9,23 +8,24 @@ datasource db {
 }
 
 model User {
-  id         String     @id @default(cuid())
-  name       String?
-  email      String?     @unique
-  emailVerified DateTime? @map("email_verified")
-  image      String?
-  surname    String?
-  password   String?
-  phone      String?
-  avatar     String?
-  role       Role       @default(USER)
-  isActive   Boolean    @default(true)
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  articles   Article[]
-  contacts   Contact[]
-  favorites  Favorite[]
-  properties Property[]
+  id            String     @id @default(cuid())
+  name          String?
+  email         String?    @unique
+  emailVerified DateTime?  @map("email_verified")
+  image         String?
+  surname       String?
+  password      String?
+  phone         String?
+  preferences   String?
+  avatar        String?
+  role          Role       @default(USER)
+  isActive      Boolean    @default(true)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  articles      Article[]
+  contacts      Contact[]
+  favorites     Favorite[]
+  properties    Property[]
   accounts      Account[]
   sessions      Session[]
 
@@ -33,81 +33,90 @@ model User {
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String  @map("user_id")
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String? @db.Text
-  access_token       String? @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? @db.Text
-  session_state      String?
- 
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@unique([provider, providerAccountId])
   @@map("accounts")
 }
- 
+
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique @map("session_token")
   userId       String   @map("user_id")
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@map("sessions")
 }
- 
+
 model VerificationToken {
   identifier String
   token      String
   expires    DateTime
- 
+
   @@unique([identifier, token])
   @@map("verification_tokens")
 }
 
 model Property {
-  id              String            @id @default(cuid())
-  codRef          Int               @unique
+  id           String  @id @default(cuid())
+  codRef       Int     @unique
+  title        String
+  description  String?
+  price        Float
+  area         Float?
+  bedrooms     Int
+  bathrooms    Int
+  garageSpaces Int     @default(0)
 
-  title           String
-  description     String?
-  address         String?
-  number          String?
-  complement      String?
-  neighborhood    String
-  city            String
-  state           String
-  zipCode         String?
-  price           Float
-  area            Float?
-  bedrooms        Int
-  bathrooms       Int
-  garageSpaces    Int               @default(0)
-  type            PropertyType
-  status          PropertyStatus    @default(ACTIVE)
-  imageUrls       String[]
-  views           Int               @default(0)
-  featured        Boolean           @default(false)
+  type     PropertyType
+  status   PropertyStatus @default(ACTIVE)
+  featured Boolean        @default(false)
+
+  // Vídeos e imagens
+  imageUrls     String[]
+  youtubeUrl    String?
+  youtubeId     String?
+  videoFeatured Boolean  @default(false)
+
+  // Endereço
+  address      String?
+  street       String?
+  number       String?
+  complement   String?
+  neighborhood String
+  city         String
+  state        String
+  zipCode      String?
+  latitude     Float?
+  longitude    Float?
+
+  slug            String?   @unique
+  views           Int       @default(0)
   deletedAt       DateTime?
-  slug            String?           @unique
   metaTitle       String?
   metaDescription String?
-  latitude        Float?
-  longitude       Float?
-  youtubeId       String?
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  createdById     String
-  history         PropertyHistory[]
-  contacts        Contact[]
-  favorites       Favorite[]
-  createdBy       User              @relation(fields: [createdById], references: [id])
+
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  createdById String
+  history     PropertyHistory[]
+  contacts    Contact[]
+  favorites   Favorite[]
+  createdBy   User              @relation(fields: [createdById], references: [id])
 
   @@index([type, status])
   @@index([city, neighborhood])
@@ -115,6 +124,67 @@ model Property {
   @@index([featured, createdAt])
   @@index([slug])
   @@map("properties")
+}
+
+// Usuário favorita o imóvel
+model Favorite {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  userId     String
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, propertyId])
+  @@map("favorites")
+}
+
+// Solicitação para o usuário cadastrar o imóvel na página
+model ListingRequest {
+  id           String  @id @default(cuid())
+  name         String
+  email        String?
+  phone        String
+  neighborhood String?
+  city         String
+
+  state       String?
+  type        PropertyType
+  title       String
+  description String?
+  price       Float?
+  area        Float?
+  bedrooms    Int?
+  imageUrls   String[]      @default([])
+  source      String?
+  updatedAt   DateTime      @updatedAt
+  createdAt   DateTime      @default(now())
+  status      ListingStatus @default(PENDING)
+
+  @@index([status, createdAt])
+  @@map("listing_requests")
+}
+
+// Solicitação de propriedade para o usuário
+model PropertyRequest {
+  id           String                @id @default(cuid())
+  name         String
+  phone        String
+  type         PropertyType
+  city         String
+  neighborhood String?
+  minPrice     Float?
+  maxPrice     Float?
+  description  String?
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+  status       PropertyRequestStatus @default(PENDING)
+  source       String?
+
+  @@index([status, createdAt])
+  @@index([type])
+  @@index([city])
+  @@map("property_requests")
 }
 
 model PropertyHistory {
@@ -156,17 +226,6 @@ model Article {
   @@map("articles")
 }
 
-model Tag {
-  id          String       @id @default(cuid())
-  name        String       @unique
-  slug        String       @unique
-  description String?
-  color       String?
-  articles    ArticleTag[]
-
-  @@map("tags")
-}
-
 model ArticleTag {
   articleId String
   tagId     String
@@ -175,6 +234,16 @@ model ArticleTag {
 
   @@id([articleId, tagId])
   @@map("article_tags")
+}
+
+model Tag {
+  id          String       @id @default(cuid())
+  name        String       @unique
+  description String?
+  color       String?
+  articles    ArticleTag[]
+
+  @@map("tags")
 }
 
 model Customer {
@@ -194,63 +263,6 @@ model Customer {
   @@index([isActive, order])
   @@map("customers")
 }
-
-model Favorite {
-  id         String   @id @default(cuid())
-  createdAt  DateTime @default(now())
-  userId     String
-  propertyId String
-  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, propertyId])
-  @@map("favorites")
-}
-
-model ListingRequest {
-  id          String   @id @default(cuid())
-  name        String
-  email       String?
-  phone       String
-  city        String
-  state       String?
-  type        PropertyType
-  title       String
-  description String?
-  price       Float?
-  area        Float?
-  bedrooms    Int?
-  imageUrls   String[] @default([])
-  source      String?
-  updatedAt   DateTime  @updatedAt
-  createdAt   DateTime  @default(now())
-  status      ListingStatus @default(PENDING)
-
-  @@index([status, createdAt])
-  @@map("listing_requests")
-}
-
-model PropertyRequest {
-  id             String   @id @default(cuid())
-  name           String
-  phone          String
-  type           PropertyType
-  city           String
-  neighborhood   String?
-  minPrice       Float?
-  maxPrice       Float?
-  description    String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  status         PropertyRequestStatus @default(PENDING)
-  source         String?
-
-  @@index([status, createdAt])
-  @@index([type])
-  @@index([city])
-  @@map("property_requests")
-}
-
 
 model Contact {
   id           String        @id @default(cuid())
@@ -324,7 +336,6 @@ enum PropertyRequestStatus {
   COMPLETED
   CANCELLED
 }
-
 
 enum ContactType {
   GENERAL
