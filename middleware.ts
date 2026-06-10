@@ -1,7 +1,8 @@
-import { auth } from "@/lib/auth"
+import { getToken } from "next-auth/jwt"
 import { NextResponse } from "next/server"
+import type { NextRequest } from "next/server"
 
-export default auth((req) => {
+export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
   const host = req.headers.get("host")
   const oldHostRaw = process.env.OLD_HOST
@@ -29,7 +30,7 @@ export default auth((req) => {
     return NextResponse.next()
   }
 
-  const token = req.auth
+  const token = await getToken({ req, secret: process.env.AUTH_SECRET })
 
   if (!token) {
     const signInUrl = new URL("/api/auth/signin", req.url)
@@ -37,12 +38,12 @@ export default auth((req) => {
     return NextResponse.redirect(signInUrl)
   }
 
-  if (token.user?.role !== "ADMIN") {
+  if (token.role !== "ADMIN") {
     return NextResponse.redirect(new URL("/", req.url))
   }
 
   return NextResponse.next()
-})
+}
 
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
