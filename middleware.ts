@@ -12,7 +12,11 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next()
   }
 
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
+  const token = await getToken({
+    req,
+    secret: process.env.NEXTAUTH_SECRET,
+    cookieName: "__Secure-next-auth.session-token",
+  })
   console.log("TOKEN:", JSON.stringify(token))
 
   if (!token) {
