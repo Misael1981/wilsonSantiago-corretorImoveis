@@ -17,7 +17,12 @@ export async function middleware(req: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
     cookieName: "__Secure-next-auth.session-token",
   })
-  console.log("TOKEN:", JSON.stringify(token))
+  console.log("SECRET:", process.env.NEXTAUTH_SECRET?.slice(0, 5)) // só os primeiros 5 caracteres
+  console.log(
+    "COOKIE:",
+    req.cookies.get("__Secure-next-auth.session-token")?.value?.slice(0, 20),
+  )
+  console.log("TOKEN:", token)
 
   if (!token) {
     const signInUrl = new URL("/api/auth/signin", req.url)
