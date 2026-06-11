@@ -2,10 +2,12 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+@custom-variant dark (&:is(.dark *));
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-primary);
+  --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -40,6 +42,10 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --font-heading: var(--font-sans);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
 :root {
@@ -54,60 +60,58 @@
   /* Radius */
   --radius: 0.625rem;
 
-  /* Background & Foreground */
-  --background: oklch(96% 0.002 106.42); /* Branco suave */
-  --foreground: oklch(15% 0.01 258.34); /* Azul escuro Wilson */
+  /* Background & Foreground */ /* Branco suave */ /* Azul escuro Wilson */
 
   /* Cards */
-  --card: oklch(100% 0 0); /* Branco puro */
-  --card-foreground: oklch(15% 0.01 258.34);
+  --card: oklch(1 0 0); /* Branco puro */
+  --card-foreground: oklch(0.145 0 0);
 
   /* Popover */
-  --popover: oklch(100% 0 0);
-  --popover-foreground: oklch(15% 0.01 258.34);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
 
   /* Primary - Azul Wilson */
-  --primary: oklch(25% 0.02 258.34); /* Aumentei de 15% para 25% */
-  --primary-foreground: oklch(98% 0 0); /* Branco */
+  --primary: oklch(0.205 0 0); /* Aumentei de 15% para 25% */
+  --primary-foreground: oklch(0.985 0 0); /* Branco */
 
   /* Secondary - Dourado Wilson */
-  --secondary: oklch(75% 0.08 85.87); /* #d6b689 */
-  --secondary-foreground: oklch(15% 0.01 258.34); /* Azul escuro */
+  --secondary: oklch(0.97 0 0); /* #d6b689 */
+  --secondary-foreground: oklch(0.205 0 0); /* Azul escuro */
 
   /* Muted */
-  --muted: oklch(50% 0.08 258.34);
-  --muted-foreground: oklch(45% 0.006 258.34); /* Cinza médio */
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0); /* Cinza médio */
 
   /* Accent - Azul claro Wilson */
-  --accent: oklch(50% 0.08 258.34); /* #426792 */
-  --accent-foreground: oklch(98% 0 0); /* Branco */
+  --accent: oklch(0.97 0 0); /* #426792 */
+  --accent-foreground: oklch(0.205 0 0); /* Branco */
 
   /* Destructive */
-  --destructive: oklch(62.8% 0.257 29.23); /* Vermelho padrão */
+  --destructive: oklch(0.577 0.245 27.325); /* Vermelho padrão */
 
   /* Border & Input */
-  --border: oklch(89% 0.005 106.42); /* Cinza claro */
-  --input: oklch(89% 0.005 106.42);
+  --border: oklch(0.922 0 0); /* Cinza claro */
+  --input: oklch(0.922 0 0);
 
   /* Ring */
-  --ring: oklch(50% 0.08 258.34); /* Azul claro Wilson */
+  --ring: oklch(0.708 0 0); /* Azul claro Wilson */
 
   /* Charts - Tons do Wilson */
-  --chart-1: oklch(50% 0.08 258.34); /* Azul claro */
-  --chart-2: oklch(75% 0.08 85.87); /* Dourado */
-  --chart-3: oklch(15% 0.01 258.34); /* Azul escuro */
-  --chart-4: oklch(65% 0.06 85.87); /* Dourado claro */
-  --chart-5: oklch(35% 0.05 258.34); /* Azul médio */
+  --chart-1: oklch(0.87 0 0); /* Azul claro */
+  --chart-2: oklch(0.556 0 0); /* Dourado */
+  --chart-3: oklch(0.439 0 0); /* Azul escuro */
+  --chart-4: oklch(0.371 0 0); /* Dourado claro */
+  --chart-5: oklch(0.269 0 0); /* Azul médio */
 
   /* Sidebar */
-  --sidebar: oklch(98% 0.002 106.42);
-  --sidebar-foreground: oklch(15% 0.01 258.34);
-  --sidebar-primary: oklch(15% 0.01 258.34);
-  --sidebar-primary-foreground: oklch(98% 0 0);
-  --sidebar-accent: oklch(96% 0.005 106.42);
-  --sidebar-accent-foreground: oklch(15% 0.01 258.34);
-  --sidebar-border: oklch(89% 0.005 106.42);
-  --sidebar-ring: oklch(50% 0.08 258.34);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
 
   /* Fonts do projeto Wilson */
   --font-title: var(--font-playfair), "Playfair Display", serif;
@@ -133,6 +137,8 @@
     rgba(6, 112, 45, 1) 51%,
     rgba(37, 211, 102, 0.95) 100%
   );
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
 }
 
 @layer base {
@@ -192,6 +198,9 @@
 
   ::-webkit-scrollbar-thumb:hover {
     background: oklch(15% 0.01 258.34);
+  }
+  html {
+    @apply font-sans;
   }
 }
 
@@ -286,4 +295,38 @@
       max-width: 70%;
     }
   }
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
 }

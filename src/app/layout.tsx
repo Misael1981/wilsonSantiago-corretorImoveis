@@ -1,8 +1,11 @@
 import type { Metadata } from "next"
-import { Outfit, Playfair_Display } from "next/font/google"
+import { Outfit, Playfair_Display, Inter } from "next/font/google"
 import "./globals.css"
 import AuthProvider from "@/providers/auth"
 import { Toaster } from "@/components/ui/sonner"
+import { cn } from "@/lib/utils";
+
+const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -33,7 +36,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${outfit.variable} ${playfairDisplay.variable}`}
+      className={cn(outfit.variable, playfairDisplay.variable, "font-sans", inter.variable)}
     >
       <body className="flex min-h-full flex-col">
         <AuthProvider>

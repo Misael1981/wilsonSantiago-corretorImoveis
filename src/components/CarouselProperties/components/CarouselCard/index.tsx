@@ -72,7 +72,7 @@ const CarouselCard = ({ property }: CarouselCardProps) => {
                 R$ {property.price?.toLocaleString("pt-BR")}
               </div>
 
-              <Button className="bg-gradient-wilson-golden mt-4 w-full" asChild>
+              <Button className="bg-gradient-wilson-golden mt-4 w-full">
                 Ver Detalhes
               </Button>
             </div>
