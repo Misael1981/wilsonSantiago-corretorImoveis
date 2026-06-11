@@ -23,6 +23,7 @@ export async function middleware(req: NextRequest) {
     req.cookies.get("__Secure-next-auth.session-token")?.value?.slice(0, 20),
   )
   console.log("TOKEN:", token)
+  console.log("ALL COOKIES:", req.cookies.getAll())
 
   if (!token) {
     const signInUrl = new URL("/api/auth/signin", req.url)
