@@ -15,8 +15,9 @@ export async function middleware(req: NextRequest) {
   const token = await getToken({
     req,
     secret: process.env.NEXTAUTH_SECRET,
-    cookieName: "__Secure-next-auth.session-token",
+    cookieName: "__Secure-authjs.session-token",
   })
+
   console.log("SECRET:", process.env.NEXTAUTH_SECRET?.slice(0, 5)) // só os primeiros 5 caracteres
   console.log(
     "COOKIE:",
