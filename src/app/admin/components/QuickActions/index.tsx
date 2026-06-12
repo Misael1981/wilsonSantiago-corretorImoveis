@@ -4,7 +4,7 @@ import Link from "next/link"
 const actions = [
   {
     label: "+ Cadastrar novo imóvel",
-    href: "/admin/imoveis/cadastrar",
+    href: "/admin/imoveis/cadastrar/novo",
   },
   {
     label: "+ Escrever novo artigo",
