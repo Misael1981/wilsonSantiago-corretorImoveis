@@ -74,7 +74,7 @@ export default async function ImoveisPage({ searchParams }: ImoveisPageProps) {
         label="Gerenciar Imóveis"
         description="Gerencie imóveis, cadastre imóveis e encomendas de imóveis"
         actionButton={
-          <Link href="/admin/imoveis/cadastrar">
+          <Link href="/admin/imoveis/cadastrar/novo">
             <Button className="bg-gradient-wilson-blue px-6 py-4 text-lg text-white">
               + Novo Imóvel
             </Button>
