@@ -13,8 +13,7 @@ export default async function RegisterFormPage({
 }: RegisterFormPageProps) {
   const resolvedParams = await params
   const propertyId = resolvedParams.id?.[0]
-
-  const isEditMode = Boolean(propertyId)
+  const isEditMode = Boolean(propertyId) && propertyId !== "novo"
 
   let propertyData: PropertyFormValues | undefined = undefined
 
