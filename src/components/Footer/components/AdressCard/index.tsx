@@ -1,8 +1,6 @@
-"use client"
-
 import { Card, CardContent } from "@/components/ui/card"
 import { MdLocationOn } from "react-icons/md"
-import Image from "next/image"
+import RealEstateMap from "../RealEstateMap"
 
 const AdressCard = () => {
   return (
@@ -18,21 +16,11 @@ const AdressCard = () => {
           </span>
         </li>
       </ul>
-      <div className="h-50 w-full min-w-50 overflow-hidden rounded-md">
-        <Card className="p-0">
-          <CardContent className="p-2">
-            {/* <MapLocation lat={-22.234165644473553} lng={-45.936176118928095} /> */}
-            <div className="relative h-50 w-full min-w-50">
-              <Image
-                src="/assets/map.PNG"
-                fill
-                className="object-cover"
-                alt="mapa"
-              />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <Card className="bg-gray-700/30 p-0">
+        <CardContent className="p-2">
+          <RealEstateMap />
+        </CardContent>
+      </Card>
     </div>
   )
 }
