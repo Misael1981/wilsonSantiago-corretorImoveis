@@ -15,7 +15,7 @@ export default function InputsSearch() {
     <div className="space-y-4 lg:flex lg:items-end lg:justify-center lg:space-y-0">
       <div className="w-full px-4 lg:max-w-62">
         <h3 className="text-wilson-blue mb-2 text-lg font-semibold">
-          Busca por endereço
+          Tipo de imóvel
         </h3>
         <Select>
           <SelectTrigger className="w-full border border-blue-900 focus:border-blue-900 focus:ring-2 focus:ring-blue-200">
@@ -54,7 +54,7 @@ export default function InputsSearch() {
         </h3>
         <Input
           className="border border-blue-900"
-          placeholder="Digite o endereço"
+          placeholder="Digite a cidade que está procurando o imóvel..."
         />
       </div>
       <div className="w-full px-4 lg:max-w-62">

@@ -38,15 +38,13 @@ const CarouselCard = ({ property }: CarouselCardProps) => {
           <div className="flex h-full flex-1 flex-col">
             {/* Container da imagem com aspect ratio fixo */}
             <div className="relative aspect-4/3 w-full overflow-hidden">
-              {imageUrl && (
-                <Image
-                  src={imageUrl || "logo-vertical.svg"}
-                  alt={property.title}
-                  fill
-                  className="object-cover transition-transform duration-300 hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                />
-              )}
+              <Image
+                src={imageUrl || "/assets/fallback.webp"}
+                alt={property.title}
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+              />
               <StatusBadge status={property.status} />
             </div>
 
