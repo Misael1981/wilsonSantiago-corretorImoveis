@@ -3,9 +3,9 @@ import { Outfit, Playfair_Display, Inter } from "next/font/google"
 import "./globals.css"
 import AuthProvider from "@/providers/auth"
 import { Toaster } from "@/components/ui/sonner"
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -22,6 +22,7 @@ const playfairDisplay = Playfair_Display({
 export const metadata: Metadata = {
   title: "Wilson Corretor de Imóveis",
   description: "Encontre o imóvel dos seus sonhos",
+  manifest: "/manifest.json",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ||
       "https://www.wilsonsantiago-corretor.com.br",
@@ -36,7 +37,12 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={cn(outfit.variable, playfairDisplay.variable, "font-sans", inter.variable)}
+      className={cn(
+        outfit.variable,
+        playfairDisplay.variable,
+        "font-sans",
+        inter.variable,
+      )}
     >
       <body className="flex min-h-full flex-col">
         <AuthProvider>

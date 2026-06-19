@@ -19,7 +19,6 @@ export async function saveArticleAction(
   formData: ArticleFormInput,
   articleId?: string | null,
 ) {
-  // 1. Validação com o Schema do Zod (tags entram como string aqui)
   const validatedFields = articleSchema.safeParse(formData)
 
   if (!validatedFields.success) {
@@ -44,7 +43,6 @@ export async function saveArticleAction(
 
     const currentAuthorId = session.user.id
 
-    // Validação de slug único: Verifica se já existe outro artigo com o mesmo slug
     const existingArticle = await db.article.findFirst({
       where: {
         slug: data.slug,
