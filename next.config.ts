@@ -30,8 +30,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-
-  turbopack: {},
 }
 
 const pwaConfig = withPWA(nextConfig)

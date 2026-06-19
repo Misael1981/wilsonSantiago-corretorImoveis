@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ||
-      "https://www.wilsonsantiago-corretor.com.br",
+      "https://www.wilsonsantiago-corretor.com.br/",
   ),
 }
 
