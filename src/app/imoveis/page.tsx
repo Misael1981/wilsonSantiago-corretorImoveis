@@ -6,7 +6,7 @@ import PaginationButtons from "./components/PaginationButtons"
 import PropertyCard from "./components/PropertyCard"
 
 type PropertiesPageProps = {
-  searchParams: Promise<{ page?: string; type?: string }>
+  searchParams: Promise<{ page?: string; type?: string; city?: string }>
 }
 
 export default async function PropertiesPage({
@@ -14,12 +14,14 @@ export default async function PropertiesPage({
 }: PropertiesPageProps) {
   const resolvedParams = await searchParams
   const page = Number(resolvedParams.page) || 1
-  const type = resolvedParams.type || null
+  const type = resolvedParams.type ?? undefined
+  const city = resolvedParams.city ?? undefined
 
   const { properties, meta } = await getPropertiesForCards({
     page,
     limit: 6,
     type,
+    city,
   })
 
   return (
