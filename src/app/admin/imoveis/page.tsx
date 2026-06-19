@@ -13,16 +13,16 @@ import ListPropertiesOrdered from "./components/ListPropertiesOrdered"
 import PaginationButtons from "./components/PaginationButtons"
 import { getProperties } from "@/data/get-properties"
 
-type ImoveisPageProps = {
-  searchParams: {
+interface ImoveisPageProps {
+  searchParams?: Promise<{
     view?: string
     q?: string
     page?: string
-  }
+  }>
 }
 
 export default async function ImoveisPage({ searchParams }: ImoveisPageProps) {
-  const resolvedSearchParams = await searchParams
+  const resolvedSearchParams = (await searchParams) ?? {}
 
   const q = resolvedSearchParams.q
   const view = resolvedSearchParams.view
