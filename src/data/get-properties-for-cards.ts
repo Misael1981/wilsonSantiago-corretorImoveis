@@ -24,7 +24,11 @@ export async function getPropertiesForCards({
     }
 
     if (type && type !== "ALL") {
-      whereClause.type = type as PropertyType
+      const baseType = (type as string).includes("_")
+        ? (type as string).split("_")[0]
+        : (type as string)
+
+      whereClause.type = baseType as PropertyType
     }
 
     if (city && (city as string).trim() !== "") {

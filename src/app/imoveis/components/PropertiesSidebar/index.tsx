@@ -23,6 +23,7 @@ import { useState } from "react"
 
 const PropertiesSidebar = () => {
   const [isOpen, setIsOpen] = useState(true)
+  const [type, setType] = useState<string | undefined>(undefined)
 
   return (
     <Sidebar>
@@ -52,20 +53,25 @@ const PropertiesSidebar = () => {
                   {/* Tipo */}
                   <div className="space-y-1">
                     <Label>Tipo do imóvel</Label>
-                    <Select>
+                    <Select
+                      onValueChange={(v) => setType(v)}
+                      value={type ?? undefined}
+                    >
                       <SelectTrigger>
                         <SelectValue placeholder="Selecione" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="casa">Casa</SelectItem>
-                        <SelectItem value="apartamento">Apartamento</SelectItem>
-                        <SelectItem value="sobrado">Sobrado</SelectItem>
-                        <SelectItem value="chacara">Chácara</SelectItem>
-                        <SelectItem value="comercial">Comercial</SelectItem>
+                        <SelectItem value="CASA">Casa</SelectItem>
+                        <SelectItem value="APARTAMENTO">Apartamento</SelectItem>
+                        <SelectItem value="CASA_SOBRADO">Sobrado</SelectItem>
+                        <SelectItem value="CHACARA">Chácara</SelectItem>
+                        <SelectItem value="SALA_COMERCIAL">
+                          Comercial
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                     {/* Hidden input para enviar o valor do Select no GET */}
-                    <input type="hidden" name="type" />
+                    <input type="hidden" name="type" value={type ?? ""} />
                   </div>
 
                   {/* Localização */}

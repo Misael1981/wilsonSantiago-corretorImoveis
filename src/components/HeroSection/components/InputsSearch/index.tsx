@@ -46,20 +46,22 @@ export default function InputsSearch() {
               <SelectLabel>Residencial</SelectLabel>
               <SelectItem value="APARTAMENTO">Apartamento</SelectItem>
               <SelectItem value="CASA">Casa</SelectItem>
-              <SelectItem value="APARTAMENTO">Cobertura</SelectItem>
-              <SelectItem value="CASA">Sobrado</SelectItem>
+              <SelectItem value="APARTAMENTO_COBERTURA">Cobertura</SelectItem>
+              <SelectItem value="CASA_SOBRADO">Sobrado</SelectItem>
             </SelectGroup>
             <SelectGroup>
               <SelectLabel>Comercial</SelectLabel>
               <SelectItem value="SALA_COMERCIAL">Consultório</SelectItem>
               <SelectItem value="GALPAO">Galpão/Depósito/Armazem</SelectItem>
-              <SelectItem value="SALA_COMERCIAL">Imóvel Comercial</SelectItem>
+              <SelectItem value="SALA_COMERCIAL_GERAL">
+                Imóvel Comercial
+              </SelectItem>
               <SelectItem value="LOJA">Ponto Comercial/Box/Loja</SelectItem>
             </SelectGroup>
             <SelectGroup>
               <SelectLabel>Outros tipos</SelectLabel>
               <SelectItem value="TERRENO">Lotes/Terrenos</SelectItem>
-              <SelectItem value="TERRENO">Fazenda</SelectItem>
+              <SelectItem value="TERRENO_FAZENDA">Fazenda</SelectItem>
               <SelectItem value="SITIO">Sítios</SelectItem>
               <SelectItem value="CHACARA">Chácaras</SelectItem>
             </SelectGroup>
