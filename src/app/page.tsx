@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import AdvertiseRealEstate from "@/components/AdvertiseRealEstate"
 import BannerContactUs from "@/components/BannerContactUs"
 import BlogSection from "@/components/BlogSection"
