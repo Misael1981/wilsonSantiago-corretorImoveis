@@ -1,6 +1,5 @@
 "use client"
 
-import ImageUpload from "@/components/ImageUpload"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import {
@@ -10,19 +9,20 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea" // Importando Textarea para o resumo e metadescrição
-import { Switch } from "@/components/ui/switch" // Importando Switch para booleans
-import { generateSlug } from "@/helpers/generate-slug"
-import { ArticleFormInput, articleSchema } from "@/schemas/article-schema"
+import { Textarea } from "@/components/ui/textarea"
+import { Switch } from "@/components/ui/switch"
+import { toast } from "sonner"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useEffect, useTransition } from "react"
 import { Controller, useForm, useWatch } from "react-hook-form"
+import { saveArticleAction } from "@/app/actions/save-article"
+import { ArticleFormInput, articleSchema } from "@/schemas/article-schema"
+import { isRedirectError } from "next/dist/client/components/redirect-error"
+import { uploadToCloudinaryClient } from "@/services/upload-images"
+import ImageUpload from "@/components/ImageUpload"
+import { generateSlug } from "@/helpers/generate-slug"
 import ReactQuill from "react-quill-new"
 import "react-quill-new/dist/quill.snow.css"
-import { saveArticleAction } from "@/app/actions/save-article"
-import { toast } from "sonner"
-import { uploadToCloudinaryClient } from "@/services/upload-images"
-import { isRedirectError } from "next/dist/client/components/redirect-error"
 
 export type ArticleFormProps = {
   article?: {
