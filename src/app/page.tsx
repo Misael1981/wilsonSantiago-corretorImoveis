@@ -26,7 +26,9 @@ export default async function Home() {
 
         <BannerContactUs />
 
-        <CarouselProperties properties={properties} />
+        {properties.length > 0 && (
+          <CarouselProperties properties={properties} />
+        )}
 
         <AdvertiseRealEstate />
 
