@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import HeaderAdmin from "@/components/HeaderAdmin"
 import { getOverviewCounts } from "@/data/get-overview-counts"
 import Overview from "./components/Overview"

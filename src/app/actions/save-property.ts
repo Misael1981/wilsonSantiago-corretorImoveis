@@ -6,10 +6,18 @@ import { extractYoutubeId } from "@/helpers/extract-youtubeId"
 import { Prisma } from "@/generated/prisma"
 import { auth } from "@/lib/auth"
 
+type SavePropertyResult =
+  | { success: true }
+  | {
+      success: false
+      error: string
+      details?: Record<string, string[] | undefined>
+    }
+
 export async function savePropertyAction(
   formData: PropertyFormValues,
   propertyId?: string | null,
-) {
+): Promise<SavePropertyResult> {
   const validatedFields = propertySchema.safeParse(formData)
 
   const session = await auth()
@@ -79,6 +87,8 @@ export async function savePropertyAction(
         where: { id: propertyId },
         data: updateData,
       })
+
+      return { success: true }
     } else {
       // ==========================================
       // MODO CADASTRO
@@ -121,6 +131,8 @@ export async function savePropertyAction(
       await db.property.create({
         data: createData,
       })
+
+      return { success: true }
     }
   } catch (error) {
     console.error("Erro crítico na Server Action:", error)

@@ -1,6 +1,7 @@
 import { getPropertiesById } from "@/data/get-properties-by-id"
 import PropertyForm from "./components/PropertyForm"
 import { PropertyFormValues } from "@/schemas/property-schema"
+import { dbPropertyToFormValues } from "@/helpers/db-property-to-form-values"
 
 interface RegisterFormPageProps {
   params: Promise<{
@@ -18,15 +19,15 @@ export default async function RegisterFormPage({
   let propertyData: PropertyFormValues | undefined = undefined
 
   if (isEditMode && propertyId) {
-    propertyData = (await getPropertiesById({
-      id: propertyId,
-    })) as unknown as PropertyFormValues
+    const dbProperty = await getPropertiesById({ id: propertyId })
 
-    if (!propertyData) {
+    if (!dbProperty) {
       return (
         <div className="p-6 text-red-500">Imóvel não encontrado, mano!</div>
       )
     }
+
+    propertyData = dbPropertyToFormValues(dbProperty)
   }
 
   return (
@@ -37,7 +38,10 @@ export default async function RegisterFormPage({
           : "Cadastrar Novo Imóvel"}
       </h1>
 
-      <PropertyForm property={propertyData} propertyId={propertyId} />
+      <PropertyForm
+        property={propertyData}
+        propertyId={propertyId === "novo" ? undefined : propertyId}
+      />
     </div>
   )
 }

@@ -1,60 +1,67 @@
 import { PropertyStatus, PropertyType } from "@/generated/prisma"
 import z from "zod"
 
-export const propertySchema = z
-  .object({
-    title: z.string().min(2, "O título é deve ter pelo menos 2 caracteres"),
-    slug: z.string().min(2, "Campo obrigatório."),
-    codRef: z.number().min(1, "Campo Obrigatório."),
-    description: z.string().optional().or(z.literal("")),
-    price: z.coerce.number().min(1, "O preço deve ser maior que zero"),
-    area: z.coerce
-      .number()
-      .min(1, "A área deve ser maior que zero")
-      .optional()
-      .or(z.literal(0)),
-    bedrooms: z.coerce.number().min(0, "Mínimo 0 quartos"),
-    bathrooms: z.coerce.number().min(0, "Mínimo 0 banheiros"),
-    garageSpaces: z.coerce.number().min(0, "Mínimo 0 vagas").default(0),
+const propertyObjectSchema = z.object({
+  title: z.string().min(2, "O título é deve ter pelo menos 2 caracteres"),
+  slug: z.string().min(2, "Campo obrigatório."),
+  codRef: z.number().min(1, "Campo Obrigatório."),
+  description: z.string().optional().or(z.literal("")),
+  price: z.coerce.number().min(1, "O preço deve ser maior que zero"),
+  area: z.coerce
+    .number()
+    .min(1, "A área deve ser maior que zero")
+    .optional()
+    .or(z.literal(0)),
+  bedrooms: z.coerce.number().min(0, "Mínimo 0 quartos"),
+  bathrooms: z.coerce.number().min(0, "Mínimo 0 banheiros"),
+  garageSpaces: z.coerce.number().min(0, "Mínimo 0 vagas").default(0),
+  type: z.enum(PropertyType).default("CASA"),
+  status: z.enum(PropertyStatus).default("ACTIVE"),
+  featured: z.boolean().default(false),
+  street: z.string().optional(),
+  number: z.string().optional(),
+  complement: z.string().optional(),
+  neighborhood: z.string().min(2, "Bairro obrigatório"),
+  city: z.string().min(2, "Cidade obrigatória"),
+  state: z.string().length(2, "Use a sigla do estado (ex: MG)"),
+  youtubeUrl: z
+    .string()
+    .url("URL do YouTube inválida")
+    .optional()
+    .or(z.literal("")),
+  videoFeatured: z.boolean().default(false),
+})
 
-    type: z.enum(PropertyType).default("CASA"),
-    status: z.enum(PropertyStatus).default("ACTIVE"),
-    featured: z.boolean().default(false),
+const videoRefine = (data: { videoFeatured: boolean; youtubeUrl?: string }) =>
+  !(data.videoFeatured && !data.youtubeUrl)
 
-    street: z.string().optional(),
-    number: z.string().optional(),
-    complement: z.string().optional(),
-    neighborhood: z.string().min(2, "Bairro obrigatório"),
-    city: z.string().min(2, "Cidade obrigatória"),
-    state: z.string().length(2, "Use a sigla do estado (ex: MG)"),
+const videoRefineConfig = {
+  message:
+    "Para destacar o vídeo na Home, você precisa preencher a URL do YouTube!",
+  path: ["youtubeUrl"],
+}
 
+// Schema "de salvamento" — só strings de URL. Usado no onSubmit, após o upload.
+export const propertySchema = propertyObjectSchema
+  .extend({
     imageUrls: z
       .array(z.string().url())
       .min(1, "Cadastre pelo menos 1 foto do imóvel"),
-    youtubeUrl: z
-      .string()
-      .url("URL do YouTube inválida")
-      .optional()
-      .or(z.literal("")),
-    videoFeatured: z.boolean().default(false),
   })
-  .refine(
-    (data) => {
-      if (data.videoFeatured && !data.youtubeUrl) {
-        return false
-      }
-      return true
-    },
-    {
-      message:
-        "Para destacar o vídeo na Home, você precisa preencher a URL do YouTube!",
-      path: ["youtubeUrl"],
-    },
-  )
+  .refine(videoRefine, videoRefineConfig)
 
-// Extrai a Tipagem automática do TypeScript com base no Schema do Zod
+// Schema "de formulário" — aceita File (preview local) OU string (já hospedada).
+// Usado no resolver do useForm, enquanto o usuário ainda está editando/anexando fotos.
+export const propertyFormSchema = propertyObjectSchema
+  .extend({
+    imageUrls: z
+      .array(z.union([z.instanceof(File), z.string().url()]))
+      .min(1, "Cadastre pelo menos 1 foto do imóvel"),
+  })
+  .refine(videoRefine, videoRefineConfig)
+
 export type PropertyFormValues = z.infer<typeof propertySchema>
-export type PropertyFormInput = z.input<typeof propertySchema>
+export type PropertyFormInput = z.input<typeof propertyFormSchema>
 
 export const listingRequestSchema = z.object({
   name: z.string().min(2, "O nome é deve ter pelo menos 2 caracteres"),

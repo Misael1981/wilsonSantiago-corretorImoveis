@@ -1,9 +1,13 @@
 "use client"
 
-import { PropertyFormValues, propertySchema } from "@/schemas/property-schema"
+import {
+  PropertyFormInput,
+  propertyFormSchema,
+  PropertyFormValues,
+  propertySchema,
+} from "@/schemas/property-schema"
 import { useForm, useWatch, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import z from "zod"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import {
   Field,
@@ -41,14 +45,12 @@ type PropertyFormProps = {
   propertyId?: string
 }
 
-export type PropertyFormInput = z.input<typeof propertySchema>
-
 const PropertyForm = ({ property, propertyId }: PropertyFormProps) => {
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
   const methods = useForm<PropertyFormInput>({
-    resolver: zodResolver(propertySchema),
+    resolver: zodResolver(propertyFormSchema),
     defaultValues: {
       title: property?.title || "",
       slug: property?.slug || "",
@@ -112,13 +114,18 @@ const PropertyForm = ({ property, propertyId }: PropertyFormProps) => {
     startTransition(async () => {
       try {
         const finalImageUrls = await uploadMultipleImages(data.imageUrls)
-
         const dataToSave = propertySchema.parse({
           ...data,
           imageUrls: finalImageUrls,
         })
 
-        await savePropertyAction(dataToSave, propertyId)
+        const result = await savePropertyAction(dataToSave, propertyId)
+
+        if (!result?.success) {
+          toast.error(result?.error ?? "Erro ao salvar o imóvel, mano!")
+          return
+        }
+
         toast.success("Imóvel salvo com sucesso!")
         router.push("/admin/imoveis")
       } catch (error) {
@@ -128,9 +135,13 @@ const PropertyForm = ({ property, propertyId }: PropertyFormProps) => {
     })
   }
 
+  const onError = (errors: unknown) => {
+    console.log("❌ O ZOD BLOQUEOU O ENVIO NESSES CAMPOS:", errors)
+  }
+
   return (
     <Card>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit, onError)}>
         <CardContent>
           <FieldGroup className="grid grid-cols-1 gap-6">
             {/* Seção Destacar Imóvel */}
@@ -183,6 +194,8 @@ const PropertyForm = ({ property, propertyId }: PropertyFormProps) => {
                         ))}
                       </SelectContent>
                     </Select>
+
+                    <FieldError>{errors.status?.message}</FieldError>
                   </Field>
                 )}
               />
@@ -206,6 +219,8 @@ const PropertyForm = ({ property, propertyId }: PropertyFormProps) => {
                         ))}
                       </SelectContent>
                     </Select>
+
+                    <FieldError>{errors.type?.message}</FieldError>
                   </Field>
                 )}
               />
@@ -224,9 +239,11 @@ const PropertyForm = ({ property, propertyId }: PropertyFormProps) => {
               <Field className="lg:w-1/4">
                 <FieldLabel>Código de Referência</FieldLabel>
                 <Input
-                  placeholder="Ex: 123456"
                   type="number"
-                  {...register("codRef")}
+                  placeholder="Ex: 1234"
+                  {...register("codRef", {
+                    valueAsNumber: true,
+                  })}
                 />
                 <FieldError>{errors.codRef?.message}</FieldError>
               </Field>
@@ -292,14 +309,21 @@ const PropertyForm = ({ property, propertyId }: PropertyFormProps) => {
                 control={control}
                 name="area"
                 render={({ field }) => {
-                  const value = (field.value as string | number) ?? ""
+                  const rawDigits =
+                    typeof field.value === "number"
+                      ? String(field.value)
+                      : String(field.value ?? "") // ← String() em vez de só ?? ""
+
+                  const displayedValue = rawDigits
+                    ? formatArea(rawDigits, false)
+                    : ""
 
                   return (
                     <Field>
                       <FieldLabel>Área do Imóvel</FieldLabel>
                       <Input
                         placeholder="Ex: 150 m²"
-                        value={value}
+                        value={displayedValue}
                         onChange={(e) => {
                           const inputValue = e.target.value
                           const isDeleting =
@@ -313,22 +337,11 @@ const PropertyForm = ({ property, propertyId }: PropertyFormProps) => {
                           ) {
                             cleanValue = inputValue.replace(/ m²| m| $/g, "")
                           }
-
                           const onlyDigits = cleanValue.replace(/\D/g, "")
-
-                          if (!onlyDigits) {
-                            field.onChange("")
-                            return
-                          }
-
-                          const formattedArea = formatArea(
-                            onlyDigits,
-                            isDeleting,
-                          )
-
-                          field.onChange(formattedArea)
+                          field.onChange(onlyDigits)
                         }}
                       />
+                      <FieldError>{errors.area?.message}</FieldError>
                     </Field>
                   )
                 }}
@@ -381,11 +394,13 @@ const PropertyForm = ({ property, propertyId }: PropertyFormProps) => {
                     placeholder="Ex: Rua das Flores"
                     {...register("street")}
                   />
+                  <FieldError>{errors.street?.message}</FieldError>
                 </Field>
 
                 <Field className="lg:w-1/4">
                   <FieldLabel>Número</FieldLabel>
                   <Input placeholder="Ex: 123" {...register("number")} />
+                  <FieldError>{errors.number?.message}</FieldError>
                 </Field>
               </div>
               {/* Complemento e Bairro */}
@@ -396,6 +411,7 @@ const PropertyForm = ({ property, propertyId }: PropertyFormProps) => {
                     placeholder="Ex: Apto 101"
                     {...register("complement")}
                   />
+                  <FieldError>{errors.complement?.message}</FieldError>
                 </Field>
 
                 <Field>
@@ -404,6 +420,7 @@ const PropertyForm = ({ property, propertyId }: PropertyFormProps) => {
                     placeholder="Ex: Centro"
                     {...register("neighborhood")}
                   />
+                  <FieldError>{errors.neighborhood?.message}</FieldError>
                 </Field>
               </div>
 
@@ -412,11 +429,13 @@ const PropertyForm = ({ property, propertyId }: PropertyFormProps) => {
                 <Field>
                   <FieldLabel>Cidade</FieldLabel>
                   <Input placeholder="Ex: São Paulo" {...register("city")} />
+                  <FieldError>{errors.city?.message}</FieldError>
                 </Field>
 
                 <Field className="lg:w-1/4">
                   <FieldLabel>Estado</FieldLabel>
                   <Input placeholder="Ex: SP" {...register("state")} />
+                  <FieldError>{errors.state?.message}</FieldError>
                 </Field>
               </div>
             </div>
@@ -471,6 +490,8 @@ const PropertyForm = ({ property, propertyId }: PropertyFormProps) => {
                           disabled={!youtubeUrl}
                           className="shadow-sm data-[state=checked]:bg-red-600"
                         />
+
+                        <FieldError>{errors.videoFeatured?.message}</FieldError>
                       </Field>
                     )}
                   />
@@ -488,6 +509,8 @@ const PropertyForm = ({ property, propertyId }: PropertyFormProps) => {
                 name="imageUrls"
                 initialUrls={property?.imageUrls}
               />
+
+              <FieldError>{errors.imageUrls?.message}</FieldError>
             </Field>
           </FieldGroup>
         </CardContent>

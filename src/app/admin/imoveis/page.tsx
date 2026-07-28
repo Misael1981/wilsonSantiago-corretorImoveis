@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import HeaderAdmin from "@/components/HeaderAdmin"
 import MetricsCards from "@/components/MetricsCards"
 import SectionTitleAdmin from "@/components/SectionTitleAdmin"
