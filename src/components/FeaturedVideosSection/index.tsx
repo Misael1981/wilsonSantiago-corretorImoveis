@@ -11,7 +11,7 @@ const FeaturedVideosSection = async () => {
         <section className="boxed p-4" id="highlights space-y-6">
           <SubTitle title="Novidades & Lançamentos" />
 
-          <div className="scrollbar-none mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 lg:grid lg:grid-cols-2 lg:gap-8 lg:overflow-visible">
+          <div className="mt-8 flex snap-x snap-mandatory scrollbar-none gap-4 overflow-x-auto pb-4 lg:grid lg:grid-cols-2 lg:gap-8 lg:overflow-visible">
             {videoProperties.map((propertie) => (
               <div
                 key={propertie.id}

@@ -1,6 +1,7 @@
 "use client"
 
 import { formatDate } from "@/helpers/format-date"
+import { getYoutubeId } from "@/helpers/get-youtube-id"
 import { Calendar, Play } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -22,7 +23,7 @@ type VideoCardProps = {
 const VideoCard = ({ propertie }: VideoCardProps) => {
   const [isPlaying, setIsPlaying] = useState(false)
 
-  const videoId = propertie.youtubeId
+  const videoId = getYoutubeId(propertie.youtubeUrl ?? "")
 
   if (!videoId) return null
 
@@ -66,11 +67,11 @@ const VideoCard = ({ propertie }: VideoCardProps) => {
         )}
       </div>
 
-      <div className="p-6">
+      <div className="min-h-24 p-2">
         <span className="mb-1 block text-xs font-semibold text-slate-400">
           Ref: #{propertie.codRef}
         </span>
-        <h3 className="text-wilson-blue line-clamp-2 text-lg font-bold">
+        <h3 className="text-wilson-blue line-clamp-2 text-center text-lg font-bold">
           {propertie.title}
         </h3>
       </div>
