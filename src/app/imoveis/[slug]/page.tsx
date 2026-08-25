@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { BedDouble, CarFront, ChartArea, ShowerHead } from "lucide-react"
 import { formatCurrency } from "@/helpers/format-currency"
 import { FaWhatsapp } from "react-icons/fa"
-import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 type PropertyDetailsProps = {
   params: Promise<{ slug: string }>
@@ -50,6 +50,9 @@ export default async function PropertyDetailsPage({
       imageUrls: property.imageUrls,
     },
   }
+
+  const phoneNumber =
+    process.env.NEXT_PUBLIC_WHATSAPP?.replace(/\D/g, "") || "553599415176"
 
   return (
     <div className="w-full">
@@ -127,10 +130,17 @@ export default async function PropertyDetailsPage({
                   <div className="flex w-full justify-end text-xl font-bold text-green-600">
                     <p>{formatCurrency(property.price)}</p>
                   </div>
-                  <Button className="w-full bg-green-600 text-white hover:bg-green-700">
-                    <FaWhatsapp className="mr-2" />
+                  <Link
+                    href={`https://wa.me/${phoneNumber?.replace(/\D/g, "")}?text=${encodeURIComponent(
+                      `Olá! Poderia falar com o corretor a repeito do imóvel ${property.title}, com o codRef ${property.codRef}?`,
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex w-full items-center justify-center gap-2 rounded-md bg-green-600 p-2 text-white shadow-2xs hover:bg-green-700`}
+                  >
+                    <FaWhatsapp className="size-4" />
                     Fale com o Corretor
-                  </Button>
+                  </Link>
                 </div>
               </div>
             </div>
