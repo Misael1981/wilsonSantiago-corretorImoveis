@@ -30,6 +30,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  compiler: {
+    styledComponents: true,
+  },
 }
 
 const pwaConfig = withPWA(nextConfig)

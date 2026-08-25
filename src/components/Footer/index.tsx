@@ -1,3 +1,4 @@
+import FloatingWhatsApp from "../FloatingWhatsApp"
 import AdressCard from "./components/AdressCard"
 import ContactCard from "./components/ContactCard"
 import InstitutionalCard from "./components/InstitutionalCard"
@@ -12,10 +13,12 @@ const Footer = () => {
       </div>
 
       <div>
-        <p className="text-center text-white/50">
+        <p className="text-center text-white">
           © 2025 Misael Borges - Desenvolvedor full-stack. Proibida a reprodução
           total ou parcial sem autorização.
         </p>
+
+        <FloatingWhatsApp />
       </div>
     </footer>
   )
