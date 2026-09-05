@@ -41,7 +41,6 @@ const videoRefineConfig = {
   path: ["youtubeUrl"],
 }
 
-// Schema "de salvamento" — só strings de URL. Usado no onSubmit, após o upload.
 export const propertySchema = propertyObjectSchema
   .extend({
     imageUrls: z
@@ -50,8 +49,6 @@ export const propertySchema = propertyObjectSchema
   })
   .refine(videoRefine, videoRefineConfig)
 
-// Schema "de formulário" — aceita File (preview local) OU string (já hospedada).
-// Usado no resolver do useForm, enquanto o usuário ainda está editando/anexando fotos.
 export const propertyFormSchema = propertyObjectSchema
   .extend({
     imageUrls: z

@@ -135,10 +135,16 @@ export async function savePropertyAction(
       return { success: true }
     }
   } catch (error) {
-    console.error("Erro crítico na Server Action:", error)
-    return {
-      success: false,
-      error: "Erro interno ao salvar no banco de dados Neon.",
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === "P2002") {
+        return {
+          success: false,
+          error:
+            "Já existe um imóvel com este Slug. Escolha outro slug ou adicione um sufixo (ex: -2)!",
+        }
+      }
     }
+
+    return { success: false, error: "Erro interno ao salvar imóvel." }
   }
 }

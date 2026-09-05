@@ -87,22 +87,19 @@ const PropertyForm = ({ property, propertyId }: PropertyFormProps) => {
     formState: { errors },
   } = methods
 
-  const name = useWatch({
-    control,
-    name: "title",
-  })
-
   const youtubeUrl = useWatch({
     control,
     name: "youtubeUrl",
   })
 
-  useEffect(() => {
-    if (!name) return
+  const titleValue = useWatch({ control, name: "title" })
 
-    const generatedSlug = generateSlug(name)
+  useEffect(() => {
+    if (!titleValue) return
+
+    const generatedSlug = generateSlug(titleValue)
     methods.setValue("slug", generatedSlug, { shouldValidate: true })
-  }, [name, methods])
+  }, [titleValue, methods])
 
   useEffect(() => {
     if (!youtubeUrl) {
